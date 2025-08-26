@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Comment {
 	private int comment_num;
-	private String comment_contet;
+	private String comment_content;
 	private Date comment_date;
 	private int group_num;
 	private int group_order;
@@ -15,10 +15,10 @@ public class Comment {
 		
 	}
 
-	public Comment(int comment_num, String comment_contet, Date comment_date, int group_num, int group_order,
+	public Comment(int comment_num, String comment_content, Date comment_date, int group_num, int group_order,
 			String email, int post_num) {
 		this.comment_num = comment_num;
-		this.comment_contet = comment_contet;
+		this.comment_content = comment_content;
 		this.comment_date = comment_date;
 		this.group_num = group_num;
 		this.group_order = group_order;
@@ -34,12 +34,12 @@ public class Comment {
 		this.comment_num = comment_num;
 	}
 
-	public String getComment_contet() {
-		return comment_contet;
+	public String getComment_content() {
+		return comment_content;
 	}
 
-	public void setComment_contet(String comment_contet) {
-		this.comment_contet = comment_contet;
+	public void setComment_content(String comment_content) {
+		this.comment_content = comment_content;
 	}
 
 	public Date getComment_date() {

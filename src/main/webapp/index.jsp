@@ -9,6 +9,7 @@
 </head>
 <body>
 	<h1>학부모 정보통</h1><br></br>
+	<a href="comment/comment.do">댓글</a>
 	
 </body>
 </html>
