@@ -8,6 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-	<h1>학부모 정보통</h1>
+	<h1>학부모 정보통</h1><br></br>
+	
 </body>
 </html>
