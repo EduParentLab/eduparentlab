@@ -10,6 +10,7 @@
 <body>
 	<h1>학부모 정보통</h1>
 	<a href="admin/admin.jsp">관리자페이지</a><br/>
+
 </body>
 
 </html>

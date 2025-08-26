@@ -1,5 +1,6 @@
 package model.service;
 
+
 import java.util.ArrayList;
 import model.dao.PostDAO;
 import domain.Post;
@@ -16,4 +17,3 @@ public class PostService {
 	public ArrayList<Post> listS(){
 		return dao.list();
 	}
-}
