@@ -12,7 +12,7 @@ public class PostDAO {
 	public PostDAO() {
 		try{
 			Context initContext = new InitialContext();
-			Context envContext = (Context)initContext.lookup("java:/comp/env");
+			Context envContext = (Context)initContext.lookup("java:comp/env");
 			ds = (DataSource)envContext.lookup("jdbc/TestDB");
 		}catch(NamingException ne){
 		}

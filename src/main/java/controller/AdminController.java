@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 
-@WebServlet("admin/admin.do")
+@WebServlet("/admin/admin.do")
 public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

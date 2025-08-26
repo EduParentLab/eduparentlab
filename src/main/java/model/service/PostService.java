@@ -17,3 +17,4 @@ public class PostService {
 	public ArrayList<Post> listS(){
 		return dao.list();
 	}
+}
