@@ -5,8 +5,9 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 import domain.Post;
-
 import static model.sql.PostSQL.*;
+import static model.sql.AdminSQL.*;
+
 
 public class PostDAO {
     private DataSource ds;
@@ -181,24 +182,45 @@ public class PostDAO {
         }
     }
     
-    public void hit(int post_num){
-        java.sql.Connection con = null;
-        java.sql.PreparedStatement pstmt = null;
-        try{
-            con = ds.getConnection();
-            pstmt = con.prepareStatement(HIT);
-            pstmt.setInt(1, post_num);
-            pstmt.executeUpdate();
-        }catch(java.sql.SQLException se){
-        	
-            se.printStackTrace();
-            
-        }finally{
-            try{ 
-	            pstmt.close(); 
-	            con.close(); 
-            }catch(Exception e){}
-        }
-    }
-
+  
+	public LinkedHashMap<String, Integer> countPost(){
+		LinkedHashMap<String, Integer> map= new LinkedHashMap<>();
+		Connection con = null;
+		Statement stmt = null;
+	    ResultSet rs = null;
+	    try{
+	    	con = ds.getConnection();
+			stmt = con.createStatement();
+	        rs = stmt.executeQuery(COUNTPOST);
+	        while(rs.next()) {
+	        	String category  = rs.getString("category_name");
+	        	int count = rs.getInt("post_count");
+	        	map.put(category, count);
+	        }
+	    }catch(SQLException se) {
+	    	
+	    }finally{
+            try{
+                rs.close();
+                stmt.close();
+                con.close();
+            }catch(SQLException se){}
+        }return map;	
+	} 	
+	
+	public void hit(int post_num){
+	    java.sql.Connection con = null;
+	    java.sql.PreparedStatement pstmt = null;
+	    try{
+	        con = ds.getConnection();
+	        pstmt = con.prepareStatement(HIT);
+	        pstmt.setInt(1, post_num);
+	        pstmt.executeUpdate();
+	    }catch(java.sql.SQLException se){
+	        se.printStackTrace();
+	    }finally{
+	        try{ pstmt.close(); con.close(); }catch(Exception e){}
+	    }
+	}
+	
 }
