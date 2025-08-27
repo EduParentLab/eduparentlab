@@ -6,7 +6,7 @@ import javax.naming.*;
 import javax.sql.DataSource;
 
 import domain.User;
-import static model.sql.PostSQL.*;
+import static model.sql.AdminSQL.*;
 
 public class UserDAO {
 	private DataSource ds;
