@@ -1,0 +1,158 @@
+package model.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import domain.Comment;
+import static model.sql.CommentSQL.*;
+public class CommentDAO {
+	private DataSource ds;
+	public CommentDAO() {
+		try{
+			Context initContext = new InitialContext();
+			Context envContext = (Context)initContext.lookup("java:comp/env");
+			ds = (DataSource)envContext.lookup("jdbc/TestDB");
+			System.out.println("db연결됨");
+		}catch(NamingException ne){
+			System.out.println("db연결되지 않음");
+			ne.printStackTrace();
+		}
+		
+	}
+
+	public int insert(Comment dto,int post_num) {
+		try(Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);){
+			pstmt.setString(1, dto.getComment_content());
+			pstmt.setInt(2, 0);
+			pstmt.setInt(3, 0);
+			pstmt.setString(4, dto.getEmail());
+			pstmt.setInt(5, post_num);
+			int result = pstmt.executeUpdate();
+			
+			if(result > 0) {
+				ResultSet rs = pstmt.getGeneratedKeys();
+                if(rs.next()) {
+                    int comment_num = rs.getInt(1);
+                    
+                    // 방금 생성된 comment_num으로 group_num 업데이트
+                    String updateSql = "UPDATE comments SET group_num = ? WHERE comment_num = ?";
+                    try (PreparedStatement upstmt = con.prepareStatement(updateSql)) {
+                        upstmt.setInt(1, comment_num);
+                        upstmt.setInt(2, comment_num);
+                        upstmt.executeUpdate();
+                    }
+                }
+                return 0;
+            }
+			else {
+				return 1;
+			}
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return 1;
+		}
+	}
+
+	public ArrayList<Comment> selectedByPostNum(int post_num) {
+		ArrayList<Comment> clist = new ArrayList<Comment>();
+
+		try(Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(LIST);){
+			pstmt.setInt(1, post_num);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int comment_num = rs.getInt("comment_num");
+				String email = rs.getString("email");
+				String content = rs.getString("comment_content");
+				java.sql.Date date = rs.getDate("comment_date");
+				clist.add(new Comment(comment_num, content, date, -1, -1, email, post_num));
+			}
+			return clist;
+		} catch (SQLException se) {
+			se.printStackTrace();
+			return null;
+		}
+	}
+	public Comment selectedByCommentNum(int comment_num) {
+		try(Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT);){
+			pstmt.setInt(1, comment_num);
+	        ResultSet rs = pstmt.executeQuery();
+	        if(rs.next()) {
+	            return new Comment(
+	                rs.getInt("comment_num"),
+	                rs.getString("comment_content"),
+	                rs.getDate("comment_date"),
+	                rs.getInt("group_num"),
+	                rs.getInt("group_order"),
+	                rs.getString("email"),
+	                rs.getInt("post_num")
+	            );
+	        }
+		}catch(SQLException se) {
+			se.printStackTrace();
+		}
+		return null;
+		
+	}
+	public int delete(int comment_num) {
+		try(Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(DELETE);){
+			pstmt.setInt(1, comment_num);
+			int i = pstmt.executeUpdate();
+			System.out.println("댓글 delete 된 쿼리의 수 : "+i);
+			if(i>0) return 0; 
+			else return 1;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return 1;
+		}
+	}
+	
+	public int update(String comment_content,int comment_num) {
+		try(Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(UPDATE);){
+			pstmt.setString(1,  comment_content);
+			pstmt.setInt(2, comment_num);
+			int i = pstmt.executeUpdate();
+			System.out.println("댓글 update 된 쿼리의 수 : "+i);
+			if(i>0) return 0;
+			else return 1;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return 1;
+		}
+	}
+	public int recomment(Comment dto,int post_num) {
+		try(Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(INSERT);){
+			pstmt.setString(1, dto.getComment_content());
+			pstmt.setInt(2, dto.getGroup_num());
+			pstmt.setInt(3, dto.getGroup_order());
+			pstmt.setString(4, dto.getEmail());
+			pstmt.setInt(5, post_num);
+			int i = pstmt.executeUpdate();
+			System.out.println("답댓글 insert 된 쿼리의 수 : "+i);
+			if(i>0) {
+				return 0;
+			}
+			else {
+				return 1;
+			}
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return 1;
+		}
+	}
+	
+}

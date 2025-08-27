@@ -1,5 +1,6 @@
 package model.sql;
 
-class PostSQL {
+public class PostSQL {
 	final static String INSERT="";
+	
 }
