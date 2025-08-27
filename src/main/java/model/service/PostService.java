@@ -22,16 +22,23 @@ public class PostService {
 
   
     public boolean insertS(Post dto) {
-        return dao.insert(dto);   // dto로 넘겨야 맞음
+        return dao.insert(dto);  
     }
 
    
-   /* public boolean deleteS(long seq) {
-        return dao.delete(seq);
+    public boolean deleteS(int post_num) {
+        return dao.delete(post_num);
     }
-
-   
+    
     public boolean updateS(Post dto) {
         return dao.update(dto);
-    }*/
+    }
+    
+    public Post get(int post_num){
+        return dao.get(post_num);
+    }
+    
+    public void hit(int post_num){
+        dao.hit(post_num);
+    }
 }

@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 import domain.Post;
+
 import static model.sql.PostSQL.*;
 
 public class PostDAO {
@@ -55,7 +56,7 @@ public class PostDAO {
             	rs.close(); 
             	stmt.close(); 
             	con.close(); 
-            	} catch (Exception e) {}
+            } catch (Exception e) {}
         }
     }
 
@@ -95,11 +96,109 @@ public class PostDAO {
 
         } finally {
             try { 
-            	
-            rs.close(); 
-            pstmt.close(); 
-            con.close(); 
+	            rs.close(); 
+	            pstmt.close(); 
+	            con.close(); 
             }catch (Exception e) {}
         }
     }
+    
+    public boolean delete(int post_num){
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try{
+            con = ds.getConnection();
+            pstmt = con.prepareStatement(DELETE);
+            pstmt.setInt(1, post_num);
+            int i = pstmt.executeUpdate();
+            return i > 0;
+        }catch(SQLException se){
+            se.printStackTrace();
+            return false;
+        }finally{
+            try{ 
+            	pstmt.close(); 
+            	con.close(); 
+        	}catch(Exception e){}
+        }
+    }
+    
+    public boolean update(Post dto){
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try{
+            con = ds.getConnection();
+            pstmt = con.prepareStatement(UPDATE);
+            pstmt.setString(1, dto.getPost_subject());
+            pstmt.setString(2, dto.getPost_content());
+            pstmt.setInt(3, dto.getCategory_num());
+            pstmt.setInt(4, dto.getPost_num());
+            int i = pstmt.executeUpdate();
+            return i > 0;
+            
+        }catch(SQLException se){
+            se.printStackTrace();
+            return false;
+        }finally{
+            try{
+            	pstmt.close();
+            	con.close();
+            }catch(Exception e){}
+        }
+    }
+ 
+    public Post get(int post_num){
+        java.sql.Connection con = null;
+        java.sql.PreparedStatement pstmt = null;
+        java.sql.ResultSet rs = null;
+        try{
+            con = ds.getConnection();
+            pstmt = con.prepareStatement(GET);
+            pstmt.setInt(1, post_num);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                return new Post(
+                    rs.getInt("post_num"),
+                    rs.getString("post_subject"),
+                    rs.getString("post_content"),
+                    rs.getDate("post_date"),
+                    rs.getInt("post_view"),
+                    rs.getInt("category_num"),
+                    rs.getString("email")
+                );
+            }
+            return null;
+        }catch
+        	(java.sql.SQLException se){
+            	se.printStackTrace();
+            	return null;
+        }finally{
+            try{
+	            rs.close(); 
+	            pstmt.close(); 
+	            con.close(); 
+            }catch(Exception e){}
+        }
+    }
+    
+    public void hit(int post_num){
+        java.sql.Connection con = null;
+        java.sql.PreparedStatement pstmt = null;
+        try{
+            con = ds.getConnection();
+            pstmt = con.prepareStatement(HIT);
+            pstmt.setInt(1, post_num);
+            pstmt.executeUpdate();
+        }catch(java.sql.SQLException se){
+        	
+            se.printStackTrace();
+            
+        }finally{
+            try{ 
+	            pstmt.close(); 
+	            con.close(); 
+            }catch(Exception e){}
+        }
+    }
+
 }
