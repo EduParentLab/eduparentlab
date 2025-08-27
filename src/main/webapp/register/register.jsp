@@ -22,10 +22,8 @@
           <tr>
              <th>이메일</th> 
              <td>
-             <input name="email1" id="email1" size="10"> @ <input name="email2" id="email2" size="10">
-             <input type="button" value="중복확인" id="checkEmailBtn" onclick="checkEmail()"/>
-             <br>
-      		 <span id="emailMsg"></span>
+             <input name="email1" size="10"> @ <input name="email2" size="10">
+             <input type="button" value="중복확인"/>
              </td>
           </tr>
           <tr>
@@ -33,14 +31,10 @@
              <td><input name="password" size="20"></td>
           </tr>
           <tr>
-             <th>비밀번호확인</th> 
-             <td><input name="verifyPassword" size="20" onkeydown="enterCheck(this)"></td>
-          </tr>
-          <tr>
              <th>닉네임</th> 
              <td>
              <input name="nickname" size="20">
-             <input type="button" value="중복확인" onclick="check()"/>
+             <input type="button" value="중복확인"/>
              </td>
           </tr>
              <tr>
@@ -59,7 +53,7 @@
           <tr>
              <th>생년월일</th> 
              <td>
-    		 <input type="text" name="birth" placeholder="YYYY-MM-DD">
+    		 <input type="date" name="birth">
  			 </td>
           </tr>
           <tr>
