@@ -1,10 +1,10 @@
 package model.dao;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.sql.Date;
 import javax.naming.*;
 import javax.sql.DataSource;
-
 import domain.User;
 import static model.sql.AdminSQL.*;
 
@@ -83,5 +83,29 @@ public class UserDAO {
                 con.close();
             }catch(SQLException se){}
         }		
-	}	
+	}
+	public LinkedHashMap<Date, Integer> countUser() {
+		LinkedHashMap<Date, Integer> map = new LinkedHashMap<>();
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(COUNTUSER);
+			while(rs.next()) {
+				Date cdate = rs.getDate("cdate");
+				int count = rs.getInt("user_count");
+				map.put(cdate, count);
+			}
+		}catch(SQLException se){
+			
+		}finally {
+			try {
+				rs.close();
+				stmt.close();
+				con.close();
+			}catch(SQLException se) {}
+		}return map;
+	}
 }

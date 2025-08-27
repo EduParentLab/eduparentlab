@@ -12,6 +12,7 @@ import domain.Post;
 import domain.User;
 import java.io.IOException;
 import java.util.*;
+import java.sql.Date;
 
 
 
@@ -27,7 +28,8 @@ public class AdminController extends HttpServlet {
 	    getNews(request, response);
 		getUser(request, response);
 		getGhost(request, response);	
-		countPost(request, response);	
+		countPost(request, response);
+		countUser(request, response);
 		String view = "admin.jsp";
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);
@@ -56,7 +58,12 @@ public class AdminController extends HttpServlet {
 	        throws ServletException, IOException {
     	PostService service = PostService.getInstance();
  	    LinkedHashMap<String, Integer> map = service.countPostS();	   
- 	    request.setAttribute("postCount", map);	   
- 	   System.out.println(map);
+ 	    request.setAttribute("postCount", map);	   	  
 	}
+    private void countUser(HttpServletRequest request, HttpServletResponse response) 
+	        throws ServletException, IOException {
+    	UserService service = UserService.getInstance();
+    	LinkedHashMap<Date, Integer> map = service.countUserS();
+    	request.setAttribute("userCount", map);    	
+    }
 }
