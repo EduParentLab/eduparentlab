@@ -1,7 +1,7 @@
 package model.service;
 
 
-import java.util.ArrayList;
+import java.util.*;
 import model.dao.PostDAO;
 import domain.Post;
 
@@ -17,4 +17,7 @@ public class PostService {
 	public ArrayList<Post> listS(){
 		return dao.list();
 	}
+	public LinkedHashMap<String, Integer> countPostS(){
+		return dao.countPost();
+	} 
 }

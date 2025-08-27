@@ -1,7 +1,7 @@
 package model.service;
 
-import java.util.ArrayList;
-
+import java.util.*;
+import java.sql.Date;
 import domain.User;
 import model.dao.UserDAO;
 
@@ -19,5 +19,8 @@ public class UserService {
 	}
 	public ArrayList<User> listGhostUserS(){
 		return dao.listGhostUser();
+	}
+	public LinkedHashMap<Date, Integer> countUserS(){
+		return dao.countUser();
 	}
 }

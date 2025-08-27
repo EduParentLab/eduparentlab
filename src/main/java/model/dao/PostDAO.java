@@ -5,7 +5,7 @@ import javax.sql.*;
 import java.sql.*;
 import java.util.*;
 import domain.Post;
-import static model.sql.PostSQL.*;
+import static model.sql.AdminSQL.*;
 
 public class PostDAO {
 	private DataSource ds;
@@ -48,4 +48,28 @@ public class PostDAO {
             }catch(SQLException se){}
         }		
 	}	
+	public LinkedHashMap<String, Integer> countPost(){
+		LinkedHashMap<String, Integer> map= new LinkedHashMap<>();
+		Connection con = null;
+		Statement stmt = null;
+	    ResultSet rs = null;
+	    try{
+	    	con = ds.getConnection();
+			stmt = con.createStatement();
+	        rs = stmt.executeQuery(COUNTPOST);
+	        while(rs.next()) {
+	        	String category  = rs.getString("category_name");
+	        	int count = rs.getInt("post_count");
+	        	map.put(category, count);
+	        }
+	    }catch(SQLException se) {
+	    	
+	    }finally{
+            try{
+                rs.close();
+                stmt.close();
+                con.close();
+            }catch(SQLException se){}
+        }return map;	
+	} 		
 }
