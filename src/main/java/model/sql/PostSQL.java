@@ -1,8 +1,17 @@
 package model.sql;
 
 public class PostSQL {
-	final static String INSERT="";
+	public static final String INSERT =
+		    "insert into post (post_num, post_subject, post_content, post_date, post_view, category_num, email) "
+		  + "values (?, ?, ?, now(), 0, ?, ?)";
+	
+	final public static String DELETE="";
+	final public static String UPDATE="";
+	
+	final public static String POST = 
+		    "select * from POST order by post_num desc";
 	final public static String USERLIST = "select * from USER order by CDATE";
 	final public static String NEWSLIST = "select * from POST where category_num=2 order by post_num desc";//공지사항 카테고리 넘버 모르겠다 나중에 숫자 바꾸기	
 	final public static String GHOSTUSERLIST = "select * from USER where role_num=3 order by CDATE";
+	
 }
