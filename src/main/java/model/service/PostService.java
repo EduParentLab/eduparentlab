@@ -18,6 +18,7 @@ public class PostService {
 	public ArrayList<Post> listS(){
 		return dao.list();
 	}
+ 
 	public List<Post> listPagingS(int startRow, int pageSize){
 		return dao.listWithPaging(startRow, pageSize);
 	}
@@ -26,6 +27,9 @@ public class PostService {
 	}
     public boolean insertS(Post dto) {
         return dao.insert(dto);  
+    }
+    public int insertInt(Post dto) {
+        return dao.insertInt(dto);
     }
     public boolean deleteS(int post_num) {
         return dao.delete(post_num);
