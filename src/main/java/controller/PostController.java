@@ -16,7 +16,4 @@ public class PostController extends HttpServlet {
 		
 	}
 	
-
-
-
 }
