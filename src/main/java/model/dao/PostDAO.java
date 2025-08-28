@@ -12,39 +12,7 @@ import model.service.*;
 import model.sql.PostSQL;
 
 public class PostDAO {
-<<<<<<< HEAD
-	private DataSource ds;
-	public PostDAO() {
-		try{
-			Context initContext = new InitialContext();
-			Context envContext = (Context)initContext.lookup("java:comp/env");
-			ds = (DataSource)envContext.lookup("jdbc/TestDB");
-		}catch(NamingException ne){
-		}
-	}
-	public ArrayList<Post> list(){
-		ArrayList<Post> list = new ArrayList<Post>();
-		Connection con = null;
-		Statement stmt = null;
-	    ResultSet rs = null;
-	    try{
-			con = ds.getConnection();
-			stmt = con.createStatement();
-	        rs = stmt.executeQuery(NEWSLIST);
-	        while(rs.next()){
-	            int post_num = rs.getInt(1);
-	            String post_subject = rs.getString(2);	   
-				String post_content = rs.getString(3);
-				java.sql.Date post_date = rs.getDate(4);
-				String post_view  = rs.getString(5);
-				int category_num  = rs.getInt(6);
-				String email = rs.getString(7);
-	            
-	            list.add(new Post(post_num, post_subject, post_content, post_date, post_view, category_num, email));
-	        }
-	        return list;
-        }catch(SQLException se){
-=======
+
     private DataSource ds;
 
     public PostDAO() {
@@ -86,7 +54,6 @@ public class PostDAO {
 
         } catch (SQLException se) {
             se.printStackTrace();
->>>>>>> 2a7ef8e87b0f726862d55135c5c560dbe4209bb9
             return null;
 
         } finally {
