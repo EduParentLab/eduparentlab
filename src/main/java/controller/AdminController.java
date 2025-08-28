@@ -11,7 +11,8 @@ import model.service.UserService;
 import domain.Post;
 import domain.User;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
+import java.sql.Date;
 
 
 
@@ -23,11 +24,12 @@ public class AdminController extends HttpServlet {
         super();       
     }
 
-    public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+    public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 	    getNews(request, response);
 		getUser(request, response);
-		getGhost(request, response);
+		getGhost(request, response);	
+		countPost(request, response);
+		countUser(request, response);
 		String view = "admin.jsp";
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);
@@ -35,21 +37,33 @@ public class AdminController extends HttpServlet {
     private void getNews(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    PostService service = PostService.getInstance();
-	    ArrayList<Post> postlist = service.listS();	   
-	    request.setAttribute("news", postlist);	    
+	    ArrayList<Post> list = service.listS();	   
+	    request.setAttribute("news", list);	    
 	    
 	}
     private void getUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    UserService service = UserService.getInstance();
-	    ArrayList<User> userlist = service.listS();	   
-	    request.setAttribute("user", userlist);	    
+	    ArrayList<User> list = service.listS();	   
+	    request.setAttribute("user", list);	    
 	    
 	}
     private void getGhost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    UserService service = UserService.getInstance();
-	    ArrayList<User> ghostlist = service.listGhostUserS();	   
-	    request.setAttribute("ghost", ghostlist);	   
+	    ArrayList<User> list = service.listGhostUserS();	   
+	    request.setAttribute("ghost", list);	 	    
 	}
+    private void countPost(HttpServletRequest request, HttpServletResponse response) 
+	        throws ServletException, IOException {
+    	PostService service = PostService.getInstance();
+ 	    LinkedHashMap<String, Integer> map = service.countPostS();	   
+ 	    request.setAttribute("postCount", map);	   	  
+	}
+    private void countUser(HttpServletRequest request, HttpServletResponse response) 
+	        throws ServletException, IOException {
+    	UserService service = UserService.getInstance();
+    	LinkedHashMap<Date, Integer> map = service.countUserS();
+    	request.setAttribute("userCount", map);    	
+    }
 }
