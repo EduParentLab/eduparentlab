@@ -48,11 +48,18 @@ public class LoginController extends HttpServlet {
         LoginService service = LoginService.getInstance();
         int result = service.check(email, password);
         System.out.println("@LoginController result: " + result);
-
+        
+        
         if(result == YES_ID_PWD) {
             User u = service.getUserS(email);
             HttpSession session = request.getSession();
             session.setAttribute("loginOkUser", u); //User 객체를 loginOkUser라는 이름으로 HttpSession에 넣음!
+            response.setContentType("text/plain; charset=UTF-8");
+            response.getWriter().write("success");
+        }
+        else {
+        	response.setContentType("text/plain; charset=UTF-8");
+            response.getWriter().write("fail");
         }
         request.setAttribute("result", result);
 

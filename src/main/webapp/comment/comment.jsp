@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<jsp:include page = "../login/login_check_modul.jsp"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +10,7 @@
 	
 	<form id="commentForm" action="comment/comment.do?m=insert" method="post">
 	    <input type="hidden" name="post_num" value="${param.post_num}">
-	    <input type="hidden" name="email" value="${loginOkUser.email}">
+	    <input type="hidden" name="email" value="${email}">
 	    <textarea name="content" rows="3" cols="50" placeholder="댓글을 입력하세요"></textarea>
 	    <button type="submit">등록</button>
 	</form>
