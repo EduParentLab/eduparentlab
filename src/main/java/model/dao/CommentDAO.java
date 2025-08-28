@@ -63,12 +63,22 @@ public class CommentDAO {
 		}
 	}
 
-	public ArrayList<Comment> selectedByPostNum(int post_num) {
+	public ArrayList<Comment> selectedByPostNum(int post_num, boolean latestFirst, int startRow, int pageSize) {
 		ArrayList<Comment> clist = new ArrayList<Comment>();
 
-		try(Connection con = ds.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(LIST);){
+		try {
+			Connection con = ds.getConnection();
+			PreparedStatement pstmt = null;
+			if(latestFirst) {
+				pstmt = con.prepareStatement(LIST_L);
+				
+			}else {
+				pstmt = con.prepareStatement(LIST);
+			}
 			pstmt.setInt(1, post_num);
+			pstmt.setInt(2,  startRow);
+			pstmt.setInt(3, pageSize);
+			
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int comment_num = rs.getInt("comment_num");
@@ -83,6 +93,19 @@ public class CommentDAO {
 			return null;
 		}
 	}
+	// 특정 글의 전체 댓글 개수 조회
+    public int getTotalCount(int post_num) {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM post";
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) total = rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
 	public Comment selectedByCommentNum(int comment_num) {
 		try(Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(SELECT);){

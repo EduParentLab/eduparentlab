@@ -15,8 +15,11 @@ public class CommentService {
 	public static CommentService getInstance() {
 		return INSTANCE;
 	}
-	public ArrayList<Comment> list(int post_num){
-		return dao.selectedByPostNum(post_num);
+	public ArrayList<Comment> selectedByPostNum(int post_num, boolean latestFirst, int startRow, int pageSize){
+		return dao.selectedByPostNum(post_num, latestFirst, startRow, pageSize);
+	}
+	public int getTotalComments(int post_num) {
+		return dao.getTotalCount(post_num);
 	}
 	public int insert(Comment dto, int post_num) {
 		return dao.insert(dto, post_num);
