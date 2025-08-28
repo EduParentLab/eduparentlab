@@ -45,9 +45,10 @@ public class PostDAO {
                 int post_view = rs.getInt(5);
                 int category_num = rs.getInt(6);
                 String email = rs.getString(7);
+                int likes = rs.getInt(8);
 
                 list.add(new Post(post_num, post_subject, post_content,
-                                  post_date, post_view, category_num, email));
+                                  post_date, post_view, category_num, email, likes));
             }
             
             return list;
@@ -84,10 +85,11 @@ public class PostDAO {
                     int post_view = rs.getInt(5);
                     int category_num = rs.getInt(6);
                     String email = rs.getString(7);
+                    int likes = rs.getInt(8);
 
                     list.add(new Post(
                         post_num, post_subject, post_content,
-                        post_date, post_view, category_num, email
+                        post_date, post_view, category_num, email, likes
                     ));
                 }
             }
@@ -240,7 +242,8 @@ public class PostDAO {
                     rs.getDate("post_date"),
                     rs.getInt("post_view"),
                     rs.getInt("category_num"),
-                    rs.getString("email")
+                    rs.getString("email"),
+                    rs.getInt("likes")
                 );
             }
             return null;

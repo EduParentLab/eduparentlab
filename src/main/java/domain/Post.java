@@ -10,9 +10,10 @@ public class Post {
     private int post_view;   
     private int category_num;
     private String email;
+    private int likes;
 
     public Post(int post_num, String post_subject, String post_content,
-                Date post_date, int post_view, int category_num, String email) {
+                Date post_date, int post_view, int category_num, String email, int likes) {
         this.post_num = post_num;
         this.post_subject = post_subject;
         this.post_content = post_content;
@@ -20,7 +21,7 @@ public class Post {
         this.post_view = post_view;
         this.category_num = category_num;
         this.email = email;
-        
+        this.likes = likes;
         
     }
 
@@ -78,5 +79,12 @@ public class Post {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
 	}
 }
