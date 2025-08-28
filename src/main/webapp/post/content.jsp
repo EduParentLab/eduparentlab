@@ -27,7 +27,8 @@
     <th>제목</th><td>${dto.post_subject}</td>
   </tr>
   <tr>
-    <th>내용</th><td style="height:200px; text-align:left;">${dto.post_content}</td>
+    <th>내용</th>
+    <td style="height:200px; text-align:left;">${dto.post_content}</td>
   </tr>
   <tr>
     <th>작성자</th><td>${dto.email}</td>
@@ -38,13 +39,34 @@
   <tr>
     <th>조회수</th><td>${dto.post_view}</td>
   </tr>
-  
+  <tr>
+    <th>첨부파일</th>
+    <td>
+      <c:choose>
+        <c:when test="${empty fileList}">
+          첨부파일 없음
+        </c:when>
+        <c:otherwise>
+          <c:forEach var="file" items="${fileList}">
+            <div>
+              <a href="<%=request.getContextPath()%>/upload/${file.stored_name}" download="${file.original_name}">
+                ${file.original_name}
+              </a>
+              <span>(${file.file_size} Byte)</span>
+            </div>
+          </c:forEach>
+        </c:otherwise>
+      </c:choose>
+    </td>
+  </tr>
 </table>
-	<div class="btns">
-	  <a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}">수정</a>
-	  <a href="<%=request.getContextPath()%>/post.do?m=delete&seq=${dto.post_num}"
-	     onclick="return confirm('정말 삭제할까요?');">삭제</a>
-	  <a href="<%=request.getContextPath()%>/post.do?m=list">목록</a>
-	</div>
+
+<div class="btns">
+  <a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}">수정</a>
+  <a href="<%=request.getContextPath()%>/post.do?m=delete&seq=${dto.post_num}"
+     onclick="return confirm('정말 삭제할까요?');">삭제</a>
+  <a href="<%=request.getContextPath()%>/post.do?m=list">목록</a>
+</div>
+
 </body>
 </html>

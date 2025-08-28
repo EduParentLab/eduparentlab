@@ -19,11 +19,10 @@ public class PostService {
 		return dao.list();
 	}
   
-    public boolean insertS(Post dto) {
-        return dao.insert(dto);  
-    }
+	public int insertS(Post dto) {
+	    return dao.insert(dto);
+	}
 
-   
     public boolean deleteS(int post_num) {
         return dao.delete(post_num);
     }

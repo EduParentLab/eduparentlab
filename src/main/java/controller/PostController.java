@@ -6,6 +6,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import model.service.FileService;
 import model.service.PostService;
 import domain.Post;
 
@@ -50,6 +51,7 @@ public class PostController extends HttpServlet {
     
     private void insert(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+    	
         String post_subject = request.getParameter("post_subject");
         String post_content = request.getParameter("post_content");
         int post_view = 0; 
@@ -59,7 +61,14 @@ public class PostController extends HttpServlet {
         Post dto = new Post(-1, post_subject, post_content, null, post_view, category_num, email);
 
         PostService service = PostService.getInstance();
-        boolean flag = service.insertS(dto);
+        int postNum = service.insertS(dto);  
+
+        boolean flag = false;
+        
+        if (postNum > 0) {
+            FileService.getInstance().saveFiles(request, postNum);
+            flag = true;
+        }
 
         request.setAttribute("flag", flag);
         request.setAttribute("kind", "insert");
@@ -67,6 +76,7 @@ public class PostController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/post/msg.jsp");
         rd.forward(request, response);
     }
+
     
     
     private void delete(HttpServletRequest request, HttpServletResponse response) 

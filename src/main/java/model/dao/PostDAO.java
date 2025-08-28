@@ -62,48 +62,33 @@ public class PostDAO {
     }
 
 
-    public boolean insert(Post dto) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        try {
-            con = ds.getConnection();
-
+    public int insert(Post dto) {
+        String sql = "INSERT INTO post (post_subject, post_content, post_view, email, category_num, post_date) " 
+        				+"VALUES (?, ?, ?, ?, ?, NOW())";
         
-            int newPostNum = 1;
-            pstmt = con.prepareStatement("SELECT IFNULL(MAX(post_num),0)+1 FROM post");
-            rs = pstmt.executeQuery();
-            if (rs.next()) newPostNum = rs.getInt(1);
-            rs.close();
-            pstmt.close();
-
-       
-            pstmt = con.prepareStatement(INSERT);
-            pstmt = con.prepareStatement(INSERT);
-            pstmt.setInt(1, newPostNum);                    
-            pstmt.setString(2, dto.getPost_subject());      
-            pstmt.setString(3, dto.getPost_content());     
-            pstmt.setInt(4, dto.getCategory_num());         
-            pstmt.setString(5, dto.getEmail());             
-
-            int i = pstmt.executeUpdate();
-            if (i > 0) return true;
-            else return false;
-
-        } catch (SQLException se) {
-            se.printStackTrace();
-            return false;
-
-        } finally {
-            try { 
-	            rs.close(); 
-	            pstmt.close(); 
-	            con.close(); 
-            }catch (Exception e) {}
-        }
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+        	
+            pstmt.setString(1, dto.getPost_subject());
+            pstmt.setString(2, dto.getPost_content());
+            pstmt.setInt(3, dto.getPost_view());
+            pstmt.setString(4, dto.getEmail());
+            pstmt.setInt(5, dto.getCategory_num());
+            
+            int result = pstmt.executeUpdate();
+            
+            if (result > 0) {
+                try (PreparedStatement pstmt2 = 
+                		con.prepareStatement("SELECT MAX(post_num) FROM post");
+                		
+                     ResultSet rs = pstmt2.executeQuery()){
+                    if (rs.next()) return rs.getInt(1);
+                }
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        	return -1;
     }
-    
+
     public boolean delete(int post_num){
         Connection con = null;
         PreparedStatement pstmt = null;
