@@ -56,7 +56,7 @@ public class CommentController extends HttpServlet {
 		Comment comment = new Comment(-1, content, null, 0, 0, email, post_num);
 		
 		int result = service.insert(comment, post_num);
-		if(result == 0) {
+		if(result == 1) {
 			System.out.println("댓글 등록 성공");
 			response.sendRedirect("comment.do?m=list&post_num = 1");
 		}
@@ -70,12 +70,13 @@ public class CommentController extends HttpServlet {
 		int comment_num = Integer.parseInt(strComment_num);
 		
 		int result = service.delete(comment_num);
-		if(result == 0) {
+		if(result == 1) {
 			System.out.println("댓글 삭제 성공");
-			response.sendRedirect("comment.do?m=list&post_num=1");
+			response.setStatus(HttpServletResponse.SC_OK);
 		}
 		else {
 			System.out.println("댓글 등록 실패");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "댓글 등록 실패");
 		}
 	}
 	private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -84,12 +85,13 @@ public class CommentController extends HttpServlet {
 		String strComment_num = request.getParameter("comment_num");
 		int comment_num = Integer.parseInt(strComment_num);
 		int result = service.update(comment_content, comment_num);
-		if(result ==0) {
+		if(result == 1) {
 			System.out.println("댓글 수정 성공");
-			response.sendRedirect("comment.do?m=list&post_num=1");
+			response.setStatus(HttpServletResponse.SC_OK);
 		}
 		else {
 			System.out.println("댓글 수정 실패");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "댓글 수정 실패");
 		}
 	}
 	private void recomment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -100,12 +102,12 @@ public class CommentController extends HttpServlet {
 		String content = request.getParameter("content");
 		String email = request.getParameter("email");
 		String strParent_num = request.getParameter("parent_num");
-		if(strParent_num == null | strParent_num.trim().isEmpty()) {
+		if(strParent_num == null || strParent_num.trim().isEmpty()) {
 			System.out.println("parent_num이 null입니다.");
 			return;
 		}
 		int parent_num = Integer.parseInt(strParent_num);
-		
+
 		Comment recomment = new Comment();
 		recomment.setComment_content(content);
 		recomment.setEmail(email);
@@ -114,9 +116,9 @@ public class CommentController extends HttpServlet {
 		
 		int result = service.recomment(recomment, post_num);
 		System.out.println("recommnet의 result: "+result);
-		if(result == 0) {
+		if(result == 1) {
+			response.sendRedirect("comment.do");
 			System.out.println("댓글 등록 성공");
-			response.sendRedirect("comment.do?m=list&post_num = 1");
 		}
 		else {
 			System.out.println("댓글 등록 실패");
