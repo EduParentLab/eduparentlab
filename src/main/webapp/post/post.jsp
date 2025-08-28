@@ -76,7 +76,7 @@
                     <td>${dto.email}</td>
                     <td>${dto.post_date}</td>
                     <td>${dto.post_view}</td>
-                    <td>${dto.post_view}</td>
+                    <td>${dto.likes}</td>
                 </tr>
             </c:forEach>
         </c:otherwise>

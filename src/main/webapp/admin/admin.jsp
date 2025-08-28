@@ -105,12 +105,7 @@
 			<td align='center'>${dto.nickname}</td>		
 			<td align='center'>${dto.gender}</td>
 			<td align='center'>${dto.birth}</td>
-			<td align='center'>${dto.name}</a></td>
-			<td align='center'><a href='../post/post.do?m=content&code=${dto.name}'>${dto.email}</a></td>							
-			<td align='center'>${dto.nickname}</td>
-			<td align='center'>${dto.gender}</td>	
-			<td align='center'>${dto.birth}</td>
-			<td align='center'>${dto.name}</td>
+			<td align='center'>${dto.name}</a></td>						
 			<td align='center'>${dto.phone}</td>
 			<td align='center'>${dto.cdate}</td>
 			</tr>		

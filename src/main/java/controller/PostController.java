@@ -79,8 +79,9 @@ public class PostController extends HttpServlet {
         int post_view = 0; 
         String email = request.getParameter("email");
         int category_num = Integer.parseInt(request.getParameter("category_num"));
+        int likes = 0;
 
-        Post dto = new Post(-1, post_subject, post_content, null, post_view, category_num, email);
+        Post dto = new Post(-1, post_subject, post_content, null, post_view, category_num, email, likes);
 
         PostService service = PostService.getInstance();
 
@@ -133,7 +134,7 @@ public class PostController extends HttpServlet {
         int category_num = Integer.parseInt(request.getParameter("category_num"));
 
  
-        Post dto = new Post(post_num, post_subject, post_content, null, 0, category_num, null);
+        Post dto = new Post(post_num, post_subject, post_content, null, 0, category_num, null, 0);
 
         boolean flag = PostService.getInstance().updateS(dto);
         
