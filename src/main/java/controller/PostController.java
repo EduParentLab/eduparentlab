@@ -1,16 +1,27 @@
 package controller;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
+import model.service.FileService;
+import model.service.CommentService;
 import model.service.PostService;
+import util.PagingUtil;
+import domain.Comment;
 import domain.Post;
+import domain.PostFile;
 
 @WebServlet("/post.do")
+@MultipartConfig
 public class PostController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 1L;
+       
 
     public void service(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -24,20 +35,36 @@ public class PostController extends HttpServlet {
             case "update" : update(request,response); break;
             case "delete": delete(request, response); break;
             case "content": content(request,response); break;
+            case "view":content(request,response); break;
             default: list(request, response); break;
         }
     }
 
     private void list(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+    	int page = 1; //현재 페이지
+    	int pageSize = 5; //한 페이지에 보여줄 글 수
+    	int pageBlock = 5; //한 번에 보여줄 페이지 번호 개수
+    	
+    	String strPage = request.getParameter("page");
+    	if(strPage != null) {
+    		page = Integer.parseInt(strPage);
+    	}
+    	
         PostService service = PostService.getInstance();
-        ArrayList<Post> list = service.listS();
+        int totalCount = service.getTotalPosts();
+        
+        PagingUtil paging = new PagingUtil(totalCount, page, pageSize, pageBlock);
+        
+        
+        List<Post> list = service.listPagingS(paging.getStartRow(), pageSize);
         request.setAttribute("list", list);
+        request.setAttribute("paging", paging);
 
         RequestDispatcher rd = request.getRequestDispatcher("/post/post.jsp");
         rd.forward(request, response);
     }
-    
+
     private void input(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         response.sendRedirect(request.getContextPath() + "/post/input.jsp");
@@ -46,6 +73,7 @@ public class PostController extends HttpServlet {
     
     private void insert(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+
         String post_subject = request.getParameter("post_subject");
         String post_content = request.getParameter("post_content");
         int post_view = 0; 
@@ -55,14 +83,25 @@ public class PostController extends HttpServlet {
         Post dto = new Post(-1, post_subject, post_content, null, post_view, category_num, email);
 
         PostService service = PostService.getInstance();
-        boolean flag = service.insertS(dto);
+
+     
+        int postNum = service.insertInt(dto);
+
+        boolean flag = false;
+
+        if (postNum > 0) {
+            FileService.getInstance().saveFiles(request, postNum);
+            flag = true;
+        }
 
         request.setAttribute("flag", flag);
         request.setAttribute("kind", "insert");
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("/post/msg.jsp");
         rd.forward(request, response);
     }
+
+
     
     
     private void delete(HttpServletRequest request, HttpServletResponse response) 
@@ -109,14 +148,20 @@ public class PostController extends HttpServlet {
             throws ServletException, IOException {
         int post_num = Integer.parseInt(request.getParameter("seq"));
         PostService service = PostService.getInstance();
-
+        CommentService commentService = CommentService.getInstance();
         service.hit(post_num);               
         Post dto = service.get(post_num);    
 
+        List<PostFile> fileList = FileService.getInstance().findFilesByPost(post_num);
+
         request.setAttribute("dto", dto);
+
+        request.setAttribute("fileList", fileList);
+
         RequestDispatcher rd = request.getRequestDispatcher("/post/content.jsp");
         rd.forward(request, response);
     }
+
     
     
     private void edit(HttpServletRequest request, HttpServletResponse response)
@@ -127,5 +172,4 @@ public class PostController extends HttpServlet {
         request.setAttribute("dto", dto);
         request.getRequestDispatcher("/post/postUpdate.jsp").forward(request, response);
     }
-
 }

@@ -27,7 +27,7 @@
         table { width: 100%; border-collapse: collapse; }
         td { padding: 10px; }
         td.label { width: 25%; text-align: right; font-weight: bold; color: #555; }
-        input[type="text"], textarea {
+        input[type="text"], input[type="number"], textarea, input[type="file"] {
             width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;
         }
         textarea { resize: none; height: 120px; }
@@ -42,7 +42,7 @@
         .top-links a:hover { text-decoration: underline; }
     </style>
 </head>
-<body onload="document.input.writer.focus()">
+<body onload="document.input.email.focus()">
 
 <div class="container">
     <div class="top-links">
@@ -50,7 +50,8 @@
     </div>
     <h2>게시글 작성</h2>
 
-   <form name="input" method="post" action="<%=request.getContextPath()%>/post.do?m=insert">
+   <!-- 파일 업로드를 위해 enctype 추가 -->
+   <form name="input" method="post" action="<%=request.getContextPath()%>/post.do?m=insert" enctype="multipart/form-data">
     <table>
         <tr>
             <td class="label">이메일</td>
@@ -68,9 +69,15 @@
             <td class="label">카테고리번호</td>
             <td><input type="number" name="category_num" value="1"></td>
         </tr>
+        <!-- 파일 첨부 영역 -->
+        <tr>
+            <td class="label">첨부파일</td>
+            <td><input type="file" name="files" multiple></td>
+        </tr>
     </table>
     <div class="buttons">
         <input type="submit" value="등록" class="btn-submit">
+        <input type="reset" value="초기화" class="btn-reset">
     </div>
 </form>
    

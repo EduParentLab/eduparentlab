@@ -12,6 +12,7 @@ public class User {
 	private Date cdate;
 	private int role_num;
 	
+	public User(){}
 	public User(String email, String password, String nickname, String gender, Date birth, String name, String phone, Date cdate, int role_num){
 		this.email = email;
 		this.password = password;
@@ -80,14 +81,13 @@ public class User {
 		this.phone = phone;
 	}
 
-	public Date getcdate() {
+	public Date getCdate() {
 		return cdate;
 	}
 
-	public void setcdate(Date cdate) {
-		cdate = cdate;
+	public void setCdate(Date cdate) {
+		this.cdate = cdate;
 	}
-
 	public int getRole_num() {
 		return role_num;
 	}

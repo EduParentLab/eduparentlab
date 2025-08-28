@@ -85,11 +85,18 @@
 
 <!-- ◀▶ 페이지네이션 -->
 <div class="pagination">
-    <a href="#">◀</a>
-    <c:forEach var="i" begin="1" end="15">
-        <a href="<%=request.getContextPath()%>/post.do?m=list&page=${i}">${i}</a>
+     <c:if test="${paging.hasPrev()}">
+        <a href="post.do?m=list&page=${paging.startPage - 1}">◀</a>
+    </c:if>
+
+    <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
+        <a href="post.do?m=list&page=${i}" 
+           class="${i == paging.currentPage ? 'active' : ''}">${i}</a>
     </c:forEach>
-    <a href="#">▶</a>
+
+    <c:if test="${paging.hasNext()}">
+        <a href="post.do?m=list&page=${paging.endPage + 1}">▶</a>
+    </c:if>
 </div>
 
 </body>

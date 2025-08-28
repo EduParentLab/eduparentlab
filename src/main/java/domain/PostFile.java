@@ -1,0 +1,49 @@
+package domain;
+
+public class PostFile {
+	private long file_num;
+	private String file_name;
+	private String file_oname;
+	private String file_path;
+	
+	public PostFile(long file_num, String file_name, String file_oname, String file_path) {
+		super();
+		this.file_num = file_num;
+		this.file_name = file_name;
+		this.file_oname = file_oname;
+		this.file_path = file_path;
+	}
+
+	public long getFile_num() {
+		return file_num;
+	}
+
+	public void setFile_num(long file_num) {
+		this.file_num = file_num;
+	}
+
+	public String getFile_name() {
+		return file_name;
+	}
+
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+
+	public String getFile_oname() {
+		return file_oname;
+	}
+
+	public void setFile_oname(String file_oname) {
+		this.file_oname = file_oname;
+	}
+
+	public String getFile_path() {
+		return file_path;
+	}
+
+	public void setFile_path(String file_path) {
+		this.file_path = file_path;
+	}
+	
+}
