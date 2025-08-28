@@ -18,7 +18,10 @@
 <body>
 
 <h2 style="text-align:center">게시글 보기</h2>
-
+<div style="text-align: center;">
+	<a>공감수: </a><br>
+	<a href="likes.do?m=add&post_num=${dto.post_num}">공감</a>
+</div>
 <table>
   <tr>
     <th>번호</th><td>${dto.post_num}</td>
@@ -48,3 +51,8 @@
 	</div>
 </body>
 </html>
+<script>
+	function likes(){
+		
+	}
+</script>

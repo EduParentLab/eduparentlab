@@ -12,9 +12,8 @@
 	<h1>학부모 정보통</h1><br></br>
 	<a href="comment/comment.do">댓글</a>
 	<a href="admin/admin.do">관리자페이지</a><br/>
-	<a href="<%=request.getContextPath()%>/post.do">post</a><br/>
+	<a href="post.do">post</a><br/>
 	<a href="test.jsp">DB연결테스트</a><br/>
-
-
+	<a href="likesTest.jsp">공감테스트</a><br/>	
 </body>
 </html>

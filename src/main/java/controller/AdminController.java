@@ -19,11 +19,7 @@ import java.sql.Date;
 @WebServlet("/admin/admin.do")
 public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public AdminController() {
-        super();       
-    }
-
+           
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 	    getNews(request, response);
 		getUser(request, response);
