@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-
 import model.service.FileService;
-
 import model.service.CommentService;
 import model.service.PostService;
 import util.PagingUtil;
@@ -66,7 +64,7 @@ public class PostController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/post/post.jsp");
         rd.forward(request, response);
     }
-	
+
     private void input(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         response.sendRedirect(request.getContextPath() + "/post/input.jsp");

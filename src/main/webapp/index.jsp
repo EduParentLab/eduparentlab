@@ -11,6 +11,11 @@
 
 	<h1>학부모 정보통</h1><br></br>
 	<a href="admin/admin.do">관리자페이지</a><br/>
+<<<<<<< HEAD
+	<a href="post.do">post</a><br/>
+	<a href="test.jsp">DB연결테스트</a><br/>
+	<a href="likesTest.jsp">공감테스트</a><br/>	
+=======
 	<a href="<%=request.getContextPath()%>/post.do">post + comment</a><br/>
 	<a href="test.jsp">DB연결테스트</a><br/>
 	
@@ -33,5 +38,6 @@
     <br>
     <a href="register/register.jsp">회원가입</a>
 
+>>>>>>> bb26e4d655a7076c4c8ab10494b86a0b6e9b7bd9
 </body>
 </html>
