@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<jsp:include page = "../login/login_check_modul.jsp"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
 	
 	<form id="commentForm" action="comment/comment.do?m=insert" method="post">
 	    <input type="hidden" name="post_num" value="${param.post_num}">
-	    <input type="hidden" name="email" value="user1@edu_parent.com">
+	    <input type="hidden" name="email" value="${loginOkUser.email}">
 	    <textarea name="content" rows="3" cols="50" placeholder="댓글을 입력하세요"></textarea>
 	    <button type="submit">등록</button>
 	</form>
@@ -103,6 +104,7 @@ $(function() {
     // 댓글 삭제 버튼 클릭
     $(document).on("click", ".deleteBtn", function() {
         const $btn = $(this);
+        $btn.prop("disabled", true);
         const $li = $btn.closest("li");
      	// 1️⃣ li가 제대로 잡히는지 확인
         console.log("선택된 li:", $li);
@@ -117,7 +119,13 @@ $(function() {
         }
      	
         $.post('comment/comment.do?m=delete', { comment_num: commentNum })
-         .done(function() { $li.remove(); })
+         .done(function(res) { 
+        	 if(res.trim() === "success"){
+        		 $li.remove(); 
+        	 }else{
+        		 alert("삭제 실패");
+        	 }
+         })
          .fail(function() { alert("삭제 중 오류 발생"); });
     });
 	

@@ -94,11 +94,12 @@ public class CommentController extends HttpServlet {
 		int result = service.delete(comment_num);
 		if(result == 1) {
 			System.out.println("댓글 삭제 성공");
+		    response.getWriter().write("success"); 
 			response.setStatus(HttpServletResponse.SC_OK);
 		}
 		else {
-			System.out.println("댓글 등록 실패");
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "댓글 등록 실패");
+			System.out.println("댓글 삭제 실패");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "댓글 삭제 실패");
 		}
 	}
 	private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
