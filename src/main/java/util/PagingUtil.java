@@ -16,7 +16,7 @@ public class PagingUtil {
 		this.pageSize = pageSize;
 		this.pageBlock = pageBlock;
 	}
-
+	
 	public int getStartRow() { //DB쿼리에서 LIMIT 용 
 		return (currentPage - 1) * pageSize;
 	}
@@ -38,5 +38,8 @@ public class PagingUtil {
 	}
 	public boolean hasNext() {
 		return getEndPage() < getTotalPage();
+	}
+	public int getCurrentPage() {
+	    return currentPage;
 	}
 }

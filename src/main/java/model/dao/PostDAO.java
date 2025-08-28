@@ -2,6 +2,7 @@ package model.dao;
 
 import javax.naming.*;
 import javax.sql.DataSource;
+
 import java.sql.*;
 import java.util.*;
 import domain.Post;
@@ -46,6 +47,7 @@ public class PostDAO {
                 list.add(new Post(post_num, post_subject, post_content,
                                   post_date, post_view, category_num, email));
             }
+            
             return list;
 
         } catch (SQLException se) {
@@ -60,8 +62,47 @@ public class PostDAO {
             } catch (Exception e) {}
         }
     }
+    public List<Post> listWithPaging(int startRow, int pageSize){
+    	List<Post> list = new ArrayList<>();
+    	String sql = "select * from POST LIMIT ?, ?";
+    	
+    	try(Connection con = ds.getConnection();
+    			PreparedStatement pstmt = con.prepareStatement(sql)){
+    		pstmt.setInt(1, startRow);
+    		pstmt.setInt(2, pageSize);
+    		
+    		ResultSet rs = pstmt.executeQuery();
+    		while(rs.next()) {
+    			int post_num = rs.getInt(1);
+                String post_subject = rs.getString(2);
+                String post_content = rs.getString(3);
+                java.sql.Date post_date = rs.getDate(4);
+                int post_view = rs.getInt(5);
+                int category_num = rs.getInt(6);
+                String email = rs.getString(7);
 
-
+                list.add(new Post(post_num, post_subject, post_content,
+                                  post_date, post_view, category_num, email));
+    		}
+    	}catch(SQLException se) {
+    		se.printStackTrace();
+    	}
+    	return list;
+	    			
+	}
+    // 전체 글 개수 조회
+    public int getTotalCount() {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM post";
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) total = rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
     public boolean insert(Post dto) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -222,5 +263,6 @@ public class PostDAO {
 	        try{ pstmt.close(); con.close(); }catch(Exception e){}
 	    }
 	}
+	
 	
 }
