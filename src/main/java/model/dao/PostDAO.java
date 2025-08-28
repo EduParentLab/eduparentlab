@@ -2,12 +2,14 @@ package model.dao;
 
 import javax.naming.*;
 import javax.sql.DataSource;
+
 import java.sql.*;
 import java.util.*;
 import domain.Post;
 import static model.sql.PostSQL.*;
 import static model.sql.AdminSQL.*;
-
+import model.service.*;
+import model.sql.PostSQL;
 
 public class PostDAO {
     private DataSource ds;
@@ -46,6 +48,7 @@ public class PostDAO {
                 list.add(new Post(post_num, post_subject, post_content,
                                   post_date, post_view, category_num, email));
             }
+            
             return list;
 
         } catch (SQLException se) {
@@ -60,11 +63,101 @@ public class PostDAO {
             } catch (Exception e) {}
         }
     }
+    
+    public List<Post> listWithPaging(int startRow, int pageSize) {
+        List<Post> list = new ArrayList<>();
+        String sql = "SELECT * FROM Post ORDER BY post_num DESC LIMIT ?, ?";
 
-    public int insert(Post dto) {
         try (Connection con = ds.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, pageSize);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int post_num = rs.getInt(1);
+                    String post_subject = rs.getString(2);
+                    String post_content = rs.getString(3);
+                    java.sql.Date post_date = rs.getDate(4);
+                    int post_view = rs.getInt(5);
+                    int category_num = rs.getInt(6);
+                    String email = rs.getString(7);
+
+                    list.add(new Post(
+                        post_num, post_subject, post_content,
+                        post_date, post_view, category_num, email
+                    ));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
             
+    public int getTotalCount() {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM post";
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) total = rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+    
+    
+    public boolean insert(Post dto) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ds.getConnection();
+            int newPostNum = 1;
+            pstmt = con.prepareStatement("SELECT IFNULL(MAX(post_num),0)+1 FROM post");
+            rs = pstmt.executeQuery();
+            if (rs.next()) newPostNum = rs.getInt(1);
+            rs.close();
+            pstmt.close();
+
+       
+            pstmt = con.prepareStatement(INSERT);
+            pstmt = con.prepareStatement(INSERT);
+            pstmt.setInt(1, newPostNum);                    
+            pstmt.setString(2, dto.getPost_subject());      
+            pstmt.setString(3, dto.getPost_content());     
+            pstmt.setInt(4, dto.getCategory_num());         
+            pstmt.setString(5, dto.getEmail());             
+
+            int i = pstmt.executeUpdate();
+            if (i > 0) return true;
+            else return false;
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return false;
+
+        } finally {
+            try { 
+	            rs.close(); 
+	            pstmt.close(); 
+	            con.close(); 
+            }catch (Exception e) {}
+        }
+    }
+    
+    
+    public int insertInt(Post dto) {
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(PostSQL.INSERT, Statement.RETURN_GENERATED_KEYS)) {
+
             pstmt.setString(1, dto.getPost_subject());
             pstmt.setString(2, dto.getPost_content());
             pstmt.setInt(3, dto.getCategory_num());
@@ -74,7 +167,7 @@ public class PostDAO {
             if (result > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        return rs.getInt(1); 
+                        return rs.getInt(1);
                     }
                 }
             }
@@ -83,6 +176,7 @@ public class PostDAO {
         }
         return -1;
     }
+
 
     public boolean delete(int post_num){
         Connection con = null;
@@ -206,5 +300,4 @@ public class PostDAO {
 	        }catch(Exception e){}
 	    }
 	}
-	
 }

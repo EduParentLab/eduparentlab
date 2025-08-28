@@ -68,5 +68,45 @@
   <a href="<%=request.getContextPath()%>/post.do?m=list">목록</a>
 </div>
 
+	<form id="sortForm" method="get" action="post.do">
+	    <input type="hidden" name="m" value="view">
+	    <input type="hidden" name="seq" value="${dto.post_num}">
+	    <select name="latest" onchange="this.form.submit()">
+	    	<option value="false" ${param.latest=='false' ? 'selected' : ''}>오래된순</option>
+	        <option value="true" ${param.latest=='true' ? 'selected' : ''}>최신순</option>
+	        
+	    </select>
+	</form>
+
+	<div id ="commentArea" style="width:600px; margin:auto; margin-top:30px"></div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script>
+	$(function(){
+	    const postNum = ${dto.post_num};
+	
+	    function loadComments(page = 1){
+	        const latest = $("select[name='latest']").val() || "true";
+	
+	        $.get("${pageContext.request.contextPath}/comment/comment.do", 
+	            { m: 'list', post_num: postNum, latest: latest, page: page }, 
+	            function(data){
+	                $("#commentArea").html(data);
+	            }
+	        );
+	    }
+	
+	    // 페이지 선택 시
+	    $(document).on("click", ".pagination a", function(e){
+	        e.preventDefault();
+	        const page = $(this).data("page");
+	        loadComments(page);
+	    });
+	
+	    // 초기 로딩
+	    loadComments();
+	});
+	</script>
+	
 </body>
 </html>

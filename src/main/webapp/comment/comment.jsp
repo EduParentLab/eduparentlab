@@ -7,8 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form id="commentForm" action="comment.do?m=insert" method="post">
-	    <input type="hidden" name="post_num" value="1">
+	
+	<form id="commentForm" action="comment/comment.do?m=insert" method="post">
+	    <input type="hidden" name="post_num" value="${param.post_num}">
 	    <input type="hidden" name="email" value="user1@edu_parent.com">
 	    <textarea name="content" rows="3" cols="50" placeholder="댓글을 입력하세요"></textarea>
 	    <button type="submit">등록</button>
@@ -23,7 +24,7 @@
 	          <span>${c.comment_date}</span>
 	
 	          <!-- 삭제 버튼 -->
-	          <button type="button" class="deleteBtn">삭제</button>
+	          <button type="button" class="deleteBtn" onclick="return confirm('선택한 댓글을 삭제하시겠습니까?');">삭제</button>
 	
 	          <!-- 수정 버튼 -->
 	          <button type="button" class="editBtn">수정</button>
@@ -33,8 +34,8 @@
 	          
     		  
 	          <!-- 답댓글 영역 -->
-	          <form class="recommentForm" action="comment.do?m=recomment" method="post" style="display:none;">
-	          		<input type="hidden" name="post_num" value="1">
+	          <form class="recommentForm" action="comment/comment.do?m=recomment" method="post" style="display:none;">
+	          		<input type="hidden" name="post_num" value="${c.post_num}">
 	          		<input type="hidden" name="email" value="user2@edu_parent.com">
 				    <input type="hidden" name="parent_num" value="${c.comment_num}">
 				    <textarea name="content" placeholder="답댓글 입력"></textarea>
@@ -43,6 +44,20 @@
 	      </li>
 	  </c:forEach>
 	</ul>
+	<!-- ◀▶ 페이지네이션 -->
+	<div class="pagination">
+	    <c:if test="${paging.hasPrev()}">
+	        <a href="#" data-page="${paging.startPage - 1}">◀</a>
+	    </c:if>
+	
+	    <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
+	        <a href="#" data-page="${i}" class="${i == paging.currentPage ? 'active' : ''}">${i}</a>
+	    </c:forEach>
+	
+	    <c:if test="${paging.hasNext()}">
+	        <a href="#" data-page="${paging.endPage + 1}">▶</a>
+	    </c:if>
+	</div>
 </body>
 </html>
 
@@ -74,7 +89,7 @@ $(function() {
         
         console.log("commentNum:", commentNum, "newText:", newText);
         
-        $.post('comment.do?m=update', 
+        $.post('comment/comment.do?m=update', 
             { comment_num: commentNum, comment_content: newText },
             function() {
                 $li.find("> .content").text(newText);
@@ -100,11 +115,8 @@ $(function() {
             alert("comment_num이 없습니다.");
             return;
         }
-        
-     	// 3️⃣ 실제 AJAX 호출 전 테스트용 alert
-        alert("이 li의 comment_num: " + commentNum);
      	
-        $.post('comment.do?m=delete', { comment_num: commentNum })
+        $.post('comment/comment.do?m=delete', { comment_num: commentNum })
          .done(function() { $li.remove(); })
          .fail(function() { alert("삭제 중 오류 발생"); });
     });
