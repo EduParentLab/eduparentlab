@@ -13,7 +13,25 @@
 	<a href="comment/comment.do">댓글</a>
 	<a href="admin/admin.do">관리자페이지</a><br/>
 	<a href="test.jsp">DB연결테스트</a><br/>
-
+	
+	<br>
+    <br>
+	
+	<c:choose>
+        <c:when test="${empty loginOkUser}">
+            <a href="login/login.do?m=form">로그인</a>
+        </c:when>
+        <c:otherwise>
+            <font style="color:green">${loginOkUser.name}</font>님 안녕하세요
+            <a href="login/login.do?m=logout">로그아웃</a>
+            <a href="mypage/mypage.jsp">마이페이지</a>
+            
+        </c:otherwise>
+    </c:choose>
+    
+    <br>
+    <br>
+    <a href="register/register.jsp">회원가입</a>
 
 </body>
 </html>

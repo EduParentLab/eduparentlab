@@ -1,0 +1,38 @@
+package controller;
+
+import java.io.IOException;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.service.MypageUpdateService;
+import domain.User;
+
+@WebServlet("/mypage/delete.do")
+public class MypageDeleteController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		 HttpSession session = request.getSession(); //로그인한 사용자 정보 꺼냄
+		 User loginUser = (User) session.getAttribute("loginOkUser");
+		 
+		 String bb = loginUser.getEmail();
+		 
+		 MypageUpdateService service = MypageUpdateService.getInstance();
+		 boolean deleteResult = service.deleteS(bb); // role_num=3 으로 업데이트
+		 
+		 if(deleteResult) {
+			 session.invalidate(); //로그아웃
+			
+			 request.setAttribute("deleteResult", deleteResult);
+		     RequestDispatcher rd = request.getRequestDispatcher("/mypage/msg.jsp");
+		     rd.forward(request, response);
+		 }
+	}
+}
