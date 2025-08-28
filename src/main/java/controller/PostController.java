@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import model.service.PostService;
 import domain.Post;
 
@@ -38,7 +37,6 @@ public class PostController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/post/post.jsp");
         rd.forward(request, response);
     }
-
     
     private void input(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {

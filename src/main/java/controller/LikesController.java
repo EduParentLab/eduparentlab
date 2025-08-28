@@ -38,6 +38,5 @@ public class LikesController extends HttpServlet {
 			System.out.println("좋아요 안되어있어서 좋아요 추가함");	
 		}  	
 	    response.sendRedirect("post.do?m=content&seq=" + post_num);
-	}
-	
+	}	
 }

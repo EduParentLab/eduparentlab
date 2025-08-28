@@ -5,10 +5,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
-import domain.Likes;
+import java.util.*;
 import static model.sql.LikesSQL.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 public class LikesDAO {
 	private DataSource ds;
@@ -19,22 +17,28 @@ public class LikesDAO {
 			ds = (DataSource)envContext.lookup("jdbc/TestDB");
 		}catch(NamingException ne){}
 	}
-	public void countLikes(int post_num) {
+	public HashMap<Integer, Integer> countLikes() {
+		HashMap<Integer, Integer> map = new HashMap<>();
 		Connection con = null;
-		PreparedStatement pstmt = null;		
+		Statement stmt = null;	
+		ResultSet rs = null;
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(COUNTLIKES);
-			pstmt.setInt(1, post_num);
-			pstmt.executeQuery();			
-		}catch(SQLException se){
+			stmt = con.createStatement();			
+			rs = stmt.executeQuery(COUNTLIKES);	
+			while(rs.next()) {
+				int post_num = rs.getInt("post_num");
+				int likes_count = rs.getInt("likes_count");
+				map.put(post_num, likes_count);
+			}
+		}catch(SQLException se){			
 			se.printStackTrace();			
 		}finally {
 			try {				
-				pstmt.close();
+				stmt.close();
 				con.close();
 			}catch(Exception e) {}
-		}
+		}return map;
 	}
 	public int checkLikes(String email, int post_num) {
 		Connection con = null;

@@ -198,7 +198,7 @@ public class PostDAO {
 	        	map.put(category, count);
 	        }
 	    }catch(SQLException se) {
-	    	
+	    	se.printStackTrace();	   	
 	    }finally{
             try{
                 rs.close();

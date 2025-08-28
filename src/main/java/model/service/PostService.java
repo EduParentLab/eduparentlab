@@ -1,14 +1,13 @@
 package model.service;
 
-import java.util.ArrayList;
 import java.util.*;
 import model.dao.PostDAO;
 import domain.Post;
 
-public class PostService {
+public class PostService {	
     private PostDAO dao;
     private static final PostService instance = new PostService();
-
+   
     private PostService() {
         dao = new PostDAO();
     }
@@ -42,7 +41,13 @@ public class PostService {
     public void hit(int post_num){
         dao.hit(post_num);
     }
+    //관리자페이지 카테고리 별 게시물 수 
 	public LinkedHashMap<String, Integer> countPostS(){
 		return dao.countPost();
 	} 
+	//likes 수
+	public HashMap<Integer, Integer> countLikesS(){
+		LikesService likesService = LikesService.getInstance();
+		return likesService.countLikesS();
+	}
 }
