@@ -88,7 +88,6 @@ public class User {
 	public void setCdate(Date cdate) {
 		this.cdate = cdate;
 	}
-
 	public int getRole_num() {
 		return role_num;
 	}

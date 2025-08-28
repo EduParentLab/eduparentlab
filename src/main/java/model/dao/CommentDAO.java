@@ -52,23 +52,33 @@ public class CommentDAO {
                         upstmt.executeUpdate();
                     }
                 }
-                return 0;
+                return 1;
             }
 			else {
-				return 1;
+				return 0;
 			}
 		}catch(SQLException se) {
 			se.printStackTrace();
-			return 1;
+			return 0;
 		}
 	}
 
-	public ArrayList<Comment> selectedByPostNum(int post_num) {
+	public ArrayList<Comment> selectedByPostNum(int post_num, boolean latestFirst, int startRow, int pageSize) {
 		ArrayList<Comment> clist = new ArrayList<Comment>();
 
-		try(Connection con = ds.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(LIST);){
+		try {
+			Connection con = ds.getConnection();
+			PreparedStatement pstmt = null;
+			if(latestFirst) {
+				pstmt = con.prepareStatement(LIST_L);
+				
+			}else {
+				pstmt = con.prepareStatement(LIST);
+			}
 			pstmt.setInt(1, post_num);
+			pstmt.setInt(2,  startRow);
+			pstmt.setInt(3, pageSize);
+			
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int comment_num = rs.getInt("comment_num");
@@ -83,6 +93,19 @@ public class CommentDAO {
 			return null;
 		}
 	}
+	// 특정 글의 전체 댓글 개수 조회
+    public int getTotalCount(int post_num) {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM post";
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) total = rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
 	public Comment selectedByCommentNum(int comment_num) {
 		try(Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(SELECT);){
@@ -111,11 +134,11 @@ public class CommentDAO {
 			pstmt.setInt(1, comment_num);
 			int i = pstmt.executeUpdate();
 			System.out.println("댓글 delete 된 쿼리의 수 : "+i);
-			if(i>0) return 0; 
-			else return 1;
+			if(i>0) return 1; 
+			else return 0;
 		}catch(SQLException se) {
 			se.printStackTrace();
-			return 1;
+			return 0;
 		}
 	}
 	
@@ -126,32 +149,40 @@ public class CommentDAO {
 			pstmt.setInt(2, comment_num);
 			int i = pstmt.executeUpdate();
 			System.out.println("댓글 update 된 쿼리의 수 : "+i);
-			if(i>0) return 0;
-			else return 1;
+			if(i>0) return 1;
+			else return 0;
 		}catch(SQLException se) {
 			se.printStackTrace();
-			return 1;
+			return 0;
 		}
 	}
 	public int recomment(Comment dto,int post_num) {
+		int maxOrder = 0;
 		try(Connection con = ds.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(INSERT);){
-			pstmt.setString(1, dto.getComment_content());
-			pstmt.setInt(2, dto.getGroup_num());
-			pstmt.setInt(3, dto.getGroup_order());
-			pstmt.setString(4, dto.getEmail());
-			pstmt.setInt(5, post_num);
-			int i = pstmt.executeUpdate();
+				PreparedStatement pstmt = con.prepareStatement(RECOMMENT);
+				PreparedStatement pstmt2 = con.prepareStatement(INSERT);){
+			pstmt.setInt(1, dto.getGroup_num());
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				maxOrder = rs.getInt(1);
+			}
+			int newGroupOrder = maxOrder +1;
+			pstmt2.setString(1,dto.getComment_content());
+			pstmt2.setInt(2, dto.getGroup_num());
+			pstmt2.setInt(3, newGroupOrder);
+			pstmt2.setString(4, dto.getEmail());
+			pstmt2.setInt(5, post_num);
+			int i = pstmt2.executeUpdate();
 			System.out.println("답댓글 insert 된 쿼리의 수 : "+i);
 			if(i>0) {
-				return 0;
+				return 1;
 			}
 			else {
-				return 1;
+				return 0;
 			}
 		}catch(SQLException se) {
 			se.printStackTrace();
-			return 1;
+			return 0;
 		}
 	}
 	
