@@ -61,32 +61,27 @@ public class PostDAO {
         }
     }
 
-
     public int insert(Post dto) {
-        String sql = "INSERT INTO post (post_subject, post_content, post_view, email, category_num, post_date) " 
-        				+"VALUES (?, ?, ?, ?, ?, NOW())";
-        
         try (Connection con = ds.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
-        	
+             PreparedStatement pstmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
+            
             pstmt.setString(1, dto.getPost_subject());
             pstmt.setString(2, dto.getPost_content());
-            pstmt.setInt(3, dto.getPost_view());
+            pstmt.setInt(3, dto.getCategory_num());
             pstmt.setString(4, dto.getEmail());
-            pstmt.setInt(5, dto.getCategory_num());
-            
+
             int result = pstmt.executeUpdate();
-            
             if (result > 0) {
-                try (PreparedStatement pstmt2 = 
-                		con.prepareStatement("SELECT MAX(post_num) FROM post");
-                		
-                     ResultSet rs = pstmt2.executeQuery()){
-                    if (rs.next()) return rs.getInt(1);
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); 
+                    }
                 }
             }
-        } catch (Exception e) { e.printStackTrace(); }
-        	return -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     public boolean delete(int post_num){
@@ -204,7 +199,11 @@ public class PostDAO {
 	    }catch(java.sql.SQLException se){
 	        se.printStackTrace();
 	    }finally{
-	        try{ pstmt.close(); con.close(); }catch(Exception e){}
+	        try{
+	        	pstmt.close(); 
+	        	con.close(); 
+	        	
+	        }catch(Exception e){}
 	    }
 	}
 	

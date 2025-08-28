@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
 import model.dao.PostFileDAO;
 import domain.PostFile;
-import util.Path;
 
 public class FileService {
     private static final FileService instance = new FileService();
@@ -17,19 +16,27 @@ public class FileService {
     private FileService() {}
     public static FileService getInstance() { return instance; }
 
-
     public void saveFiles(HttpServletRequest request, long postNum) {
         try {
+          
+            String uploadPath = request.getServletContext().getRealPath("/upload");
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) uploadDir.mkdirs();
+
             Collection<Part> parts = request.getParts();
             for (Part part : parts) {
                 if ("files".equals(part.getName()) && part.getSize() > 0) {
                     String oname = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                     String sname = UUID.randomUUID().toString() + "_" + oname;
-                    String path = Path.FILE_STORE + File.separator + sname;
 
-                    part.write(path);
+                  
+                    String savePath = uploadPath + File.separator + sname;
+                    part.write(savePath);
 
-                    PostFile f = new PostFile(0, sname, oname, path);
+              
+                    String webPath = "/upload/" + sname;
+
+                    PostFile f = new PostFile(0, sname, oname, webPath);
                     dao.insert(f, postNum);
                 }
             }

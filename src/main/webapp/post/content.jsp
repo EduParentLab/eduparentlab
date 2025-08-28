@@ -49,10 +49,10 @@
         <c:otherwise>
           <c:forEach var="file" items="${fileList}">
             <div>
-              <a href="<%=request.getContextPath()%>/upload/${file.stored_name}" download="${file.original_name}">
-                ${file.original_name}
+              <a href="<%=request.getContextPath()%>${file.file_path}" 
+                 download="${file.file_oname}">
+                ${file.file_oname}
               </a>
-              <span>(${file.file_size} Byte)</span>
             </div>
           </c:forEach>
         </c:otherwise>

@@ -1,16 +1,20 @@
 package controller;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.service.FileService;
 import model.service.PostService;
 import domain.Post;
+import domain.PostFile;
 
 @WebServlet("/post.do")
+@MultipartConfig
 public class PostController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -127,10 +131,15 @@ public class PostController extends HttpServlet {
         service.hit(post_num);               
         Post dto = service.get(post_num);    
 
+        List<PostFile> fileList = FileService.getInstance().findFilesByPost(post_num);
+
         request.setAttribute("dto", dto);
+        request.setAttribute("fileList", fileList);
+
         RequestDispatcher rd = request.getRequestDispatcher("/post/content.jsp");
         rd.forward(request, response);
     }
+
     
     
     private void edit(HttpServletRequest request, HttpServletResponse response)

@@ -56,7 +56,9 @@ public class PostFileDAO {
              PreparedStatement pstmt = con.prepareStatement(DELETE_BY_POST)) {
             pstmt.setLong(1, post_num);
             return pstmt.executeUpdate() > 0;
+            
         } catch (SQLException e) {
+        	
             e.printStackTrace();
             return false;
         }
