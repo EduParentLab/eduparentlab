@@ -33,7 +33,5 @@
     <br>
     <br>
     <a href="register/register.jsp">회원가입</a>
-
->>>>>>> bb26e4d655a7076c4c8ab10494b86a0b6e9b7bd9
 </body>
 </html>
