@@ -19,7 +19,7 @@
 
 <h2 style="text-align:center">게시글 보기</h2>
 <div style="text-align: center;">
-	<a>공감수: </a> &nbsp&nbsp
+	<a>공감수: </a> &nbsp;&nbsp;
 	<a href="likes.do?m=add&post_num=${dto.post_num}">공감</a>
 </div>
 <table>
@@ -53,8 +53,8 @@
           <c:forEach var="file" items="${fileList}">
             <div>
               <a href="<%=request.getContextPath()%>${file.file_path}" 
-                 download="${file.file_oname}">
-                ${file.file_oname}
+                 download="${file.file_origin_name}">
+                ${file.file_origin_name}
               </a>
             </div>
           </c:forEach>
@@ -77,7 +77,6 @@
 	    <select name="latest" onchange="this.form.submit()">
 	    	<option value="false" ${param.latest=='false' ? 'selected' : ''}>오래된순</option>
 	        <option value="true" ${param.latest=='true' ? 'selected' : ''}>최신순</option>
-	        
 	    </select>
 	</form>
 
@@ -115,6 +114,5 @@
 </html>
 <script>
 	function likes(){
-		
 	}
 </script>

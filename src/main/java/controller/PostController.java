@@ -42,29 +42,58 @@ public class PostController extends HttpServlet {
 
     private void list(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-    	int page = 1; //현재 페이지
-    	int pageSize = 5; //한 페이지에 보여줄 글 수
-    	int pageBlock = 5; //한 번에 보여줄 페이지 번호 개수
-    	
-    	String strPage = request.getParameter("page");
-    	if(strPage != null) {
-    		page = Integer.parseInt(strPage);
-    	}
-    	
+        int page = 1;
+        int pageSize = 10;
+        int pageBlock = 5;
+
+        String strPage = request.getParameter("page");
+        if (strPage != null) page = Integer.parseInt(strPage);
+
+        String rowsParam = request.getParameter("rows");
+        if (rowsParam != null && !rowsParam.isBlank()) {
+            pageSize = Integer.parseInt(rowsParam);
+        }
+
+        String sort = request.getParameter("sort");
+        if (sort == null || sort.isBlank()) sort = "latest";
+
+        String type = request.getParameter("type");
+        String keyword = request.getParameter("keyword");
+
+        int categoryNum = 1;
+        String catParam = request.getParameter("category_num");
+        if (catParam != null) {
+            categoryNum = Integer.parseInt(catParam);
+        }
+
         PostService service = PostService.getInstance();
-        int totalCount = service.getTotalPosts();
-        
+        int totalCount = service.getTotalPostsByCategory(categoryNum);
+
         PagingUtil paging = new PagingUtil(totalCount, page, pageSize, pageBlock);
-        
-        
-        List<Post> list = service.listPagingS(paging.getStartRow(), pageSize);
+
+        List<Post> list;
+        if (keyword != null && !keyword.isBlank()) {
+            list = service.searchWithPagingS(paging.getStartRow(), pageSize, sort, type, keyword, categoryNum);
+        } else {
+            list = service.listPagingS(paging.getStartRow(), pageSize, sort, categoryNum);
+        }
+
         request.setAttribute("list", list);
         request.setAttribute("paging", paging);
+        request.setAttribute("sort", sort);
+        request.setAttribute("type", type);
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("category_num", categoryNum);
 
         RequestDispatcher rd = request.getRequestDispatcher("/post/post.jsp");
         rd.forward(request, response);
     }
 
+
+
+    
+    
+    
     private void input(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         response.sendRedirect(request.getContextPath() + "/post/input.jsp");

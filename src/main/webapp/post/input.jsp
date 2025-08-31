@@ -27,7 +27,7 @@
         table { width: 100%; border-collapse: collapse; }
         td { padding: 10px; }
         td.label { width: 25%; text-align: right; font-weight: bold; color: #555; }
-        input[type="text"], input[type="number"], textarea, input[type="file"] {
+        input[type="text"], textarea, input[type="file"], select {
             width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;
         }
         textarea { resize: none; height: 120px; }
@@ -50,37 +50,43 @@
     </div>
     <h2>게시글 작성</h2>
 
-   <!-- 파일 업로드를 위해 enctype 추가 -->
-   <form name="input" method="post" action="<%=request.getContextPath()%>/post.do?m=insert" enctype="multipart/form-data">
-    <table>
-        <tr>
-            <td class="label">이메일</td>
-            <td><input type="text" name="email" required></td>
-        </tr>
-        <tr>
-            <td class="label">글제목</td>
-            <td><input type="text" name="post_subject" required></td>
-        </tr>
-        <tr>
-            <td class="label">글내용</td>
-            <td><textarea name="post_content" required></textarea></td>
-        </tr>
-        <tr>
-            <td class="label">카테고리번호</td>
-            <td><input type="number" name="category_num" value="1"></td>
-        </tr>
-        <!-- 파일 첨부 영역 -->
-        <tr>
-            <td class="label">첨부파일</td>
-            <td><input type="file" name="files" multiple></td>
-        </tr>
-    </table>
-    <div class="buttons">
-        <input type="submit" value="등록" class="btn-submit">
-        <input type="reset" value="초기화" class="btn-reset">
-    </div>
-</form>
-   
+
+    <form name="input" method="post" action="<%=request.getContextPath()%>/post.do?m=insert" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td class="label">이메일</td>
+                <td><input type="text" name="email" required></td>
+            </tr>
+            <tr>
+                <td class="label">글제목</td>
+                <td><input type="text" name="post_subject" required></td>
+            </tr>
+            <tr>
+                <td class="label">글내용</td>
+                <td><textarea name="post_content" required></textarea></td>
+            </tr>
+
+            <tr>
+                <td class="label">게시판</td>
+                <td>
+                    <select name="category_num" required>
+                        <option value="1">공지게시판</option>
+                        <option value="2">입시게시판</option>
+                        <option value="3">자유게시판</option>
+                    </select>
+                </td>
+            </tr>
+         
+            <tr>
+                <td class="label">첨부파일</td>
+                <td><input type="file" name="files" multiple></td>
+            </tr>
+        </table>
+        <div class="buttons">
+            <input type="submit" value="등록" class="btn-submit">
+            <input type="reset" value="초기화" class="btn-reset">
+        </div>
+    </form>
 </div>
 
 </body>

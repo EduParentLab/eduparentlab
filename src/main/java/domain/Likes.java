@@ -1,19 +1,19 @@
 package domain;
 
 public class Likes { 
-	private String eamil;
+	private String email;
 	private int post_num;
 		
-	public Likes(String eamil, int post_num) {		
-		this.eamil = eamil;
+	public Likes(String email, int post_num) {		
+		this.email = email;
 		this.post_num = post_num;
 	}
-	public String getEamil() {
-		return eamil;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEamil(String eamil) {
-		this.eamil = eamil;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public int getPost_num() {

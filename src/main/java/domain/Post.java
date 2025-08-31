@@ -9,7 +9,9 @@ public class Post {
     private Date post_date;
     private int post_view;   
     private int category_num;
-    private String email;
+    private String email;     
+    private String nickname;   
+
 
     public Post(int post_num, String post_subject, String post_content,
                 Date post_date, int post_view, int category_num, String email) {
@@ -20,8 +22,12 @@ public class Post {
         this.post_view = post_view;
         this.category_num = category_num;
         this.email = email;
-        
-        
+    }
+
+    public Post(int post_num, String post_subject, String post_content,
+    		Date post_date, int post_view, int category_num, String email, String nickname) {
+        this(post_num, post_subject, post_content, post_date, post_view, category_num, email);
+        this.nickname = nickname;
     }
 
 	public int getPost_num() {
@@ -79,4 +85,13 @@ public class Post {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 }
