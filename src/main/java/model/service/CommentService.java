@@ -39,5 +39,16 @@ public class CommentService {
 		
 		return dao.recomment(dto, post_num);
 	}
+	public boolean canUpdate(int comment_num, String userEmail) {
+		Comment comment = dao.selectedByCommentNum(comment_num);
+		if(comment == null) return false;
+		
+		return userEmail != null && userEmail.equals(comment.getEmail());
+	}
+	public String getCommentWriterEmail(int comment_num) {
+	    Comment c = dao.selectedByCommentNum(comment_num);
+	    return (c != null) ? c.getEmail() : null;
+	}
+	
 	
 }

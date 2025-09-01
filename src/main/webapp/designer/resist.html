@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>학부모정보통</title>
+  <link rel="stylesheet" href="layout.css" />
+  <link rel="stylesheet" href="resist.css" />
+</head>
+
+
+<body>
+  <div class="wrapper">
+
+
+    <header>
+      <div class="logo">
+        <a href="index.html">
+          <img src="./assets/logoremoveback.png" alt="학부모정보통 로고" />
+        </a>
+      </div>
+      <div class="search-container">
+        <div class="search-bar">
+          <div class="search-logo">N</div>
+          <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
+          <button class="search-btn">🔍</button>
+        </div>
+        <!-- ▼ 아래 추천 검색어 목록 ▼ -->
+        <div class="search-dropdown">
+          <div class="search-section-title">검색 추천</div>
+          <ul class="search-list">
+            <li>교육</li>
+            <li>탐구</li>
+            <li>연구소</li>
+          </ul>
+        </div>
+      </div>
+      <div class="login"><button>로그인</button><button>마이페이지</button></div>
+    </header>
+
+
+
+    <main>
+      <div class="center-wrapper">
+        <div class="resistcontainer">
+        
+            <div class="reist-title">
+                <h2>회원가입</h2>
+            </div>
+            <div class="form-input">
+                <input type="text" id="userid" placeholder="아이디" />
+                <button class="id-check-btn">중복확인</button>
+            </div>
+            <div class="form-input">
+                <input type="password" id="password" placeholder="패스워드" />
+            </div>
+            <div class="form-input">
+                <input type="password" id="password" placeholder="비밀번호확인" />
+            </div>
+            <div class="form-input">
+                <input type="text" id="password" placeholder="생년월일" />
+            </div>
+            <div class="form-input">
+                <input type="text" id="password" placeholder="성별" />
+            </div>
+            <div class="form-input">
+                <input type="text" id="password" placeholder="본인확인이메일" />
+            </div>
+                <button type="submit" class="resist-btn">회원가입</button>
+            </div>
+    </main>
+
+
+    <footer>
+      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
+      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
+    </footer>
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="search.js"></script>
+<script src="login.js"></script>
+
+
+
+</body>
+</html>

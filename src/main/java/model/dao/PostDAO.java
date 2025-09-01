@@ -10,6 +10,7 @@ import static model.sql.PostSQL.*;
 import static model.sql.AdminSQL.*;
 import model.service.*;
 import model.sql.PostSQL;
+import model.sql.AdminSQL;
 
 public class PostDAO {
 
@@ -45,9 +46,11 @@ public class PostDAO {
                 int post_view = rs.getInt(5);
                 int category_num = rs.getInt(6);
                 String email = rs.getString(7);
+                String nickname = rs.getString(8);
+                int likes = rs.getInt(9);
 
                 list.add(new Post(post_num, post_subject, post_content,
-                                  post_date, post_view, category_num, email));
+                                  post_date, post_view, category_num, email, nickname, likes));
             }
             
             return list;
@@ -65,41 +68,97 @@ public class PostDAO {
         }
     }
     
-    public List<Post> listWithPaging(int startRow, int pageSize) {
+    
+    public List<Post> listWithPaging(int startRow, int pageSize, String sort, int categoryNum) {
         List<Post> list = new ArrayList<>();
-        String sql = "SELECT * FROM Post ORDER BY post_num DESC LIMIT ?, ?";
+        String sql = ("views".equals(sort)) ? PostSQL.LIST_PAGING_VIEWS : PostSQL.LIST_PAGING_LATEST;
 
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
 
-            pstmt.setInt(1, startRow);
-            pstmt.setInt(2, pageSize);
+            pstmt.setInt(1, categoryNum);
+            pstmt.setInt(2, startRow);
+            pstmt.setInt(3, pageSize);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    int post_num = rs.getInt(1);
-                    String post_subject = rs.getString(2);
-                    String post_content = rs.getString(3);
-                    java.sql.Date post_date = rs.getDate(4);
-                    int post_view = rs.getInt(5);
-                    int category_num = rs.getInt(6);
-                    String email = rs.getString(7);
+                    String nickname = rs.getString("nickname");
+                    if (nickname == null || nickname.isBlank()) {
+                        nickname = rs.getString("email");
+                    }
 
                     list.add(new Post(
-                        post_num, post_subject, post_content,
-                        post_date, post_view, category_num, email
+                        rs.getInt("post_num"),
+                        rs.getString("post_subject"),
+                        rs.getString("post_content"),
+                        rs.getDate("post_date"),
+                        rs.getInt("post_view"),
+                        rs.getInt("category_num"),
+                        rs.getString("email"),
+                        nickname,
+                        rs.getInt("likes")
                     ));
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return list;
     }
 
-            
+
+
+  
+
+    public List<Post> searchWithPaging(int startRow,
+    		int pageSize, String sort, String type, String keyword, int categoryNum) {
+    	
+        List<Post> list = new ArrayList<>();
+
+        String column;
+        switch (type) {
+            case "title": column = "p.post_subject"; break;
+            case "writer": column = "u.nickname"; break;
+            case "title_content": column = "CONCAT(p.post_subject,' ',p.post_content)"; break;
+            default: column = "p.post_subject"; break;
+        }
+
+        String baseSql = ("views".equals(sort)) ? PostSQL.LIST_SEARCH_VIEWS : PostSQL.LIST_SEARCH_LATEST;
+        String sql = String.format(baseSql, column);
+
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setInt(1, categoryNum);
+            pstmt.setString(2, "%" + keyword + "%");
+            pstmt.setInt(3, startRow);
+            pstmt.setInt(4, pageSize);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    String nickname = rs.getString("nickname");
+                    if (nickname == null || nickname.isBlank()) nickname = rs.getString("email");
+
+                    list.add(new Post(
+                        rs.getInt("post_num"),
+                        rs.getString("post_subject"),
+                        rs.getString("post_content"),
+                        rs.getDate("post_date"),
+                        rs.getInt("post_view"),
+                        rs.getInt("category_num"),
+                        rs.getString("email"),
+                        nickname,
+                        rs.getInt("likes")
+                    ));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+       
     public int getTotalCount() {
         int total = 0;
         String sql = "SELECT COUNT(*) FROM post";
@@ -128,8 +187,6 @@ public class PostDAO {
             rs.close();
             pstmt.close();
 
-       
-            pstmt = con.prepareStatement(INSERT);
             pstmt = con.prepareStatement(INSERT);
             pstmt.setInt(1, newPostNum);                    
             pstmt.setString(2, dto.getPost_subject());      
@@ -240,7 +297,9 @@ public class PostDAO {
                     rs.getDate("post_date"),
                     rs.getInt("post_view"),
                     rs.getInt("category_num"),
-                    rs.getString("email")
+                    rs.getString("email"),
+                    rs.getString("nickname"),
+                    rs.getInt("likes")
                 );
             }
             return null;
@@ -302,6 +361,7 @@ public class PostDAO {
 	    }
 	}
 	
+
 	//민영 추가- 내가 쓴 글 목록
     public List<Post> mypagePostList(String email) {
         List<Post> list = new ArrayList<>();
@@ -384,4 +444,60 @@ public class PostDAO {
         return total;
     }
     
+
+	public int getTotalCountByCategory(int categoryNum) {
+	    int total = 0;
+	    try (Connection con = ds.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(PostSQL.COUNT_BY_CATEGORY)) {
+	        pstmt.setInt(1, categoryNum);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) total = rs.getInt(1);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return total;
+	}
+	//관리자페이지 공지사항 가져오기
+	public ArrayList<Post> listNotice() {
+        ArrayList<Post> list = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ds.getConnection();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(NOTICELIST);
+
+            while (rs.next()) {
+                int post_num = rs.getInt(1);
+                String post_subject = rs.getString(2);
+                String post_content = rs.getString(3);
+                java.sql.Date post_date = rs.getDate(4);
+                int post_view = rs.getInt(5);
+                int category_num = rs.getInt(6);
+                String email = rs.getString(7);               
+                int likes = rs.getInt(8);
+                String nickname = "관리자";
+
+                list.add(new Post(post_num, post_subject, post_content,
+                                  post_date, post_view, category_num, email, nickname, likes));
+            }
+            
+            return list;
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return null;
+
+        } finally {
+            try { 
+            	rs.close(); 
+            	stmt.close(); 
+            	con.close(); 
+            } catch (Exception e) {}
+        }
+    }
+
 }
