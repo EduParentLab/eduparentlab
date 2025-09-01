@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -200,13 +202,9 @@
                 </div>
         </div>
 
-
       </div>
-
-      
+  
     </main>
-
-
     <footer>
       <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
       <p>© 1999 - 2025 dcinside. All rights reserved.</p>
@@ -215,8 +213,6 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="board_list.js"></script>
-
-
 
 </body>
 </html>
