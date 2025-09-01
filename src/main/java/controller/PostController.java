@@ -15,6 +15,8 @@ import util.PagingUtil;
 import domain.Comment;
 import domain.Post;
 import domain.PostFile;
+import domain.User;
+
 import java.sql.Date;
 
 
@@ -94,17 +96,49 @@ public class PostController extends HttpServlet {
 
     private void input(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+    	HttpSession session = request.getSession(false);
+    	if (session == null) {
+		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+		    return;
+		}
+    	User loginUser = (User) session.getAttribute("loginOkUser");
+    	
+    	if (loginUser == null) {
+    	    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+    	    return;
+    	}
+
+    	String email = loginUser.getEmail(); // null이 아님 보장
+    	
+    	//권한 체크 
+    	if(!checkAuth(request,response,"write", email)) return;
         response.sendRedirect(request.getContextPath() + "/post/input.jsp");
     }
 
     
     private void insert(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+    	HttpSession session = request.getSession(false);
+    	if (session == null) {
+		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+		    return;
+		}
+    	User loginUser = (User) session.getAttribute("loginOkUser");
+    	
+    	if (loginUser == null) {
+    	    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+    	    return;
+    	}
 
-        String post_subject = request.getParameter("post_subject");
+    	String email = loginUser.getEmail(); // null이 아님 보장
+    	
+    	//권한 체크 
+    	if(!checkAuth(request,response,"write", email)) return;
+        
+    	String post_subject = request.getParameter("post_subject");
         String post_content = request.getParameter("post_content");
         int post_view = 0; 
-        String email = request.getParameter("email");
+  
         int category_num = Integer.parseInt(request.getParameter("category_num"));
         String nickname = request.getParameter("nickname");
         int likes = 0;
@@ -131,16 +165,16 @@ public class PostController extends HttpServlet {
     }
 
 
-    
-    
     private void delete(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	
     	String post_numStr = request.getParameter("seq");
         int seq = Integer.parseInt(post_numStr);
-        
-        
         PostService service = PostService.getInstance();
+        Post post = service.get(seq);
+        
+        //권한 체크
+        if(!checkAuth(request,response, "delete", post.getEmail())) return;
         
         boolean flag = service.deleteS(seq);
         
@@ -156,13 +190,29 @@ public class PostController extends HttpServlet {
     private void update(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-        int post_num = Integer.parseInt(request.getParameter("post_num"));
+    	HttpSession session = request.getSession(false);
+    	if (session == null) {
+		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+		    return;
+		}
+ 	    User loginUser = (User) session.getAttribute("loginOkUser");
+ 	   if (loginUser == null) {
+	   	    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+	   	    return;
+	   	}	
+ 	    String role = (String) session.getAttribute("role");
+    	
+ 	    int post_num = Integer.parseInt(request.getParameter("post_num"));
+    	PostService service = PostService.getInstance();
+	    Post post = service.get(post_num);
+	      
+	    //권한 체크
+	    if(!checkAuth(request,response, "update", post.getEmail())) return;
+      
         String post_subject = request.getParameter("post_subject");
         String post_content = request.getParameter("post_content");
         int category_num = Integer.parseInt(request.getParameter("category_num"));
         
-
- 
         Post dto = new Post(post_num, post_subject, post_content, null, 0, category_num, null, null, 0);
 
         boolean flag = PostService.getInstance().updateS(dto);
@@ -196,10 +246,72 @@ public class PostController extends HttpServlet {
     
     private void edit(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	HttpSession session = request.getSession(false);
+    	if (session == null) {
+		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+		    return;
+		}
+ 	    User loginUser = (User) session.getAttribute("loginOkUser");
+ 	   if (loginUser == null) {
+	   	    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+	   	    return;
+	   	}	
+ 	    String role = (String) session.getAttribute("role");
+ 	    
         int post_num = Integer.parseInt(request.getParameter("seq"));
         Post dto = PostService.getInstance().get(post_num);
-        
+	      
+	    //권한 체크
+	    if(!checkAuth(request,response, "update", dto.getEmail())) return;
         request.setAttribute("dto", dto);
         request.getRequestDispatcher("/post/postUpdate.jsp").forward(request, response);
     }
+    
+    private boolean checkAuth(HttpServletRequest request, HttpServletResponse response,
+            String action, String writerEmail) throws IOException, ServletException {
+
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+		    return false;
+		}
+		String role = (session != null) ? (String) session.getAttribute("role") : "guest"; 
+		User loginUser = (User)session.getAttribute("loginOkUser");
+		if (loginUser == null) {
+		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+		    return false;
+		}
+		String email = (loginUser != null) ? loginUser.getEmail() : null;
+		
+		// 관리자는 모든 권한 허용
+		if ("admin".equals(role)) return true;
+		
+		// 비회원/탈퇴회원은 작성/수정/삭제 불가
+		if ("guest".equals(role)) {
+		response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+		return false;
+		}
+		
+		// 일반회원
+		if ("user".equals(role)) {
+			switch(action) {
+				case "write":
+				  return true; // 글 작성 가능
+				case "update":
+				case "delete":
+				  // 본인 글만 가능
+				  if (email != null && email.equals(writerEmail)) {
+				      return true;
+				  } else {
+				      response.sendRedirect(request.getContextPath() + "/post.do?m=list&error=unauthorized");
+				      return false;
+				  }
+				default:
+				  return false;
+			}
+		}
+		
+		return false;
+	}
 }
