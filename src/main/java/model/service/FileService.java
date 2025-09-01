@@ -2,7 +2,8 @@ package model.service;
 
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,27 +19,34 @@ public class FileService {
 
     public void saveFiles(HttpServletRequest request, long postNum) {
         try {
-          
             String uploadPath = request.getServletContext().getRealPath("/upload");
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) uploadDir.mkdirs();
 
-            Collection<Part> parts = request.getParts();
-            for (Part part : parts) {
-                if ("files".equals(part.getName()) && part.getSize() > 0) {
-                    String oname = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-                    String sname = UUID.randomUUID().toString() + "_" + oname;
+            Set<String> processedOriginalNames = new HashSet<>();
 
-                  
-                    String savePath = uploadPath + File.separator + sname;
-                    part.write(savePath);
+            for (Part part : request.getParts()) {
+                if (!"files".equals(part.getName())) continue;
 
-              
-                    String webPath = "/upload/" + sname;
+                if (part.getSubmittedFileName() == null || part.getSize() == 0) continue;
 
-                    PostFile f = new PostFile(0, sname, oname, webPath);
-                    dao.insert(f, postNum);
+                String originalFileName = Paths.get(part.getSubmittedFileName())
+                                               .getFileName().toString();
+
+                if (!processedOriginalNames.add(originalFileName)) {
+                    System.out.println("[SKIP] 중복 Part 감지: " + originalFileName);
+                    continue;
                 }
+
+                String storedFileName = UUID.randomUUID().toString() + "_" + originalFileName;
+
+                String savePath = uploadPath + File.separator + storedFileName;
+                part.write(savePath);
+
+                String webAccessiblePath = "/upload/" + storedFileName;
+
+                PostFile file = new PostFile(0, storedFileName, originalFileName, webAccessiblePath);
+                dao.insert(file, postNum);
             }
         } catch (Exception e) {
             e.printStackTrace();

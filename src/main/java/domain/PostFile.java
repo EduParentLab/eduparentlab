@@ -3,14 +3,14 @@ package domain;
 public class PostFile {
 	private long file_num;
 	private String file_name;
-	private String file_oname;
+	private String file_origin_name;
 	private String file_path;
 	
-	public PostFile(long file_num, String file_name, String file_oname, String file_path) {
+	public PostFile(long file_num, String file_name, String file_origin_name, String file_path) {
 		super();
 		this.file_num = file_num;
 		this.file_name = file_name;
-		this.file_oname = file_oname;
+		this.file_origin_name = file_origin_name;
 		this.file_path = file_path;
 	}
 
@@ -30,12 +30,12 @@ public class PostFile {
 		this.file_name = file_name;
 	}
 
-	public String getFile_oname() {
-		return file_oname;
+	public String getFile_origin_name() {
+		return file_origin_name;
 	}
 
-	public void setFile_oname(String file_oname) {
-		this.file_oname = file_oname;
+	public void setFile_oname(String file_origin_name) {
+		this.file_origin_name = file_origin_name;
 	}
 
 	public String getFile_path() {
