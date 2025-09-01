@@ -26,16 +26,22 @@ public class PostDAO {
     }
 
    
-    public ArrayList<Post> list() {
+    public ArrayList<Post> list(String sort) {
         ArrayList<Post> list = new ArrayList<>();
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
-
+        StringBuilder sql = new StringBuilder(POST);
+        
+        if("views".equals(sort)) {
+        	sql.append(" ORDER BY p.post_view DESC LIMIT 0, 5");
+        }else {
+        	sql.append(" ORDER BY p.post_date DESC LIMIT 0, 5");
+        }
         try {
             con = ds.getConnection();
             stmt = con.createStatement();
-            rs = stmt.executeQuery(POST);
+            rs = stmt.executeQuery(sql.toString());
 
             while (rs.next()) {
                 int post_num = rs.getInt(1);
