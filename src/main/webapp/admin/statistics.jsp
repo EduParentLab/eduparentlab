@@ -16,7 +16,10 @@
     <canvas id="signupChart" width="500" height="400"></canvas>
 </div>
     <div class="long-divider"></div>
-
+<div id="chartData" 
+     data-post='${postCount}' 
+     data-user='${userCount}'
+     style="display:none;"></div>
 <style>
 .long-divider {
     width: 100%;           /* 또는 원하는 길이 예: 1200px */
@@ -25,6 +28,7 @@
     margin: 20px 0;        /* 위아래 여백 */
 }
 </style>
+
 <script>
   const postCount = {
     <c:forEach var="entry" items="${postCount}" varStatus="loop">
@@ -32,22 +36,61 @@
     </c:forEach>
   };
   console.log("postCount=", postCount);
+  const userCount = {
+    <c:forEach var="entry" items="${userCount}" varStatus="loop">
+      "${entry.key}": ${entry.value}<c:if test="${!loop.last}">,</c:if>
+    </c:forEach>
+  };
+  console.log("userCount=", userCount);
 </script>
-<c:forEach var="entry" items="${postCount}">
-  <script>
-    console.log("KEY='${entry.key}', VALUE='${entry.value}'");
-  </script>
-</c:forEach>
+<!--  
 <script>
+    // postCount와 userCount를 JS 객체로 변환
+    const postCount = {};
+    <c:forEach var="entry" items="${postCount}">
+        postCount['${entry.key}'] = ${entry.value};
+    </c:forEach>
+
+    const userCount = {};
+    <c:forEach var="entry" items="${userCount}">
+        userCount['${entry.key}'] = ${entry.value};
+    </c:forEach>
+
+    console.log("postCount:", postCount);
+    console.log("userCount:", userCount);
+</script>
+<script>
+    // EL 값이 문자열로 넘어오므로 JS 객체로 변환
+    let postCount = {};
+    <c:forEach var="entry" items="${postCount}">
+        postCount['${entry.key}'] = ${entry.value};
+    </c:forEach>
+
+    console.log(postCount);
+</script>
+
+<script>
+  // JSP EL로 만든 JS 객체
   const postCountJS = {
     <c:forEach var="entry" items="${postCount}" varStatus="loop">
       "${entry.key}": ${entry.value}<c:if test="${!loop.last}">,</c:if>
     </c:forEach>
   };
+
+  // JS 배열로 변환
+  const postLabels = [];
+  const postData = [];
+
+  for (const key in postCountJS) {
+      if (postCountJS.hasOwnProperty(key)) {
+          postLabels.push(key);
+          postData.push(postCountJS[key]);
+      }
+  }
+
+  console.log(postLabels);
+  console.log(postData);
 </script>
-
-<script src="admin_notice.js"></script>
-
 <script>
 window.addEventListener('DOMContentLoaded', () => {
     const postLabels = [];
@@ -125,5 +168,5 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-</script>
+</script>-->
                 
