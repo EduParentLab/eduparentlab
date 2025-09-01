@@ -12,4 +12,9 @@ public class PostSQL {
 	public final static String NEWSLIST = "select * from POST where category_num=2 order by post_num desc";//공지사항 카테고리 넘버 모르겠다 나중에 숫자 바꾸기	
 	public final static String GHOSTUSERLIST = "select * from USER where role_num=3 order by CDATE";
 	
+	//민영 마이페이지
+	public final static String MYPAGEPOSTLIST = "select post_num, post_subject, post_date, post_view, likes from post where email=? order by post_num desc";
+	public final static String MYPAGEPOSTCOUNT = "select count(*) from post where email=?";
+	public final static String MYPAGELIKECOUNT = "select sum(likes) from post where email=?";
+	public final static String MYPAGECOMMENTCOUNT = "select count(*) from comments where email=?";
 }

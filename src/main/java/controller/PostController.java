@@ -163,7 +163,6 @@ public class PostController extends HttpServlet {
     }
 
     
-    
     private void edit(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int post_num = Integer.parseInt(request.getParameter("seq"));

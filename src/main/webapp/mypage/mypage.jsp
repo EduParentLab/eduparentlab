@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page = "../login/login_check_modul.jsp"/>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,39 +36,40 @@
         <!-- 오른쪽 표 -->
 		<td>
 	   		<table border="1">
-		        <tr><td>총 게시글 : 이거하는중</td></tr>
-		        <tr><td>총 댓글 : 아직</td></tr>
-		        <tr><td>누른 공감수 : 아직</td></tr>
-		        <tr><td>받은 공감수 : 아직</td></tr>
+		        <tr><td>총 게시글 : ${mypostcount}</td></tr>
+		        <tr><td>총 댓글 : ${mycommentcount}</td></tr>
+		        <tr><td>받은 총 공감수 : ${mypostlike}</td></tr>
 	     	</table>
     	</td>
 		</tr>
 	</table>
 	
 	
+	<!-- 내가 쓴 글 -->
 	<h2>내가 쓴 글</h2>
 	
+<form action="../mypage/mypage.do?m=delete" method="post">
 	<table border="1" width="100%">
+	
 		 <tr>
 	        <th>선택</th>
 	        <th>제목</th>
 	        <th>작성일</th>
 	        <th>조회수</th>
+	        <th>공감수</th>
 	    </tr>
     
-	    <tr>
-	        <td><input type="checkbox" name="chk"></td>
-	        <td>작성한 글을 불러와야해</td>
-	        <td>2025.08.10</td>
-	        <td>30</td>
-	    </tr>
-    
-	    <tr>
-	        <td><input type="checkbox" name="chk"></td>
-	        <td>DB에 더 많이 넣어놔야해</td>
-	        <td>2025.08.10</td>
-	        <td>30</td>
-	    </tr>
+	<c:forEach var="p" items="${mypost}">
+
+        <tr>
+            <td><input type="checkbox" name="chk" value="${p.post_num}"></td>
+            <td>${p.post_subject}</td>
+            <td><fmt:formatDate value="${p.post_date}" pattern="yyyy-MM-dd"/></td>
+            <td>${p.post_view}</td>
+            <td>${p.likes}</td>
+        </tr>
+    </c:forEach>
+	
 	</table>
 	
 	
@@ -79,8 +82,8 @@
     ...
 </div>
 
-<button>삭제</button>
-	
+<button type="submit">삭제</button>
+</form>
 	
 </body>
 </html>

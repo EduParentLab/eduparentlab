@@ -13,6 +13,6 @@
 		location.href="login.do?m=form";
 	}else{
 		alert("로그인 성공");
-		location.href="../";
+		location.href="${pageContext.request.contextPath}/main_page/headerBox.jsp";
 	}
 </script>

@@ -57,5 +57,24 @@ public class PostService {
 		LikesService likesService = LikesService.getInstance();
 		return likesService.countLikesS();
 	}
+	//민영 추가 - 내가 쓴 글 목록
+	public List<Post> mypagePostListS(String email){
+		return dao.mypagePostList(email);
+	}
+	//민영 추가- 내가 쓴 글 총 개수
+	public int mypagePostCountS(String email) {
+	    return dao.mypagePostCount(email);
+	}
+	//민영 추가- 내가 받은 총 공감 수 
+	public int mypageLikeCountS(String email) {
+	    return dao.mypageLikeCount(email);
+	}
+	//민영 추가- 내가 쓴 총 댓글 수 
+	public int mypageCommentCountS(String email) {
+	    return dao.mypageCommentCount(email);
+	}
+	
+	
+
 }
 
