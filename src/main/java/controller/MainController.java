@@ -25,7 +25,7 @@ public class MainController extends HttpServlet {
         request.setAttribute("list", list);
         
        
-        RequestDispatcher rd = request.getRequestDispatcher("/main/main.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/main/main_page.jsp");
         rd.forward(request, response);
     }
 
