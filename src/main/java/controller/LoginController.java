@@ -49,13 +49,22 @@ public class LoginController extends HttpServlet {
         int result = service.check(email, password);
         System.out.println("@LoginController result: " + result);
         
-        
         if(result == YES_ID_PWD) {
             User u = service.getUserS(email);
             HttpSession session = request.getSession();
             session.setAttribute("loginOkUser", u); //User 객체를 loginOkUser라는 이름으로 HttpSession에 넣음!
+            String role = "guest";
+            switch(u.getRole_num()) {
+            	case 1: role= "admin"; break;
+            	case 2: role = "user"; break;
+            	case 3: role ="guest"; break;
+            }
+            session.setAttribute("role", role);
             response.setContentType("text/plain; charset=UTF-8");
             response.getWriter().write("success");
+            System.out.println("loginUser: " + u);
+            System.out.println("role: " + role);
+            System.out.println("sessionId: "+ session.getId());
         }
         else {
         	response.setContentType("text/plain; charset=UTF-8");

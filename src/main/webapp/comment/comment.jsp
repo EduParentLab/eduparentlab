@@ -68,15 +68,23 @@ $(function() {
     $(document).on("click", ".editBtn", function() {
         const $btn = $(this);
         const $li = $btn.closest("li");
-        const $content = $li.find("> .content");
-        const oldText = $content.text();
+        const commentNum = $li.data("comment-num");
+        
+        $.get("${pageContext.request.contextPath}/comment/comment.do", { m: "checkUpdateAuth", comment_num: commentNum })
+        	.done(function() {
+		        const $content = $li.find("> .content");
+		        const oldText = $content.text();
+		
+		        // span → input
+		        const $input = $('<input type="text">').val(oldText);
+		        $content.empty().append($input);
 
-        // span → input
-        const $input = $('<input type="text">').val(oldText);
-        $content.empty().append($input);
-
-        // 버튼 변경
-        $btn.text("저장").removeClass("editBtn").addClass("saveBtn");
+		        // 버튼 변경
+		        $btn.text("저장").removeClass("editBtn").addClass("saveBtn");
+        	})
+        	.fail(function(){
+        		alert("수정 권한이 없습니다.");
+        	})
     });
 
     // 댓글 저장 버튼 클릭
@@ -131,7 +139,14 @@ $(function() {
     //답글 버튼 클릭 -> 입력폼 토글
     $(document).on("click", ".showReformBtn", function(){
     	const $li = $(this).closest("li");
-    	$li.find(".recommentForm").toggle();
+    	const commentNum = $li.data("comment-num");
+    	$.get("${pageContext.request.contextPath}/comment/comment.do", { m: "checkReplyAuth", comment_num: commentNum })
+        .done(function() {
+            $li.find(".recommentForm").toggle();
+        })
+        .fail(function() {
+            alert("답글 권한이 없습니다.");
+        });
     });
    
 });
