@@ -26,17 +26,22 @@ public class PostDAO {
         }
     }
 
-   
-    public ArrayList<Post> list() {
+    public ArrayList<Post> list(String sort) {
         ArrayList<Post> list = new ArrayList<>();
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
-
+        StringBuilder sql = new StringBuilder(POST);
+        
+        if("views".equals(sort)) {
+        	sql.append(" ORDER BY p.post_view DESC LIMIT 0, 5");
+        }else if("latest".equals(sort)){
+        	sql.append(" ORDER BY p.post_date DESC LIMIT 0, 5");
+        }
         try {
             con = ds.getConnection();
             stmt = con.createStatement();
-            rs = stmt.executeQuery(POST);
+            rs = stmt.executeQuery(sql.toString());
 
             while (rs.next()) {
                 int post_num = rs.getInt(1);
@@ -67,7 +72,6 @@ public class PostDAO {
             } catch (Exception e) {}
         }
     }
-    
     
     public List<Post> listWithPaging(int startRow, int pageSize, String sort, int categoryNum) {
         List<Post> list = new ArrayList<>();
@@ -105,10 +109,6 @@ public class PostDAO {
         }
         return list;
     }
-
-
-
-  
 
     public List<Post> searchWithPaging(int startRow,
     		int pageSize, String sort, String type, String keyword, int categoryNum) {
@@ -158,7 +158,6 @@ public class PostDAO {
         return list;
     }
 
-       
     public int getTotalCount() {
         int total = 0;
         String sql = "SELECT COUNT(*) FROM post";
@@ -171,7 +170,6 @@ public class PostDAO {
         }
         return total;
     }
-    
     
     public boolean insert(Post dto) {
         Connection con = null;
@@ -210,7 +208,6 @@ public class PostDAO {
             }catch (Exception e) {}
         }
     }
-    
     
     public int insertInt(Post dto) {
         try (Connection con = ds.getConnection();
