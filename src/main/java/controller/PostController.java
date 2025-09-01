@@ -15,6 +15,8 @@ import util.PagingUtil;
 import domain.Comment;
 import domain.Post;
 import domain.PostFile;
+import java.sql.Date;
+
 
 @WebServlet("/post.do")
 @MultipartConfig
@@ -42,28 +44,53 @@ public class PostController extends HttpServlet {
 
     private void list(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-    	int page = 1; //현재 페이지
-    	int pageSize = 5; //한 페이지에 보여줄 글 수
-    	int pageBlock = 5; //한 번에 보여줄 페이지 번호 개수
-    	
-    	String strPage = request.getParameter("page");
-    	if(strPage != null) {
-    		page = Integer.parseInt(strPage);
-    	}
-    	
+        int page = 1;
+        int pageSize = 10;
+        int pageBlock = 5;
+
+        String strPage = request.getParameter("page");
+        if (strPage != null) page = Integer.parseInt(strPage);
+
+        String rowsParam = request.getParameter("rows");
+        if (rowsParam != null && !rowsParam.isBlank()) {
+            pageSize = Integer.parseInt(rowsParam);
+        }
+
+        String sort = request.getParameter("sort");
+        if (sort == null || sort.isBlank()) sort = "latest";
+
+        String type = request.getParameter("type");
+        String keyword = request.getParameter("keyword");
+
+        int categoryNum = 1;
+        String catParam = request.getParameter("category_num");
+        if (catParam != null) {
+            categoryNum = Integer.parseInt(catParam);
+        }
+
         PostService service = PostService.getInstance();
-        int totalCount = service.getTotalPosts();
-        
+        int totalCount = service.getTotalPostsByCategory(categoryNum);
+
         PagingUtil paging = new PagingUtil(totalCount, page, pageSize, pageBlock);
-        
-        
-        List<Post> list = service.listPagingS(paging.getStartRow(), pageSize);
+
+        List<Post> list;
+        if (keyword != null && !keyword.isBlank()) {
+            list = service.searchWithPagingS(paging.getStartRow(), pageSize, sort, type, keyword, categoryNum);
+        } else {
+            list = service.listPagingS(paging.getStartRow(), pageSize, sort, categoryNum);
+        }
+
         request.setAttribute("list", list);
         request.setAttribute("paging", paging);
+        request.setAttribute("sort", sort);
+        request.setAttribute("type", type);
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("category_num", categoryNum);
 
         RequestDispatcher rd = request.getRequestDispatcher("/post/post.jsp");
         rd.forward(request, response);
     }
+
 
     private void input(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -79,8 +106,10 @@ public class PostController extends HttpServlet {
         int post_view = 0; 
         String email = request.getParameter("email");
         int category_num = Integer.parseInt(request.getParameter("category_num"));
+        String nickname = request.getParameter("nickname");
+        int likes = 0;
 
-        Post dto = new Post(-1, post_subject, post_content, null, post_view, category_num, email);
+        Post dto = new Post(-1, post_subject, post_content, null, 0, category_num, email, nickname, 0);
 
         PostService service = PostService.getInstance();
 
@@ -114,7 +143,7 @@ public class PostController extends HttpServlet {
         boolean flag = service.deleteS(seq);
         
         request.setAttribute("flag", flag);
-        request.setAttribute("kind", "del");
+        request.setAttribute("kind", "delete");
         
         String view = "/post/msg.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(view);
@@ -129,9 +158,10 @@ public class PostController extends HttpServlet {
         String post_subject = request.getParameter("post_subject");
         String post_content = request.getParameter("post_content");
         int category_num = Integer.parseInt(request.getParameter("category_num"));
+        
 
  
-        Post dto = new Post(post_num, post_subject, post_content, null, 0, category_num, null);
+        Post dto = new Post(post_num, post_subject, post_content, null, 0, category_num, null, null, 0);
 
         boolean flag = PostService.getInstance().updateS(dto);
         

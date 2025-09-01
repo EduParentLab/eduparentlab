@@ -20,19 +20,26 @@ public class PostService {
         return dao.list();
     }
 
-	public List<Post> listPagingS(int startRow, int pageSize){
-		return dao.listWithPaging(startRow, pageSize);
-	}
-	public int getTotalPosts() {
-	    return dao.getTotalCount();
-	}
+    public List<Post> listPagingS(int startRow, int pageSize, String sort, int categoryNum) {
+        return dao.listWithPaging(startRow, pageSize, sort, categoryNum);
+    }
+
+    public List<Post> searchWithPagingS(int startRow, int pageSize, String sort, String type, String keyword, int categoryNum) {
+        return dao.searchWithPaging(startRow, pageSize, sort, type, keyword, categoryNum);
+    }
+
+    public int getTotalPosts() {
+        return dao.getTotalCount();
+    }
 
     public boolean insertS(Post dto) {
         return dao.insert(dto);  
     }
+
     public int insertInt(Post dto) {
         return dao.insertInt(dto);
     }
+
     public boolean deleteS(int post_num) {
         return dao.delete(post_num);
     }
@@ -48,14 +55,17 @@ public class PostService {
     public void hit(int post_num){
         dao.hit(post_num);
     }
-    //관리자페이지 카테고리 별 게시물 수 
-	public LinkedHashMap<String, Integer> countPostS(){
-		return dao.countPost();
-	} 
-	//likes 수
-	public HashMap<Integer, Integer> countLikesS(){
-		LikesService likesService = LikesService.getInstance();
-		return likesService.countLikesS();
-	}
-}
+   
+    public LinkedHashMap<String, Integer> countPostS(){
+        return dao.countPost();
+    } 
+    
+    public int getTotalPostsByCategory(int categoryNum) {
+        return dao.getTotalCountByCategory(categoryNum);
+    }
 
+    public HashMap<Integer, Integer> countLikesS(){
+        LikesService likesService = LikesService.getInstance();
+        return likesService.countLikesS();
+    }
+}

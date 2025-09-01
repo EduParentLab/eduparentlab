@@ -34,7 +34,5 @@
     <br>
     <br>
     <a href="register/register.jsp">회원가입</a>
-
-
 </body>
 </html>
