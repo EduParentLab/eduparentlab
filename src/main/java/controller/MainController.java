@@ -22,9 +22,11 @@ public class MainController extends HttpServlet {
         PostService service = PostService.getInstance();
         ArrayList<Post> popularList = service.listS("views");
         ArrayList<Post> latestList = service.listS("latest");
+        ArrayList<Post> list = service.listNoticeS();	   
+	    request.setAttribute("notice", list);	  	
         request.setAttribute("popularList", popularList);
         request.setAttribute("latestList", latestList);
-       
+        
         RequestDispatcher rd = request.getRequestDispatcher("/main/main_page.jsp");
         rd.forward(request, response);
     }

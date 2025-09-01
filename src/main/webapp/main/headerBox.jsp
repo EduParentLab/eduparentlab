@@ -44,11 +44,11 @@
 </header>
 
 <div class="navigation-button-container">
-  <a href="/page3.html" class="navigation-button">이동</a>
-  <a href="/page3.html" class="navigation-button">이동</a>
-  <a href="/page3.html" class="navigation-button">이동</a>
-  <a href="/page3.html" class="navigation-button">이동</a>
-  <a href="/page3.html" class="navigation-button">이동</a>
+  <a href="main.do" class="navigation-button">홈</a>
+  <a href="../post.do?m=list&category_num=1" class="navigation-button">자유</a>
+  <a href="../post.do?m=list&category_num=2" class="navigation-button">입시</a>
+  <a href="../post.do?m=list&category_num=3" class="navigation-button">고등</a>
+  <a href="../post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
 </div>
 </body>
 </html>
