@@ -19,7 +19,7 @@ public class PostService {
     public ArrayList<Post> listS() {
         return dao.list();
     }
-
+   
     public List<Post> listPagingS(int startRow, int pageSize, String sort, int categoryNum) {
         return dao.listWithPaging(startRow, pageSize, sort, categoryNum);
     }
@@ -56,6 +56,10 @@ public class PostService {
         dao.hit(post_num);
     }
    
+    public ArrayList<Post> listNoticeS() {
+        return dao.listNotice();
+    }
+    
     public LinkedHashMap<String, Integer> countPostS(){
         return dao.countPost();
     } 
