@@ -10,6 +10,7 @@ import static model.sql.PostSQL.*;
 import static model.sql.AdminSQL.*;
 import model.service.*;
 import model.sql.PostSQL;
+import model.sql.AdminSQL;
 
 public class PostDAO {
 
@@ -373,4 +374,45 @@ public class PostDAO {
 	    }
 	    return total;
 	}
+	//관리자페이지 공지사항 가져오기
+	public ArrayList<Post> listNotice() {
+        ArrayList<Post> list = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = ds.getConnection();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(NOTICELIST);
+
+            while (rs.next()) {
+                int post_num = rs.getInt(1);
+                String post_subject = rs.getString(2);
+                String post_content = rs.getString(3);
+                java.sql.Date post_date = rs.getDate(4);
+                int post_view = rs.getInt(5);
+                int category_num = rs.getInt(6);
+                String email = rs.getString(7);               
+                int likes = rs.getInt(8);
+                String nickname = "관리자";
+
+                list.add(new Post(post_num, post_subject, post_content,
+                                  post_date, post_view, category_num, email, nickname, likes));
+            }
+            
+            return list;
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return null;
+
+        } finally {
+            try { 
+            	rs.close(); 
+            	stmt.close(); 
+            	con.close(); 
+            } catch (Exception e) {}
+        }
+    }
 }
