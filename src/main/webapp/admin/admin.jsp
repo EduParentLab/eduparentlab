@@ -37,7 +37,7 @@
 	        <tr>
 			<td align='center'>${dto.post_num}</td>
 			<td align='center'>
-			<a href='../post/post.do?m=content&code=${dto.post_num}'>${dto.post_subject}</a>
+			<a href='../post.do?m=content&seq=${dto.post_num}'>${dto.post_subject}</a>
 			</td>
 			<td align='center'>${dto.post_date}</td>		
 			<td align='center'>${dto.post_view}</td>
@@ -101,6 +101,11 @@
 	    <c:otherwise>
 	        <c:forEach items="${ghost}" var="dto">
 	        <tr>
+			<td align='center'><a href='../post/post.do?m=content&code=${dto.email}'>${dto.email}</td>			
+			<td align='center'>${dto.nickname}</td>		
+			<td align='center'>${dto.gender}</td>
+			<td align='center'>${dto.birth}</td>
+			<td align='center'>${dto.name}</a></td>
 			<td align='center'><a href='../post/post.do?m=content&code=${dto.name}'>${dto.email}</a></td>							
 			<td align='center'>${dto.nickname}</td>
 			<td align='center'>${dto.gender}</td>	

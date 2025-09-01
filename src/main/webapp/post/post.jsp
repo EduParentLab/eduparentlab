@@ -55,6 +55,7 @@
         <th>작성자</th>
         <th>작성일</th>
         <th>조회수</th>
+        <th>공감수</th>
     </tr>
 
     <c:choose>
@@ -74,6 +75,7 @@
                     </td>
                     <td>${dto.email}</td>
                     <td>${dto.post_date}</td>
+                    <td>${dto.post_view}</td>
                     <td>${dto.post_view}</td>
                 </tr>
             </c:forEach>

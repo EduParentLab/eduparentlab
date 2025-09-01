@@ -12,6 +12,7 @@ import model.service.*;
 import model.sql.PostSQL;
 
 public class PostDAO {
+
     private DataSource ds;
 
     public PostDAO() {
@@ -272,7 +273,7 @@ public class PostDAO {
 	        	map.put(category, count);
 	        }
 	    }catch(SQLException se) {
-	    	
+	    	se.printStackTrace();	   	
 	    }finally{
             try{
                 rs.close();
