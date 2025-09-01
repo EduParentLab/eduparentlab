@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<h1>postCount = ${postCount}</h1>
+<h1>userCount = ${userCount}</h1>
 <button id="toggleNav">☰ 메뉴</button>
 <div class="long-divider"></div>
 <div style="display:flex; align-items:center; justify-content:center; flex-direction: column;">
@@ -24,6 +26,29 @@
 }
 </style>
 <script>
+  const postCount = {
+    <c:forEach var="entry" items="${postCount}" varStatus="loop">
+      "${entry.key}": ${entry.value}<c:if test="${!loop.last}">,</c:if>
+    </c:forEach>
+  };
+  console.log("postCount=", postCount);
+</script>
+<c:forEach var="entry" items="${postCount}">
+  <script>
+    console.log("KEY='${entry.key}', VALUE='${entry.value}'");
+  </script>
+</c:forEach>
+<script>
+  const postCountJS = {
+    <c:forEach var="entry" items="${postCount}" varStatus="loop">
+      "${entry.key}": ${entry.value}<c:if test="${!loop.last}">,</c:if>
+    </c:forEach>
+  };
+</script>
+
+<script src="admin_notice.js"></script>
+
+<script>
 window.addEventListener('DOMContentLoaded', () => {
     const postLabels = [];
     const postData = [];
@@ -32,7 +57,7 @@ window.addEventListener('DOMContentLoaded', () => {
         postData.push(parseInt("${entry.value}"));
     </c:forEach>
 
-    new Chart(document.getElementById('myPieChart'), {
+    new Chart(document.getElementById('categoryChart'), {
         type: 'pie',
         data: {
             labels: postLabels,
@@ -78,7 +103,7 @@ window.addEventListener('DOMContentLoaded', () => {
         userData.push(parseInt("${entry.value}"));
     </c:forEach>
 
-    new Chart(document.getElementById('userChart'), {
+    new Chart(document.getElementById('signupChart'), {
         type: 'bar',
         data: {
             labels: userLabels,
@@ -100,7 +125,5 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-<c:out value="${postCount}" />
-	<c:out value="${userCount}" />
 </script>
                 

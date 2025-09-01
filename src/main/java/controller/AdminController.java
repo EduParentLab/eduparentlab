@@ -78,10 +78,10 @@ public class AdminController extends HttpServlet {
 	    rd.forward(request, response);
 	}
     private void countPost(HttpServletRequest request, HttpServletResponse response) 
-	        throws ServletException, IOException {
+	        throws ServletException, IOException {    	
     	PostService service = PostService.getInstance();
  	    LinkedHashMap<String, Integer> map = service.countPostS();	   
- 	    request.setAttribute("postCount", map);	   	    
+ 	    request.setAttribute("postCount", map);		  
 	}
     private void countUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {

@@ -39,7 +39,7 @@
 	    <c:otherwise>
 	        <c:forEach items="${ghost}" var="dto">
 	        <tr>
-				<td align='center'><a href='../post/post.do?m=content&code=${dto.email}'>${dto.email}</td>			
+				<td align='center'><a href='../mypage/mypage.jsp'>${dto.email}</td>			
 				<td align='center'>${dto.nickname}</td>		
 				<td align='center'>${dto.gender}</td>
 				<td align='center'>${dto.birth}</td>
