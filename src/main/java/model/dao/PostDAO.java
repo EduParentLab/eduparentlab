@@ -10,6 +10,7 @@ import static model.sql.PostSQL.*;
 import static model.sql.AdminSQL.*;
 import model.service.*;
 import model.sql.PostSQL;
+import model.sql.AdminSQL;
 
 public class PostDAO {
 
@@ -35,7 +36,7 @@ public class PostDAO {
         try {
             con = ds.getConnection();
             stmt = con.createStatement();
-            rs = stmt.executeQuery(POST);
+            rs = stmt.executeQuery(NOTICELIST);
 
             while (rs.next()) {
                 int post_num = rs.getInt(1);

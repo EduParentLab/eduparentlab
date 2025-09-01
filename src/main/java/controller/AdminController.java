@@ -21,40 +21,58 @@ public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
            
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-	    getNews(request, response);
-		getUser(request, response);
-		getGhost(request, response);	
-		countPost(request, response);
-		countUser(request, response);
-		String view = "admin.jsp";
-	    RequestDispatcher rd = request.getRequestDispatcher(view);
-	    rd.forward(request, response);
+	    String m = request.getParameter("m");
+	    
+	    if(m == null) {
+	    	m = "notice";
+	    	RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
+	    	rd.forward(request, response);
+	    	return;
+        }
+	    
+	    switch(m) {
+	    case "notice": getNotice(request, response); break;	    
+	    case "user_list": getUser(request, response); break;	
+	    case "withdrawn_list": getGhost(request, response); break;	
+	    case "statistics": countPost(request, response); 
+	    				   countUser(request, response); 	    				   
+					       RequestDispatcher rd = request.getRequestDispatcher("statistics.jsp");
+						   rd.forward(request, response); break;	
+	    default: getNotice(request, response); break;
+	    }    			
 	}
-    private void getNews(HttpServletRequest request, HttpServletResponse response) 
+    private void getNotice(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    PostService service = PostService.getInstance();
 	    ArrayList<Post> list = service.listS();	   
-	    request.setAttribute("news", list);	    
-	    
+	    request.setAttribute("notice", list);	  	
+	    String view = "notice.jsp";
+	    RequestDispatcher rd = request.getRequestDispatcher(view);
+	    rd.forward(request, response);
 	}
     private void getUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    UserService service = UserService.getInstance();
 	    ArrayList<User> list = service.listS();	   
-	    request.setAttribute("user", list);	    
-	    
+	    request.setAttribute("user", list);	   	
+	    String view = "user_list.jsp"; 
+	    RequestDispatcher rd = request.getRequestDispatcher(view);
+	    rd.forward(request, response);
 	}
     private void getGhost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    UserService service = UserService.getInstance();
 	    ArrayList<User> list = service.listGhostUserS();	   
-	    request.setAttribute("ghost", list);	 	    
+	    request.setAttribute("ghost", list);	
+	    String view = "withdrawn_list.jsp";
+	    RequestDispatcher rd = request.getRequestDispatcher(view);
+	    rd.forward(request, response);
 	}
     private void countPost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
     	PostService service = PostService.getInstance();
  	    LinkedHashMap<String, Integer> map = service.countPostS();	   
- 	    request.setAttribute("postCount", map);	   	  
+ 	    request.setAttribute("postCount", map);	   	    
 	}
     private void countUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {

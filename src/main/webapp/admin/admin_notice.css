@@ -1,0 +1,252 @@
+
+.center-wrapper {
+  display: flex;               /* flex 컨테이너 */
+  flex-direction: row;         /* 가로 정렬 (기본값이긴 하지만 명시해도 좋아요) */
+  justify-content: center;     /* 가로 가운데 정렬 */
+  align-items: stretch;         /* 세로 가운데 정렬 */
+  gap: 0px;                   /* 자식 간 간격 */
+  background-color: lightgreen;
+  height: calc(100vh - 160px);
+}
+
+.box {
+  width: 100%;
+  background-color: rgb(209, 221, 224);  /* 디버깅용 */
+  border: 1px solid black;
+  height: 100%;
+}
+
+/* 선택적으로 각 박스별 스타일 */
+.box-left {
+  width: 200px;             /* 기본 너비 */
+  transition: width 0.3s ease;  /* 부드럽게 접기 */
+  overflow: hidden;         /* 내부 내용 감추기 */
+  border: 1px solid black;  /* 접힐 때도 유지되게 설정 */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.box-right {
+  background-color: #ecf3ed;
+}
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.main {
+    
+  flex: 1;
+}
+
+#toggleNav {
+  padding: 6px 12px;
+  background-color: #03c75a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 4px solid #2e3b8f; /* 보라색 테두리 */
+  border-radius: 4px;
+  overflow: hidden;
+  height: 35px;
+}
+
+.search-filter {
+  border: none;
+  background-color: #fff;
+  padding: 0 8px;
+  font-size: 14px;
+  color: #2e3b8f;
+  height: 100%;
+  border-right: 4px solid #2e3b8f;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  padding: 0 10px;
+  font-size: 14px;
+  height: 100%;
+}
+
+.search-btn {
+  background-color: #fff;
+  border: none;
+  color: #2e3b8f;
+  font-size: 16px;
+  padding: 0 10px;
+  height: 100%;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+.notice-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 14px;
+}
+
+.notice-table th,
+.notice-table td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.notice-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+
+
+
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.pagination .page {
+  padding: 2px 6px;
+  text-decoration: none;
+  color: black;
+  border-radius: 2px;
+}
+
+.pagination .current {
+  color: red;
+  font-weight: bold;
+}
+
+.pagination .next-disabled {
+  color: #ccc;
+  cursor: default;
+  padding: 0 4px;
+}
+
+.delete-btn {
+  margin-left: auto; /* 💥 오른쪽 끝으로 보냄 */
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+
+
+
+/* 좌측 사이드바 내부 박스 스타일 */
+.left-box-section {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+}
+
+/* 상단 버튼 / 프로필 / 아이콘 구간 별로 높이 조절 */
+.section-toggle {
+  height: 70px;
+}
+
+.section-profile {
+  height: 100px;
+}
+
+.section-icons {
+  height: 50px;
+}
+
+/* 메뉴 항목은 각각 고정 높이 */
+.section-menu {
+  height: 50px;
+}
+
+
+
+.section-profile {
+  height: 120px;
+  width: 100%;
+  border-bottom: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.profile-image-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f0f0f0; /* 회색 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 기본 SVG 아이콘 스타일 */
+.profile-icon {
+  width: 60px;
+  height: 60px;
+}
+
+/* 나중에 이미지 들어갈 경우 */
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+.section-menu {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  height: 45px;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.menu-text {
+  flex: 1;
+  text-align: left;
+}
+
+
+
+.section-menu.active {
+  background-color: #d0e6ff;
+  color: #003366;
+  font-weight: bold;
+}
