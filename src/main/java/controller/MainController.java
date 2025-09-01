@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.service.PostService;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 import domain.Post;
 
@@ -20,12 +20,14 @@ public class MainController extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PostService service = PostService.getInstance();
-        ArrayList<Post> list = service.listS();
-        System.out.println("MainController 실행됨, list size=" + list.size());
-        request.setAttribute("list", list);
+        ArrayList<Post> popularList = service.listS("views");
+        ArrayList<Post> latestList = service.listS("latest");
+        ArrayList<Post> list = service.listNoticeS();	   
+	    request.setAttribute("notice", list);	  	
+        request.setAttribute("popularList", popularList);
+        request.setAttribute("latestList", latestList);
         
-       
-        RequestDispatcher rd = request.getRequestDispatcher("/main/main.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/main/main_page.jsp");
         rd.forward(request, response);
     }
 

@@ -164,7 +164,6 @@ public class PostController extends HttpServlet {
         rd.forward(request, response);
     }
 
-
     private void delete(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	
@@ -310,7 +309,6 @@ public class PostController extends HttpServlet {
 				  return false;
 			}
 		}
-		
 		return false;
 	}
 }

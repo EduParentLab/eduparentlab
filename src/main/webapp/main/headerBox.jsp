@@ -1,6 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 <header>
   <div class="logo">
     <a href="index.html">
@@ -24,8 +30,6 @@
       </ul>
     </div>
   </div>
-  
-  
   <div class="login">
     <c:choose>
       <c:when test="${empty loginOkUser}">
@@ -39,13 +43,15 @@
       </c:otherwise>
     </c:choose>
   </div>
+  
 </header>
 
-
 <div class="navigation-button-container">
-  <a href="/page3.html" class="navigation-button">이동</a>
-  <a href="/page3.html" class="navigation-button">이동</a>
-  <a href="/page3.html" class="navigation-button">이동</a>
-  <a href="/page3.html" class="navigation-button">이동</a>
-  <a href="/page3.html" class="navigation-button">이동</a>
+  <a href="main.do" class="navigation-button">홈</a>
+  <a href="../post.do?m=list&category_num=1" class="navigation-button">자유</a>
+  <a href="../post.do?m=list&category_num=2" class="navigation-button">입시</a>
+  <a href="../post.do?m=list&category_num=3" class="navigation-button">고등</a>
+  <a href="../post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
 </div>
+</body>
+</html>

@@ -81,7 +81,7 @@ public class LoginController extends HttpServlet {
         //session.removeAttribute("loginOkUser"); 
         session.invalidate();
 
-        response.sendRedirect("../");
+        response.sendRedirect("../main/main.do");
     }
     private boolean isValidEmail(String email) {
         // 이메일 유효성 검사 정규표현식
