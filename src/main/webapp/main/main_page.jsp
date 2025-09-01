@@ -61,15 +61,15 @@
 
         </div>
         <div class="section-notice">
-	        <c:forEach var="news" items="${news}">
+	        <c:forEach var="notice" items="${notice}">
 	           <div style="display:flex; justify-content:center; width: 5%;">
 	            <label style="border:2px solid red; color:red; font-weight: bold;">공지</label>
 	           </div>
 	           <div style="display:flex; justify-content:flex-start; width: 50%;">
-	            <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${news.post_num}" style="font-weight:bold">${news.post_subject}</a>
+	            <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${notice.post_num}" style="font-weight:bold">${notice.post_subject}</a>
 	           </div>
 	           <div style="display:flex; justify-content:flex-end; width: 40%;">
-	            <label>${news.ppost_date}</label>
+	            <label>${notice.post_date}</label>
 	           </div>
 	        </c:forEach>
         </div>

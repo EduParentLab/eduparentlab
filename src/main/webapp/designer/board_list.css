@@ -1,0 +1,205 @@
+.navigation-button-container{
+    display: flex;
+    gap: 10px;
+    justify-content: right;
+    padding:10px;
+}
+.navigation-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #2f3b82;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.center-wrapper {
+  display: flex;               /* flex 컨테이너 */
+  flex-direction: column;         /* 가로 정렬 (기본값이긴 하지만 명시해도 좋아요) */
+  justify-content: center;     /* 가로 가운데 정렬 */
+  align-items: stretch;         /* 세로 가운데 정렬 */
+  gap: 0px;                   /* 자식 간 간격 */
+  background-color: rgb(255, 255, 255);
+  height:auto;
+  padding:0px 0px;
+}
+
+.section-title {
+  height: 60px; /* or auto */
+  padding: 40px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
+  display: flex;
+  align-items: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  box-sizing: border-box;
+}
+.section-discription {
+  padding: 80px;
+  height: 120px;
+  width: 100%;
+  border-bottom: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.section-pagingfilter {
+  padding: 15px 10px;
+  padding-bottom: 0px;
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.dropdown-select {
+  padding: 4px 8px;
+  font-size: 13px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  background-color: white;
+  appearance: none;         /* 브라우저 기본 스타일 제거 */
+  -webkit-appearance: none; /* Safari */
+  -moz-appearance: none;    /* Firefox */
+  background-image: url("data:image/svg+xml,%3Csvg fill='black' height='14' viewBox='0 0 24 24' width='14' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 14px;
+  padding-right: 30px;  /* 아이콘 오른쪽 여백 */
+}
+
+
+
+.section-board-list {
+    padding: 0px 10px;
+    padding-top: 0px;
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
+  padding-top:0px;
+  margin-top:10px;
+    margin-bottom:0px;
+    border: 1px solid #999;
+}
+
+.board-table th, .board-table td {
+  padding: 10px;
+}
+
+.board-table th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+
+
+.section-write-btn {
+    display:flex;
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  box-sizing: border-box;
+  padding :10px 10px;
+}
+
+.section-searchbar {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding : 10px 0px;
+}
+
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.dropdown-wrap {
+  position: relative;
+}
+
+.dropdown-btn {
+  background-color: #2f3b82;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #aaa;
+  width: 100%;
+  z-index: 100;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-list li {
+  padding: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.search-input {
+  padding: 6px 10px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.search-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.search-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.section-paging {
+  height: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0px 0px;
+}

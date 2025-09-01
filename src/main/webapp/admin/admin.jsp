@@ -1,223 +1,128 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
-<title>관리자 페이지</title>
-</head>
-<h1>관리자 페이지</h1>
-<a href='../'>인덱스</a>
-<body>	
-	<div class="tab">
-	  <button onclick="showSection('newsTable')">공지사항</button>
-	  <button onclick="showSection('userTable')">사용자목록</button>
-	  <button onclick="showSection('ghostTable')">탈퇴회원</button>
-	  <button onclick="showSection('statistics')">통계</button>
-	</div>		
-	<div id="newsTable">	
-	<table border='1' width='1000' cellpadding='2'>
-	<tr>
-		<th align='center' width='10%'>글번호</th>
-		<th align='center' width='50%'>글제목</th>
-		<th align='center' width='30%'>작성날짜</th>
-		<th align='center' width='10%'>조회수</th>
-	</tr>
-	<c:choose>
-	    <c:when test="${empty news}">
-	        <tr>
-	        <td align='center' colspan="4">작성한 글 없음</td>
-	        </tr>
-	    </c:when>
-	    <c:otherwise>
-	        <c:forEach items="${news}" var="dto">
-	        <tr>
-			<td align='center'>${dto.post_num}</td>
-			<td align='center'>
-			<a href='../post.do?m=content&seq=${dto.post_num}'>${dto.post_subject}</a>
-			</td>
-			<td align='center'>${dto.post_date}</td>		
-			<td align='center'>${dto.post_view}</td>
-			</tr>
-	        </c:forEach>
-	    </c:otherwise>	    
-	</c:choose>		
-	</table>
-	<button onclick="location.href='../post/post.do'" style="float:right">글쓰기</button>
-	</div>	
-	<div id="userTable" style="display:none;">	
-	<table border='1' width='1000' cellpadding='2'>
-	<tr>
-		<th align='center' width='20%'>이메일</th>
-		<th align='center' width='5%'>닉네임</th>
-		<th align='center' width='5%'>성별</th>
-		<th align='center' width='10%'>생년월일</th>
-		<th align='center' width='5%'>이름</th>
-		<th align='center' width='10%'>휴대폰번호</th>
-		<th align='center' width='10%'>가입한날짜</th>
-	</tr>
-	<c:choose>
-	    <c:when test="${empty user}">
-	        <tr>
-	        <td align='center' colspan="7">사용자 없음</td>
-	        </tr>
-	    </c:when>
-	    <c:otherwise>
-	        <c:forEach items="${user}" var="dto">
-	        <tr>
-			<td align='center'>${dto.email}</td>			
-			<td align='center'>${dto.nickname}</td>		
-			<td align='center'>${dto.gender}</td>
-			<td align='center'>${dto.birth}</td>
-			<td align='center'>${dto.name}</td>
-			<td align='center'>${dto.phone}</td>
-			<td align='center'>${dto.cdate}</td>
-			</tr>		
-	        </c:forEach>
-	    </c:otherwise>	    
-	</c:choose>	
-	</table>
-	</div>
-	<div id="ghostTable" style="display:none;">	
-	<table border='1' width='1000' cellpadding='2'>
-	<tr>
-		<th align='center' width='20%'>이메일</th>
-		<th align='center' width='5%'>닉네임</th>
-		<th align='center' width='5%'>성별</th>
-		<th align='center' width='10%'>생년월일</th>
-		<th align='center' width='5%'>이름</th>
-		<th align='center' width='10%'>휴대폰번호</th>
-		<th align='center' width='10%'>가입한날짜</th>
-	</tr>
-	<c:choose>
-	    <c:when test="${empty ghost}">
-	        <tr>
-	        <td align='center' colspan="7">탈퇴회원 없음</td>
-	        </tr>
-	    </c:when>
-	    <c:otherwise>
-	        <c:forEach items="${ghost}" var="dto">
-	        <tr>
-			<td align='center'><a href='../post/post.do?m=content&code=${dto.email}'>${dto.email}</td>			
-			<td align='center'>${dto.nickname}</td>		
-			<td align='center'>${dto.gender}</td>
-			<td align='center'>${dto.birth}</td>
-			<td align='center'>${dto.name}</a></td>						
-			<td align='center'>${dto.phone}</td>
-			<td align='center'>${dto.cdate}</td>
-			</tr>		
-	        </c:forEach>
-	    </c:otherwise>	    
-	</c:choose>	
-	</table>
-	</div>
-	<div id="statistics" style="display:none;">
-	<h2>카테고리 별 게시글 수</h2>
-	<canvas id="myPieChart" width="400" height="400"></canvas>
-	<h2>날짜 별 가입자 수</h2>
-	<canvas id="userChart" width="400" height="200"></canvas>
-	</div>
-	
-    <script>     
-	function showSection(sectionId) {
-	    const sections = ["newsTable", "userTable", "ghostTable", "statistics"];
-	    
-	    sections.forEach(id => {
-	        document.getElementById(id).style.display = (id === sectionId ? "block" : "none");
-	    });
-	}
-	//그래프 코드 예시 아무거나 가지고옴 효상님 마음대로 변경하면 됩니다/그래프 위에 숫자 계속 null로 찍힘...커서 대면 값은 나옴 왜그런거야...
-		const postLabels = [];
-	    const postData = [];
-	    
-	    <c:forEach var="entry" items="${postCount}">
-	        postLabels.push("${entry.key}");	    
-	        postData.push(${entry.value});
-	    </c:forEach>
-	    
-	    const ctxPost = document.getElementById('myPieChart').getContext('2d');
-	    
-	    new Chart(ctxPost, {
-	        type: 'pie',
-	        data: {
-	            labels: postLabels,
-	            datasets: [{
-	                data: postData,
-	                backgroundColor: [
-	                    'rgba(255, 99, 132, 0.6)',
-	                    'rgba(54, 162, 235, 0.6)',
-	                    'rgba(255, 206, 86, 0.6)',
-	                    'rgba(75, 192, 192, 0.6)',
-	                    'rgba(153, 102, 255, 0.6)'
-	                ]
-	            }]
-	        },
-	        options: {
-	            responsive: false,
-	            plugins: {
-	                datalabels: {
-	                    display: true,
-	                    color: 'white',
-	                    font: { weight: 'bold', size: 14 },
-	                    formatter: (value, context) => {
-	                        const dataset = context.chart.data.datasets[0];
-	                        const total = dataset.data.reduce((sum, val) => sum + val, 0);
-	                        const percentage = ((value / total) * 100).toFixed(1);
-	                        //return `${percentage}%`;
-	                    }
-	                },
-	                tooltip: {
-	                    callbacks: {
-	                        label: function(context) {
-	                            const label = context.label || '';
-	                            const value = context.raw || 0;
-	                            //return `${label}: ${value}개`;
-	                        }
-	                    }
-	                },
-	                legend: { display: true, position: 'bottom' },
-	                title: { display: true, text: '카테고리별 게시글 수', font: { size: 18, weight: 'bold' } }
-	            }
-	        },
-	        plugins: [ChartDataLabels]
-	    });
-	</script>	
-	
-	<!-- 📊 날짜별 가입자 수 (Bar Chart) -->
-	<script>
-		const userLabels = [];
-	    const userData = [];
-	
-	    <c:forEach var="entry" items="${userCount}">
-	        userLabels.push("${entry.key}");
-	        userData.push(${entry.value});
-	    </c:forEach>
 
-	    const ctxUser = document.getElementById('userChart').getContext('2d');
-	    new Chart(ctxUser, {
-	        type: 'bar',
-	        data: {
-	            labels: userLabels,
-	            datasets: [{
-	                label: '일별 가입자 수',
-	                data: userData,
-	                borderWidth: 1,
-	                backgroundColor: 'rgba(54, 162, 235, 0.5)'
-	            }]
-	        },
-	        options: {
-	            responsive: false,
-	            scales: {
-	                y: {
-	                    beginAtZero: true,
-	                    ticks: { stepSize: 1 }
-	                }
-	            }
-	        }
-	    });
-	</script>	
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>학부모정보통</title>
+  <link rel="stylesheet" href="../designer/layout.css" />
+  <link rel="stylesheet" href="../designer/admin_notice.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  
+</head>
+
+
+<body>
+  <div class="wrapper">
+
+
+    <header>
+      <div class="logo">
+        <a href="../">
+          <img src="../designer/assets/logoremoveback.png" alt="학부모정보통 로고" />
+        </a>
+      </div>
+      <div class="search-container">
+        <div class="search-bar">
+          <div class="search-logo">N</div>
+          <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
+          <button class="search-btn">🔍</button>
+        </div>
+        <!-- ▼ 아래 추천 검색어 목록 ▼ -->
+        <div class="search-dropdown">
+          <div class="search-section-title">검색 추천</div>
+          <ul class="search-list">
+            <li>교육</li>
+            <li>탐구</li>
+            <li>연구소</li>
+          </ul>
+        </div>
+      </div>
+      <div class="login"><button>로그인</button><button>마이페이지</button></div>
+    </header>
+
+
+
+    <main>
+        <div class="center-wrapper">
+            <div class="box box-left" id="leftBox">
+                <div class="left-box-section section-toggle">
+                    <div class="menu-icon" style="padding:15px; font-size:25px;">☰</div>
+
+                </div>
+
+                <!-- 2. 프로필 -->
+                <div class="left-box-section section-profile">
+                    <div class="profile-image-wrapper">
+                        <!-- ✅ 사진 없을 땐 SVG 기본 아이콘 -->
+                        <svg class="profile-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <circle cx="12" cy="8" r="4" fill="#999"/>
+                        <path d="M4 20c0-4 4-6 8-6s8 2 8 6" fill="#999"/>
+                        </svg>
+
+                        <!-- ✅ 사진이 있으면 아래 태그만 보이게 (JS로 대체) -->
+                        <!-- <img class="profile-img" src="user-profile.jpg" alt="프로필 사진"> -->
+                    </div>
+                </div>
+                <!-- 4. 메뉴 항목 4개 -->
+                <div class="left-box-section section-menu menu-1" style="font-size:20px; display: flex; justify-content: center; align-items: center;">
+                금영님
+                </div>
+                <!-- 공지사항 -->
+                <div class="left-box-section section-menu menu-1" data-page="notice">
+                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M3 10V6a1 1 0 011-1h2V3h2v2h3v2H8v2h4v2H8v2h3v2H8v2h2v2H8v-2H6v-2H4a1 1 0 01-1-1v-2z" fill="black"/>
+                </svg>
+                <span class="menu-text">공지사항</span>
+                </div>
+
+                <!-- 사용자 목록 -->
+                <div class="left-box-section section-menu menu-2" data-page="user_list">
+                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M5 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm8 0a3 3 0 1 1 6 0 3 3 0 0 1-6 0zM2 20v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2H2zm12 0v-2a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v2h-8z" fill="black"/>
+                </svg>
+                <span class="menu-text">사용자 목록</span>
+                </div>
+
+                <!-- 탈퇴 회원 -->
+                <div class="left-box-section section-menu menu-3" data-page="withdrawn_list">
+                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 12a5 5 0 100-10 5 5 0 000 10zM3 21v-2a6 6 0 0112 0v2H3zm13-6l5 5m0-5l-5 5" stroke="black" stroke-width="2" fill="none"/>
+                </svg>
+                <span class="menu-text">탈퇴 회원</span>
+                </div>
+
+                <!-- 통계 -->
+                <div class="left-box-section section-menu menu-4" data-page="statistics">
+                <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M4 17h2v3H4v-3zm4-6h2v9H8v-9zm4-5h2v14h-2V6zm4 8h2v6h-2v-6z" fill="black"/>
+                </svg>
+                <span class="menu-text">통계</span>
+                </div>
+
+            </div>
+            <div class="box box-right">             
+            </div>
+        </div>
+    </main>
+
+
+    <footer>
+      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
+      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
+    </footer>
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="admin_notice.js"></script>
+
+
+
 </body>
 </html>
+
+
