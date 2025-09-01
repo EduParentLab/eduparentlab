@@ -1,3 +1,6 @@
+
+@charset "UTF-8";
+
 .center-wrapper {
   display: flex;               /* flex 컨테이너 */
   flex-direction: column;         /* 가로 정렬 (기본값이긴 하지만 명시해도 좋아요) */
@@ -118,3 +121,4 @@
   box-sizing: border-box;
   gap:10px;
 }
+
