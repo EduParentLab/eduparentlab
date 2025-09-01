@@ -53,21 +53,57 @@
 
     <!-- 네비게이션 -->
     <div class="navigation-button-container">
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">공지게시판</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시게시판</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">자유게시판</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
+       <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
     </div>
 
     <main>
       <div class="center-wrapper">
 
-        <!-- 타이틀 -->
-        <div class="section-title">
-          <p style="font-size:35px; font-weight:bold" >공지사항</p> 
-        </div>
-        <div class="section-discription">
-          본 게시판은 입시와 관련된 게시판입니다.
-        </div>
+   
+    <!-- 타이틀 -->
+	<div class="section-title">
+	  <c:choose>
+	    <c:when test="${category_num == 1}">
+	      <p style="font-size:35px; font-weight:bold">자유게시판</p>
+	    </c:when>
+	    <c:when test="${category_num == 2}">
+	      <p style="font-size:35px; font-weight:bold">입시정보</p>
+	    </c:when>
+	    <c:when test="${category_num == 3}">
+	      <p style="font-size:35px; font-weight:bold">고등학교</p>
+	    </c:when>
+	    <c:when test="${category_num == 4}">
+	      <p style="font-size:35px; font-weight:bold">공지사항</p>
+	    </c:when>
+	    <c:otherwise>
+	      <p style="font-size:35px; font-weight:bold">게시판</p>
+	    </c:otherwise>
+	  </c:choose>
+	</div>
+    
+    <!-- 카테고리 안내문구 -->
+    <div class="section-discription">
+      <c:choose>
+        <c:when test="${category_num eq '1'}">
+          본 게시판은 자유게시판입니다.
+        </c:when>
+        <c:when test="${category_num eq '2'}">
+          본 게시판은 입시정보 게시판입니다.
+        </c:when>
+        <c:when test="${category_num eq '3'}">
+          본 게시판은 고등학교 게시판입니다.
+        </c:when>
+        <c:when test="${category_num eq '4'}">
+          본 게시판은 공지사항입니다.
+        </c:when>
+        <c:otherwise>
+          본 게시판입니다.
+        </c:otherwise>
+      </c:choose>
+    </div>
 
        <!-- 정렬 기준 선택 -->
 		<div class="section-pagingfilter">

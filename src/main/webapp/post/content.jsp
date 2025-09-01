@@ -40,9 +40,10 @@
     
      <!-- 네비게이션 -->
     <div class="navigation-button-container">
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">공지게시판</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시게시판</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">자유게시판</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">공지사항</a>
     </div>
   
     <main> 
@@ -85,8 +86,7 @@
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="search.js"></script>
-
+<script src="<%=request.getContextPath()%>/post/js/board_content.js"></script>
 
 
 </body>
