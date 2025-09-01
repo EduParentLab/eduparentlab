@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,10 +17,10 @@
   <div class="search-container">
     <div class="search-bar">
       <div class="search-logo">N</div>
-      <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
-      <a href="#">
-        <button class="search-btn">🔍</button>
-      </a>
+      	<form action="${pageContext.request.contextPath}/main/main.do" method="get">
+		    <input type="text" id="searchInput" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해 주세요." />
+		    <button type="submit" class="search-btn">🔍</button>
+		</form>
     </div>
     <div class="search-dropdown">
       <div class="search-section-title">검색 추천</div>
@@ -48,10 +49,10 @@
 
 <div class="navigation-button-container">
   <a href="main.do" class="navigation-button">홈</a>
-  <a href="../post.do?m=list&category_num=1" class="navigation-button">자유</a>
-  <a href="../post.do?m=list&category_num=2" class="navigation-button">입시</a>
-  <a href="../post.do?m=list&category_num=3" class="navigation-button">고등</a>
-  <a href="../post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
+  <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
+  <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
+  <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
+  <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
 </div>
 </body>
 </html>
