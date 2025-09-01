@@ -1,3 +1,4 @@
+
 // 페이지 갈아끼우는 함수는 전역으로 따로 유지
 function loadContent(page) {
   fetch(`pages/${page}.html`)
@@ -9,6 +10,10 @@ function loadContent(page) {
         return;
       }
       target.innerHTML = html;
+      if (page === "statistics") {
+  initStatisticsChart();
+  initSignupChart();
+}
       const toggleBtn = document.getElementById("toggleNav");
       const leftBox = document.getElementById("leftBox");
       let isHidden = false;
@@ -85,3 +90,73 @@ document.querySelectorAll('.section-menu').forEach(menu => {
     }
   });
 });
+
+function initStatisticsChart() {
+  const ctx = document.getElementById('categoryChart');
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['자유게시판', '입시정보', '고등학교', '공지사항'],
+      datasets: [{
+        data: [3, 5, 2, 7],
+        backgroundColor: ['#ff9baa', '#9fe3e0', '#9eccfa', '#ffe582']
+      }]
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+}
+
+function initSignupChart() {
+  const ctx = document.getElementById('signupChart');
+  if (!ctx) return;
+
+  // Chart.js + datalabels 등록
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['09-01', '09-02', '09-03', '09-04', '09-05'], // 날짜
+      datasets: [{
+        label: '일별 가입자 수',
+        data: [10, 3, 6, 2, 4],
+        backgroundColor: 'rgba(54, 162, 235, 0.5)'
+      }]
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        legend: {
+          position: 'top'
+        },
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          color: '#000',
+          font: {
+            size: 12,
+            weight: 'bold'
+          },
+          formatter: value => value
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 2
+          }
+        }
+      }
+    },
+    plugins: [ChartDataLabels]
+  });
+}

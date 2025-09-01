@@ -17,17 +17,16 @@
   border-bottom: 1px solid black;
   box-sizing: border-box;
   gap:10px;
+  margin:0px 10px;
 }
 
 .section-banner {
+  width: 100%;
   height: auto; /* or auto */
   padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
-  display: flex;
+  display: block;
   align-items: center;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
   box-sizing: border-box;
-  gap:10px;
 }
 
 
@@ -37,8 +36,6 @@
   padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
   align-items: center;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
   box-sizing: border-box;
   gap:10px;
   justify-content:center;
@@ -47,12 +44,13 @@
 
 .section-notice {
   height: 60px; /* or auto */
+  margin:2ch 10px;
   padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
   align-items: center;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
   box-sizing: border-box;
+  border:1px solid rgb(0, 0, 0);
+  border-radius:5px;
   gap:10px;
 }
 
@@ -113,7 +111,6 @@
   padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
   align-items: center;
-  border-top: 1px solid black;
   border-bottom: 1px solid black;
   box-sizing: border-box;
   gap:10px;
