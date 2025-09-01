@@ -30,17 +30,20 @@
       </ul>
     </div>
   </div>
-  <div class="login" id="login-before">
-    <a href="login.html">
-       <button>로그인</button>
-    </a>
-    <a href="resist.html">
-      <button>회원가입</button>
-    </a>
-    </div>
-    <div class="login" id="login-after" style="display:none;">
-    <label>진석님 안녕하세요</label><button>마이페이지</button><button>로그아웃</button>
+  <div class="login">
+    <c:choose>
+      <c:when test="${empty loginOkUser}">
+        <a href="${pageContext.request.contextPath}/login/login.do?m=form"><button>로그인</button></a>
+        <a href="${pageContext.request.contextPath}/login/resist.jsp"><button>회원가입</button></a>
+      </c:when>
+      <c:otherwise>
+        <label style="color:green">${loginOkUser.name}</label>님 안녕하세요
+        <a href="${pageContext.request.contextPath}/mypage/mypage.do"><button>마이페이지</button></a>
+        <a href="${pageContext.request.contextPath}/login/login.do?m=logout"><button>로그아웃</button></a>
+      </c:otherwise>
+    </c:choose>
   </div>
+  
 </header>
 
 <div class="navigation-button-container">

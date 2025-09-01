@@ -56,9 +56,6 @@
             </div>
 
 
-
-
-
         </div>
         <div class="section-notice">
 	        <c:forEach var="notice" items="${notice}">
