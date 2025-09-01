@@ -358,6 +358,90 @@ public class PostDAO {
 	    }
 	}
 	
+
+	//민영 추가- 내가 쓴 글 목록
+    public List<Post> mypagePostList(String email) {
+        List<Post> list = new ArrayList<>();
+        String sql = PostSQL.MYPAGEPOSTLIST;
+
+        try (Connection con = ds.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+               
+               pstmt.setString(1, email);
+               System.out.println("쿼리 실행 email = " + email); //확인
+               try (ResultSet rs = pstmt.executeQuery()) {
+                   while (rs.next()) {
+                       Post post = new Post();
+                       post.setPost_num(rs.getInt("post_num"));
+                       post.setPost_subject(rs.getString("post_subject"));
+                       post.setPost_date(rs.getDate("post_date"));
+                       post.setPost_view(rs.getInt("post_view"));
+                       post.setLikes(rs.getInt("likes")); //여기 추가
+                       list.add(post);
+                   }
+               }
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+           System.out.println("mypagePostList 결과 = " + list.size()); // 확인
+           return list;
+    }
+    
+    //민영 추가- 내가 쓴 글 총 개수
+    public int mypagePostCount(String email) {
+        int total = 0;
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(PostSQL.MYPAGEPOSTCOUNT)) {
+            
+            pstmt.setString(1, email);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+    
+    //민영 추가- 내가 받은 총 공감 수
+    public int mypageLikeCount(String email) {
+        int total = 0;
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(PostSQL.MYPAGELIKECOUNT)) {
+            
+            pstmt.setString(1, email);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+    
+    //민영 추가- 내가 쓴 댓글 수 
+    public int mypageCommentCount(String email) {
+        int total = 0;
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(PostSQL.MYPAGECOMMENTCOUNT)) {
+            
+            pstmt.setString(1, email);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+    
+
 	public int getTotalCountByCategory(int categoryNum) {
 	    int total = 0;
 	    try (Connection con = ds.getConnection();
@@ -412,4 +496,5 @@ public class PostDAO {
             } catch (Exception e) {}
         }
     }
+
 }

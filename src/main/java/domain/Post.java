@@ -9,12 +9,12 @@ public class Post {
     private Date post_date;
     private int post_view;   
     private int category_num;
-
     private String email;
-    private int likes;     
+    private int likes;
     private String nickname;   
-
-
+    
+    public Post(){}
+    
     public Post(int post_num, String post_subject, String post_content,
                 Date post_date, int post_view, int category_num, String email, String nickname, int likes) {
         this.post_num = post_num;
@@ -93,7 +93,6 @@ public class Post {
 	public void setLikes(int likes) {
 		this.likes = likes;
 	}
-
 
 	public String getNickname() {
 		return nickname;

@@ -242,7 +242,6 @@ public class PostController extends HttpServlet {
     }
 
     
-    
     private void edit(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	

@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+
   fetch("headerBox.jsp")
+
     .then(res => res.text())
     .then(html => {
       document.getElementById("headerArea").innerHTML = html;
