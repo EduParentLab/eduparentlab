@@ -28,7 +28,7 @@
         <c:otherwise>
             <font style="color:green">${loginOkUser.name}</font>님 안녕하세요
             <a href="login/login.do?m=logout">로그아웃</a>
-            <a href="mypage/mypage.jsp">마이페이지</a>
+            <a href="mypage/mypage.do">마이페이지</a>
             
         </c:otherwise>
     </c:choose>
@@ -36,5 +36,6 @@
     <br>
     <br>
     <a href="register/register.jsp">회원가입</a>
+
 </body>
 </html>

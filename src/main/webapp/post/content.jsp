@@ -1,120 +1,93 @@
-<%@ page contentType="text/html;charset=utf-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>게시글 보기</title>
-<style>
-	 body { font-family:'맑은 고딕', sans-serif; padding:40px; }
-	 table { border-collapse:collapse; width:600px; margin:auto; }
-	 td { border:1px solid #aaa; padding:10px; }
-	 th { background:#f0f0f0; width:25%; }
-	 .btns { text-align:center; margin-top:15px; }
-	 a { text-decoration:none; margin:0 10px; }
-</style>
+  <meta charset="UTF-8" />
+  <title>학부모정보통</title>
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/layout.css" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_content.css" />
 </head>
+
 <body>
+  <div class="wrapper">
 
-<h2 style="text-align:center">게시글 보기</h2>
-<div style="text-align: center;">
-
-	<a>공감수: ${dto.likes}</a> &nbsp&nbsp
-	<a>공감수: </a> &nbsp;&nbsp;
-	<a href="likes.do?m=add&post_num=${dto.post_num}">공감</a>
-</div>
-<table>
-  <tr>
-    <th>번호</th><td>${dto.post_num}</td>
-  </tr>
-  <tr>
-    <th>제목</th><td>${dto.post_subject}</td>
-  </tr>
-  <tr>
-    <th>내용</th>
-    <td style="height:200px; text-align:left;">${dto.post_content}</td>
-  </tr>
-  <tr>
-    <th>작성자</th><td>${dto.email}</td>
-  </tr>
-  <tr>
-    <th>작성일</th><td>${dto.post_date}</td>
-  </tr>
-  <tr>
-    <th>조회수</th><td>${dto.post_view}</td>
-  </tr>
-  <tr>
-    <th>첨부파일</th>
-    <td>
-      <c:choose>
-        <c:when test="${empty fileList}">
-          첨부파일 없음
-        </c:when>
-        <c:otherwise>
-          <c:forEach var="file" items="${fileList}">
-            <div>
-              <a href="<%=request.getContextPath()%>${file.file_path}" 
-                 download="${file.file_origin_name}">
-                ${file.file_origin_name}
-              </a>
+    <header>
+      <div class="logo">
+       <a href="<%=request.getContextPath()%>/index.jsp">
+         <img src="<%=request.getContextPath()%>/post/assets/logoremoveback.png" alt="학부모정보통 로고" />
+	    </a>
+      </div>
+      <div class="search-container">
+        <div class="search-bar">
+          <div class="search-logo">N</div>
+          <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
+          <button class="search-btn">🔍</button>
+        </div>
+        <!--  아래 추천 검색어 목록 -->
+        <div class="search-dropdown">
+          <div class="search-section-title">검색 추천</div>
+          <ul class="search-list">
+            <li>교육</li>
+            <li>탐구</li>
+            <li>연구소</li>
+          </ul>
+        </div>
+      </div>
+      <div class="login"><button>로그인</button><button>마이페이지</button></div>
+    </header>
+    
+     <!-- 네비게이션 -->
+    <div class="navigation-button-container">
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">공지사항</a>
+    </div>
+  
+    <main> 
+    
+	<div class="center-wrapper">
+        <div class="section-title">
+           <p style="font-size:35px; font-weight:bold" >입시게시판</p> 
+        </div>
+        <div class="section-content-title">
+            ${dto.post_subject}
+        </div>
+        
+        <div class="section-content-info">
+            <label>${dto.post_date}</label>
+            <div style="display: flex; align-items: center; gap: 5px;">
+	            <img src="<%=request.getContextPath()%>/post/assets/eye.png" alt="조회수" class="eye-icon" style="width: 20px; height: 20px;"/>
+	            <label>조회수 ${dto.post_view}</label>
             </div>
-          </c:forEach>
-        </c:otherwise>
-      </c:choose>
-    </td>
-  </tr>
-</table>
+            
+            <label>${dto.nickname}</label>
+            <button style="display: flex; align-items: center; gap: 5px; background-color:white; border:0px solid white; ">
+                <img src="<%=request.getContextPath()%>/post/assets/like.png" alt="좋아요" class="like-icon" style="width: 20px; height: 20px;"/>
+                <label>${dto.likes}</label>
+            </button>
+            <label>${dto.post_num}</label>
+            <label>신고하기</label>
+            
+     	   </div> 	
+     	    <div class="section-content-body">
+           		 <p>${dto.post_content}</p>
+    	    </div>    
+		</div>
+        <div id="commentArea"></div>
+    </main>
 
-<div class="btns">
-  <a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}">수정</a>
-  <a href="<%=request.getContextPath()%>/post.do?m=delete&seq=${dto.post_num}"
-     onclick="return confirm('정말 삭제할까요?');">삭제</a>
-  <a href="<%=request.getContextPath()%>/post.do?m=list">목록</a>
-</div>
+    <footer>
+      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
+      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
+    </footer>
+  </div>
 
-	<form id="sortForm" method="get" action="post.do">
-	    <input type="hidden" name="m" value="view">
-	    <input type="hidden" name="seq" value="${dto.post_num}">
-	    <select name="latest" onchange="this.form.submit()">
-	    	<option value="false" ${param.latest=='false' ? 'selected' : ''}>오래된순</option>
-	        <option value="true" ${param.latest=='true' ? 'selected' : ''}>최신순</option>
-	    </select>
-	</form>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="<%=request.getContextPath()%>/post/js/board_content.js"></script>
 
-	<div id ="commentArea" style="width:600px; margin:auto; margin-top:30px"></div>
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<script>
-	$(function(){
-	    const postNum = ${dto.post_num};
-	
-	    function loadComments(page = 1){
-	        const latest = $("select[name='latest']").val() || "true";
-	
-	        $.get("${pageContext.request.contextPath}/comment/comment.do", 
-	            { m: 'list', post_num: postNum, latest: latest, page: page }, 
-	            function(data){
-	                $("#commentArea").html(data);
-	            }
-	        );
-	    }
-	
-	    // 페이지 선택 시
-	    $(document).on("click", ".pagination a", function(e){
-	        e.preventDefault();
-	        const page = $(this).data("page");
-	        loadComments(page);
-	    });
-	
-	    // 초기 로딩
-	    loadComments();
-	});
-	</script>
-	
+
 </body>
 </html>
-<script>
-	function likes(){
-	}
-</script>

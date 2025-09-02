@@ -6,10 +6,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.service.MainService;
 import model.service.PostService;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 import domain.Post;
 
@@ -19,13 +20,29 @@ public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PostService service = PostService.getInstance();
-        ArrayList<Post> list = service.listS();
-        System.out.println("MainController 실행됨, list size=" + list.size());
-        request.setAttribute("list", list);
+		MainService mainService = MainService.getInstance();
+		PostService postService = PostService.getInstance();
+		
+        ArrayList<Post> popularList = mainService.listS("views");
+        ArrayList<Post> latestList = mainService.listS("latest");
+        ArrayList<Post> noticeList = postService.listNoticeS();
         
-       
-        RequestDispatcher rd = request.getRequestDispatcher("/main/main.jsp");
+        String keyword = request.getParameter("keyword");
+        ArrayList<Post> searchList = new ArrayList<>();
+        
+        if(keyword != null && !keyword.isBlank()) {
+        	searchList = mainService.searchWithKeyword(keyword);
+        	request.setAttribute("searchList", searchList);
+        	RequestDispatcher rd = request.getRequestDispatcher("/main/all_search.jsp");
+            rd.forward(request, response);
+        }
+   
+	    request.setAttribute("notice", noticeList);	  	
+        request.setAttribute("popularList", popularList);
+        request.setAttribute("latestList", latestList);
+        
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/main/main_page.jsp");
         rd.forward(request, response);
     }
 

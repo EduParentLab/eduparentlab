@@ -16,9 +16,6 @@ public class PostService {
         return instance;
     }
 
-    public ArrayList<Post> listS() {
-        return dao.list();
-    }
    
     public List<Post> listPagingS(int startRow, int pageSize, String sort, int categoryNum) {
         return dao.listWithPaging(startRow, pageSize, sort, categoryNum);
@@ -55,21 +52,41 @@ public class PostService {
     public void hit(int post_num){
         dao.hit(post_num);
     }
-   
+
+    //관리자페이지 카테고리 별 게시물 수 
+	public LinkedHashMap<String, Integer> countPostS(){
+		return dao.countPost();
+	} 
+	//likes 수
+	public HashMap<Integer, Integer> countLikesS(){
+		LikesService likesService = LikesService.getInstance();
+		return likesService.countLikesS();
+	}
+	//민영 추가 - 내가 쓴 글 목록
+	public List<Post> mypagePostListS(String email){
+		return dao.mypagePostList(email);
+	}
+	//민영 추가- 내가 쓴 글 총 개수
+	public int mypagePostCountS(String email) {
+	    return dao.mypagePostCount(email);
+	}
+	//민영 추가- 내가 받은 총 공감 수 
+	public int mypageLikeCountS(String email) {
+	    return dao.mypageLikeCount(email);
+	}
+	//민영 추가- 내가 쓴 총 댓글 수 
+	public int mypageCommentCountS(String email) {
+	    return dao.mypageCommentCount(email);
+	}
+
     public ArrayList<Post> listNoticeS() {
         return dao.listNotice();
     }
-    
-    public LinkedHashMap<String, Integer> countPostS(){
-        return dao.countPost();
-    } 
-    
+     
     public int getTotalPostsByCategory(int categoryNum) {
         return dao.getTotalCountByCategory(categoryNum);
     }
 
-    public HashMap<Integer, Integer> countLikesS(){
-        LikesService likesService = LikesService.getInstance();
-        return likesService.countLikesS();
-    }
+
+  
 }

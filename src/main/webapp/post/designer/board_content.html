@@ -1,0 +1,194 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>학부모정보통</title>
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/layout.css" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_list.css" />
+</head>
+
+
+<body>
+  <div class="wrapper">
+
+
+    <header>
+      <div class="logo">
+        <a href="index.html">
+          <img src="./assets/logoremoveback.png" alt="학부모정보통 로고" />
+        </a>
+      </div>
+      <div class="search-container">
+        <div class="search-bar">
+          <div class="search-logo">N</div>
+          <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
+          <button class="search-btn">🔍</button>
+        </div>
+        <!-- ▼ 아래 추천 검색어 목록 ▼ -->
+        <div class="search-dropdown">
+          <div class="search-section-title">검색 추천</div>
+          <ul class="search-list">
+            <li>교육</li>
+            <li>탐구</li>
+            <li>연구소</li>
+          </ul>
+        </div>
+      </div>
+      <div class="login"><button>로그인</button><button>마이페이지</button></div>
+    </header>
+    <div class="navigation-button-container">
+    <a href="/page3.html" class="navigation-button">이동</a>
+    <a href="/page3.html" class="navigation-button">이동</a>
+    <a href="/page3.html" class="navigation-button">이동</a>
+    <a href="/page3.html" class="navigation-button">이동</a>
+    <a href="/page3.html" class="navigation-button">이동</a>
+    </div>
+
+
+
+    <main>
+      
+        
+
+<div class="center-wrapper">
+        <div class="section-title">
+           <p style="font-size:35px; font-weight:bold" >입시게시판</p> 
+        </div>
+        <div class="section-content-title">
+            2025학년도 수능 국어영역
+        </div>
+        <div class="section-content-info">
+            <label>2025.08.23</label>
+            <div style="display: flex; align-items: center; gap: 5px;">
+            <img src="./assets/eye.png" alt="조회수" class="eye-icon" style="width: 20px; height: 20px;"/>
+            <label>조회수 1234</label>
+            </div>
+            <label>rydbrxkarn@gmail.com</label>
+            <div style="display: flex; align-items: center; gap: 5px;">
+                <img src="./assets/like.png" alt="좋아요" class="like-icon" style="width: 20px; height: 20px;"/>
+                <label>25</label>
+            </div>
+            <label>#2357</label>
+            <label>신고하기</label>
+        </div>
+
+        <div class="section-content-body">
+            <p>
+                2025학년도 수능 국어영역에 대한 내용입니다. <br/>
+                1. 시험 시간: 80분 <br/>
+                2. 문항 수: 총 40문항 <br/>
+                3. 출제 범위: 고등학교 국어 교과서 전 범위 <br/>
+                4. 평가 방식: 객관식 및 주관식 혼합형 <br/>
+                5. 난이도: 중간 수준으로 예상되며, 사고력과 문제 해결 능력을 평가하는 문항 포함 <br/>
+                6. 준비 방법: 교과서 및 기출문제 중심으로 학습, 모의고사 활용 <br/>
+                자세한 내용은 교육부 공식 발표 자료를 참고하시기 바랍니다.
+            </p>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+            <div style="display: flex; align-items: center; gap: 5px; width: 50%; padding-left: 10px;">
+                <P>댓글 4</P>
+            </div>
+            <div style="display: flex; align-items: center; justify-content:right; gap: 5px; width: 50%; padding-right: 10px;">
+                <button class="align-button" style="border-right:solid black;">인기순</button>
+                <button class="align-button " style="border-right:solid black;">최신순</button>
+                <button class="align-button">오래된 순</button>
+            </div>
+        </div>
+
+        <div class="section-content-comment-input">
+          <textarea class="comment-input" placeholder="댓글을 입력하세요."></textarea>
+            <div style="display: flex; justify-content: flex-end; width: 100%;">
+              <button class="comment-submit-btn" style="margin:0px;padding:0px; width: 150px; height: 50px;background-color: rgb(192, 165, 165);border:solid rgb(255, 255, 255); border-radius: 5px; cursor: pointer;">
+              <label style="margin:0px;padding:0px;font-size:20px; font-weight:bold;">댓글 작성</label>
+              </button>
+            </div>
+        </div>
+
+        <div class="section-content-comment">
+          <div style="margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
+          <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ffffff; gap:20px; border:solid rgb(255, 255, 255);">
+            <div>
+              햄토리
+            </div>
+            <div>
+              2024.08.23
+            </div>
+            <div style="display: flex; align-items: center; gap: 5px;">
+                <img src="./assets/like.png" alt="좋아요" class="like-icon" style="width: 20px; height: 20px;"/>
+              <div>
+                24
+              </div>
+            </div>
+          </div>
+          <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
+            <label>
+              저도 이 시험 준비하고 있는데, 정보 감사합니다!
+            </label>
+          </div>
+          </div>
+        </div>
+
+        
+        <div class="section-content-recomment">
+          <div style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
+          <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:20px; border:solid rgb(255, 255, 255);">
+            <div>
+              햄토리
+            </div>
+            <div>
+              2024.08.23
+            </div>
+            <div style="display: flex; align-items: center; gap: 5px;">
+                <img src="./assets/like.png" alt="좋아요" class="like-icon" style="width: 20px; height: 20px;"/>
+              <div>
+                24
+              </div>
+            </div>
+          </div>
+          <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
+            <label>
+              
+              <img src="./assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px;">
+              저도 이 시험 준비하고 있는데, 정보 감사합니다!저도 이 시험 준비하고 있는데, 정보 감사합니다!저도 이 시험 준비하고 있는데, 정보 감사합니다!
+            </label>
+          </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="section-content-recomment-input">
+          <div style="display: flex; justify-content: flex-end; width: 100%; align-items: center; gap:10px;">
+               <textarea class="comment-input" placeholder="댓글을 입력하세요." style="width:90%; height:100px; border:solid rgb(0, 0, 0);"></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end; width: 100%; margin-top:10px;">
+            <button style="width:150px; height:40px;">등록</button>
+          </div>
+
+        </div>
+
+        
+
+
+
+
+    </main>
+
+    <footer>
+      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
+      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
+    </footer>
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="search.js"></script>
+
+
+
+</body>
+</html>
