@@ -16,8 +16,7 @@
 	<a href="likesTest.jsp">공감테스트</a><br/>	
 	<a href="<%=request.getContextPath()%>/post.do">post + comment</a><br/>
 	<a href="main/main.do">홈화면</a>
-	
-	<a href="admin/admin.do?m=statistics">통계</a><br/>
+	<a href="comment/comment.do">댓글</a>
 	<br>
     <br>
 	

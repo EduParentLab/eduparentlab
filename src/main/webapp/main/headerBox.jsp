@@ -42,6 +42,9 @@
         <label style="color:green">${loginOkUser.name}</label>님 안녕하세요
         <a href="${pageContext.request.contextPath}/mypage/mypage.do"><button>마이페이지</button></a>
         <a href="${pageContext.request.contextPath}/login/login.do?m=logout"><button>로그아웃</button></a>
+        <c:if test="${loginOkUser.role_num == 1}">
+        <a href="${pageContext.request.contextPath}/admin/admin.do"><button>관리자페이지</button></a>
+        </c:if>
       </c:otherwise>
     </c:choose>
   </div>
