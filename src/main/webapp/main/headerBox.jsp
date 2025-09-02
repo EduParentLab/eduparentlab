@@ -19,7 +19,7 @@
       <div class="search-logo">N</div>
       	<form action="${pageContext.request.contextPath}/main/main.do" method="get">
       		<input type="hidden" name="m" value="search" />
-		    <input type="text" id="keyword" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해 주세요." />
+		    <input style="width:200px;"type="text" id="keyword" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해 주세요." />
 		    <button type="submit" class="search-btn">🔍</button>
 		</form>
     </div>
