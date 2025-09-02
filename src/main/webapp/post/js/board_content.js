@@ -1,32 +1,35 @@
+const CONTEXT_PATH = window.location.pathname.split('/')[1]; 
+const BASE_URL = `${window.location.origin}/${CONTEXT_PATH}`;
+
 document.addEventListener("DOMContentLoaded", function () {
 loadComments();
 });
 
 function loadComments() {
-	fetch("post/js/commentBox.html")
+	const postNum = new URLSearchParams(window.location.search).get("seq");
+	fetch(`${BASE_URL}/comment/comment.do?m=list&post_num=${postNum}`)
     .then(res => res.text())
     .then(html => {
     document.getElementById("commentArea").innerHTML = html;
-    });
-}
-
-// (선택) 댓글 작성 후 비동기 갱신 예시
-document.addEventListener("click", function (e) {
-if (e.target.classList.contains("comment-submit-btn")) {
-    const content = document.querySelector(".comment-input").value;
-    if (!content.trim()) return alert("댓글을 입력하세요.");
-
-    // 서버에 댓글 POST 요청 (예시)
-    fetch("/comment/insert", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ boardId: 123, content: content })
+	
     })
-    .then(res => res.json())
-    .then(data => {
-    if (data.success) {
-        loadComments(); // 댓글 부분만 다시 로딩!
-    }
-    });
+	.then(()=>{
+		events();
+	})
 }
-});
+
+function events(){
+	//답글 버튼 클릭 -> 입력폼 토글
+	    $(document).on("click", ".section-content-comment", function(){
+	    	const $commentDiv = $(this).closest(".section-content-comment");
+	    	const commentNum = $commentDiv.data("comment-num");
+	    	$.get(`${BASE_URL}/comment/comment.do`, { m: "checkReplyAuth", comment_num: commentNum })
+	        .done(function() {
+	            $commentDiv.find(".section-content-recomment-input").toggle();
+	        })
+	        .fail(function() {
+	            alert("답글 권한이 없습니다.");
+	        });
+	    });
+}
+	

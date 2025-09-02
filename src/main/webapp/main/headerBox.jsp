@@ -10,8 +10,13 @@
 <body>
 <header>
   <div class="logo">
+<<<<<<< HEAD
+    <a href="${pageContext.request.contextPath}/main/main.do">
+      <img src="../designer/assets/logoremoveback.png" alt="학부모정보통 로고" />
+=======
     <a href="/educationlab/main/main.do">
       <img src="<%=request.getContextPath()%>/designer/assets/logoremoveback.png" />
+>>>>>>> 8f2525b461efdd698e49164411f248f423668bd1
     </a>
   </div>
   <div class="search-container">
@@ -42,6 +47,9 @@
         <label style="color:green">${loginOkUser.name}</label>님 안녕하세요
         <a href="${pageContext.request.contextPath}/mypage/mypage.do"><button>마이페이지</button></a>
         <a href="${pageContext.request.contextPath}/login/login.do?m=logout"><button>로그아웃</button></a>
+        <c:if test="${loginOkUser.role_num == 1}">
+        <a href="${pageContext.request.contextPath}/admin/admin.do"><button>관리자페이지</button></a>
+        </c:if>
       </c:otherwise>
     </c:choose>
   </div>
