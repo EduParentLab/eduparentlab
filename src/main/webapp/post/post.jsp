@@ -15,7 +15,7 @@
 
 	<header>
 	  <div class="logo">
-	    <a href="<%=request.getContextPath()%>/index.jsp">
+	    <a href="<%=request.getContextPath()%>/main/main.do">
          <img src="<%=request.getContextPath()%>/post/assets/logoremoveback.png" alt="학부모정보통 로고" />
 	    </a>
 	  </div>

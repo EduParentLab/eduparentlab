@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -12,10 +14,10 @@
 
 <body>
   <div class="wrapper">
-
+  	
     <header>
       <div class="logo">
-       <a href="<%=request.getContextPath()%>/index.jsp">
+       <a href="<%=request.getContextPath()%>/main/main.do">
          <img src="<%=request.getContextPath()%>/post/assets/logoremoveback.png" alt="학부모정보통 로고" />
 	    </a>
       </div>
@@ -49,11 +51,20 @@
     <main> 
     
 	<div class="center-wrapper">
+	
         <div class="section-title">
            <p style="font-size:35px; font-weight:bold" >입시게시판</p> 
         </div>
+        
+        
+        
         <div class="section-content-title">
-            ${dto.post_subject}
+            <div style="width: 50%;">
+             <label>${dto.post_subject}</label>
+            </div>
+            <div style="width: 50%;display:flex; justify-content: flex-end;">
+             <a href="#">수정하기</a>
+            </div>
         </div>
         
         <div class="section-content-info">
@@ -71,11 +82,43 @@
             <label>${dto.post_num}</label>
             <label>신고하기</label>
             
-     	   </div> 	
-     	    <div class="section-content-body">
-           		 <p>${dto.post_content}</p>
-    	    </div>    
+		            <!-- 비이미지 파일 다운로드 -->
+		    <c:forEach var="file" items="${fileList}">
+		      <c:set var="ext" value="${fn:toLowerCase(fn:substringAfter(file.file_name, '.'))}" />
+		      <c:if test="${not (ext eq 'jpg' or ext eq 'jpeg' or ext eq 'png' or ext eq 'gif')}">
+		        <div style="display:flex; align-items:center; margin-left:10px;">
+		          <img src="<%=request.getContextPath()%>/post/assets/file.svg"
+		               style="width:20px; height:20px; margin-right:5px;" alt="파일 아이콘"/>
+		                        
+		          <a href="${pageContext.request.contextPath}/download.do?file=${file.file_name}"          
+		             style="color:blue; text-decoration: underline;">
+		            ${file.file_origin_name}
+		          </a>     
+		        </div>
+		      </c:if>
+		    </c:forEach>
+   	   </div>
+   	    
+   	    
+   	    	
+   	    <div class="section-content-body">	  		
+			  <!-- 이미지 파일만 출력 -->
+			  <c:forEach var="file" items="${fileList}">
+			    <c:set var="ext" value="${fn:toLowerCase(fn:substringAfter(file.file_name, '.'))}" />
+			    <c:if test="${ext eq 'jpg' or ext eq 'jpeg' or ext eq 'png' or ext eq 'gif'}">
+			      <div style="width:100%; text-align:center; margin:10px 0;">
+			        <img src="${pageContext.request.contextPath}/download.do?file=${file.file_name}&mode=view"
+			             alt="${file.file_origin_name}"
+			             style="width:400px; height:300px;  height:auto;"/>
+			      </div>
+			    </c:if>
+			  </c:forEach>
+			   <div style="margin-bottom:20px;">
+			    <p>${dto.post_content}</p>
+			  </div>	  
 		</div>
+	
+
         <div id="commentArea"></div>
     </main>
 
