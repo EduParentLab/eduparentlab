@@ -18,7 +18,7 @@
       <div class="center-wrapper">
         <div class="section-banner">
           <a href="#">
-           <img src="./assets/banner.jpg" style="width:100%; height:auto;display: block;" />
+           <img src="../designer/assets/banner.jpg" style="width:100%; height:auto;display: block;" />
           </a>
         </div>
         <div class="section-notice">
@@ -70,7 +70,7 @@
         </div>
         <div class="section-banner">
           <a href="#">
-           <img src="./assets/banner.jpg" style="width:100%; height:auto;display: block;" />
+           <img src="../designer/assets/banner.jpg" style="width:100%; height:auto;display: block;" />
           </a>
         </div>
         <h3 style="margin:10px";>학플리</h3>
@@ -78,24 +78,24 @@
 		<div class="section-playlist">
           <div style="display:flex; width: 100%;height: 200px;justify-content: center;gap:20px;">  
             <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="./assets/youtube.png" style="width:100%; height:100%">
+              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
             </a>
             <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="./assets/youtube.png" style="width:100%; height:100%">
+              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
             </a>
             <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="./assets/youtube.png" style="width:100%; height:100%">
+              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
             </a>
           </div>   
           <div style="display:flex; width: 100%;height: 200px;justify-content: center;gap:20px;">  
             <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="./assets/youtube.png" style="width:100%; height:100%">
+              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
             </a>
             <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="./assets/youtube.png" style="width:100%; height:100%">
+              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
             </a>
             <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="./assets/youtube.png" style="width:100%; height:100%">
+              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
             </a>
           </div>   
         </div>
