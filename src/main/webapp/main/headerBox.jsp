@@ -10,13 +10,13 @@
 <body>
 <header>
   <div class="logo">
-    <a href="main.do">
-      <img src="../designer/assets/logoremoveback.png" alt="학부모정보통 로고" />
+    <a href="/educationlab/main/main.do">
+      <img src="<%=request.getContextPath()%>/designer/assets/logoremoveback.png" />
     </a>
   </div>
   <div class="search-container">
     <div class="search-bar">
-      <div class="search-logo">N</div>
+      <div class="search-logo">H</div>
       	<form action="${pageContext.request.contextPath}/main/main.do" method="get">
       		<input type="hidden" name="m" value="search" />
 		    <input style="width:200px;"type="text" id="keyword" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해 주세요." />
