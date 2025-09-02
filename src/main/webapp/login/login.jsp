@@ -74,7 +74,7 @@
 
     <header>
       <div class="logo">
-        <a href="index.html"> 
+        <a href="../main/main.do"> 
           <img src="./assets/logoremoveback.png" alt="학부모정보통 로고" />
         </a>
       </div>

@@ -10,7 +10,7 @@
 <body>
 <header>
   <div class="logo">
-    <a href="main.do">
+    <a href="${pageContext.request.contextPath}/main/main.do">
       <img src="../designer/assets/logoremoveback.png" alt="학부모정보통 로고" />
     </a>
   </div>
@@ -42,6 +42,9 @@
         <label style="color:green">${loginOkUser.name}</label>님 안녕하세요
         <a href="${pageContext.request.contextPath}/mypage/mypage.do"><button>마이페이지</button></a>
         <a href="${pageContext.request.contextPath}/login/login.do?m=logout"><button>로그아웃</button></a>
+        <c:if test="${loginOkUser.role_num == 1}">
+        <a href="${pageContext.request.contextPath}/admin/admin.do"><button>관리자페이지</button></a>
+        </c:if>
       </c:otherwise>
     </c:choose>
   </div>
