@@ -21,8 +21,9 @@
            <img src="../designer/assets/banner.jpg" style="width:100%; height:auto;display: block;" />
           </a>
         </div>
+        <c:forEach var="notice" items="${notice}">
         <div class="section-notice">
-	        <c:forEach var="notice" items="${notice}">
+	        
 	           <div style="display:flex; justify-content:center; width: 5%;">
 	            <label style="border:2px solid red; color:red; font-weight: bold;">공지</label>
 	           </div>
@@ -32,8 +33,9 @@
 	           <div style="display:flex; justify-content:flex-end; width: 40%;">
 	            <label>${notice.post_date}</label>
 	           </div>
-	        </c:forEach>
+	        
         </div>
+        </c:forEach>
         <div class="section-popular-recent-posts">
              <div class="popular-board">
                 <h3>인기 게시물</h3>

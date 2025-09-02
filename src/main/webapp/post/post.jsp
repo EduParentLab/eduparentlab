@@ -14,7 +14,8 @@
   <div class="wrapper">
 	<div id="headerArea"></div>
     <main style="background-color:white;">
-      <div class="center-wrapper" style="background-color:white;">
+      <div class="center-wrapper" style="background-color:white;" data-category="${category_num}">
+      
 
    
     <!-- 타이틀 -->
@@ -112,7 +113,7 @@
         <div class="section-write-btn" style="gap:10px">
           <img src="<%=request.getContextPath()%>/post/assets/plus-circle.svg" class="icon" alt="글쓰기 아이콘" style="width: 40px; height: 40px;"/>
           <button class="write-btn" 
-                  onclick="location.href='<%=request.getContextPath()%>/post.do?m=input&category_num=${category_num}'"
+                  onclick="location.href='<%=request.getContextPath()%>/post.do?m=input&category_num=${param.category_num}'"
                   style="background-color: rgb(164, 183, 247); padding:10px; border-radius: 10px;">
             글쓰기
           </button>
@@ -168,6 +169,7 @@
 
   <!-- JS 경로 -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script> const contextPath = "<%=request.getContextPath()%>";</script>
   <script src="<%=request.getContextPath()%>/post/js/board_list.js"></script>
 </body>
 </html>

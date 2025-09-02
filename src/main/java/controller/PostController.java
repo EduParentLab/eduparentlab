@@ -112,7 +112,9 @@ public class PostController extends HttpServlet {
     	
     	//권한 체크 
     	if(!checkAuth(request,response,"write", email)) return;
-        response.sendRedirect(request.getContextPath() + "/post/input.jsp");
+    	
+        RequestDispatcher rd = request.getRequestDispatcher("/post/input.jsp");
+        rd.forward(request, response);
     }
 
     
@@ -246,7 +248,7 @@ public class PostController extends HttpServlet {
         List<PostFile> fileList = FileService.getInstance().findFilesByPost(post_num);
 
         request.setAttribute("dto", dto);
-
+        request.setAttribute("post_num", post_num);
         request.setAttribute("fileList", fileList);
 
         RequestDispatcher rd = request.getRequestDispatcher("/post/content.jsp");

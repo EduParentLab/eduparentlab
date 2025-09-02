@@ -10,8 +10,62 @@ function loadContent(page) {
       }
 	  
 	  target.innerHTML = html;
-	
-	  //statistics 탭 script 실행
+	  
+	  //notice 탭 검색 기능
+	  if (page === "notice"){
+		    const searchFilter = document.getElementById("search-filter");
+		    const input = target.querySelector("#noticeSearchInput");
+		    const btn = target.querySelector("#noticeSearchBtn");
+            
+			function filterRows() {
+				const searchOption = searchFilter.value;
+				//console.log(searchOption);
+                const query = input.value.toLowerCase();
+				
+				const rows = document.querySelectorAll("#noticeTable tbody tr");
+				rows.forEach(row => {
+		            let matched = false;
+					//제목+내용 다중 필터
+		            if (searchOption === "subject+content") {
+		                const cells = row.querySelectorAll("td#post_subject, td#post_content");
+		                cells.forEach(function(cell) {
+		                    if (cell.innerText.toLowerCase().includes(query)) {
+		                        matched = true; 
+		                    }
+		                });
+		            } else {//단일 필터
+		                const cell = row.querySelector("td#" + searchOption);
+		                if (cell.innerText.toLowerCase().includes(query)) {
+		                    matched = true;
+		                }
+		            }
+		            row.style.display = matched ? "" : "none";
+		        });
+            }
+			btn.addEventListener("click", filterRows);
+			input.addEventListener("keyup", filterRows);
+	  }
+	  //user_list 탭 검색 기능 
+	  if (page === "user_list" || page === "withdrawn_list"){
+	  		    const searchFilter = document.getElementById("search-filter");
+	  		    const input = target.querySelector("#userListSearchInput");
+	  		    const btn = target.querySelector("#userListSearchBtn");
+	              
+	  			function filterRows() {
+	  				const searchOption = searchFilter.value;
+	  				console.log(searchOption);
+	                const query = input.value.toLowerCase();
+	  				
+	  				const rows = document.querySelectorAll("#userTable tbody tr");
+	  				rows.forEach(row => {
+	  		            const cell = row.querySelector("td#" + searchOption); 
+						row.style.display = cell.innerText.toLowerCase().includes(query)? "" : "none";					
+	  		        });
+	              }
+	  			btn.addEventListener("click", filterRows);
+	  			input.addEventListener("keyup", filterRows);
+	   }	  
+	  //statistics 탭 그래프 그리기 script 실행
 	  if (page === "statistics") {
 	      const scripts = target.querySelectorAll('script');
 	      scripts.forEach(oldScript => {

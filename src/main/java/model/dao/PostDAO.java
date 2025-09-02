@@ -8,9 +8,7 @@ import java.util.*;
 import domain.Post;
 import static model.sql.PostSQL.*;
 import static model.sql.AdminSQL.*;
-import model.service.*;
 import model.sql.PostSQL;
-import model.sql.AdminSQL;
 
 public class PostDAO {
 

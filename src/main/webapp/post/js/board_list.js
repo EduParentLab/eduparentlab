@@ -36,3 +36,11 @@
         }
       });
   });
+  
+  const writeBtn = document.getElementById("writeBtn");
+  if (writeBtn) {
+    writeBtn.addEventListener("click", function () {
+      const catNum = document.querySelector(".center-wrapper").dataset.category;
+      location.href = `${contextPath}/post.do?m=input&category_num=${catNum}`;
+    });
+  }

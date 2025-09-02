@@ -3,18 +3,16 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <button id="toggleNav">☰ 메뉴</button>
-<div class="long-divider"></div>
+
 <div style="display:flex; align-items:center; justify-content:center; flex-direction: column;">
     <label style="font-size:24px; font-family:sans-serif; font-weight: bold;">카테고리별 게시글 수</label>
     <canvas id="categoryChart" width="500" height="500"></canvas>
 </div>
 <div class="long-divider"></div>
-<div class="long-divider"></div>
 <div style="display:flex; align-items:center; justify-content:center; flex-direction: column;">
     <h3>날짜별 가입자 수</h3>
     <canvas id="signupChart" width="500" height="400"></canvas>
 </div>
-    <div class="long-divider"></div>
 
 <style>
 .long-divider {
