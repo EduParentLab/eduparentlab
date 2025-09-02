@@ -129,17 +129,3 @@
     padding:0px 15px;
     font-size:24px;
 }
-
-
-.section-board {
-  height: 450px; /* or auto */
-  margin:5px 10px;
-  padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
-  display: flex;
-  align-items: flex-start;
-  box-sizing: border-box;
-  border:1px solid #ccc;
-  border-radius:5px;
-  background-color: rgb(255, 255, 255);
-  flex-direction: column;
-}

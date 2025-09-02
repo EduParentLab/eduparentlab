@@ -71,33 +71,7 @@
 
 <body onload="document.f.email.focus()">
   <div class="wrapper">
-
-    <header>
-      <div class="logo">
-        <a href="index.html"> 
-          <img src="./assets/logoremoveback.png" alt="학부모정보통 로고" />
-        </a>
-      </div>
-      <div class="search-container">
-        <div class="search-bar">
-          <div class="search-logo">N</div>
-          <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
-          <button class="search-btn">🔍</button>
-        </div>
-        <!-- ▼ 아래 추천 검색어 목록 ▼ -->
-        <div class="search-dropdown">
-          <div class="search-section-title">검색 추천</div>
-          <ul class="search-list">
-            <li>교육</li>
-            <li>탐구</li>
-            <li>연구소</li>
-          </ul>
-        </div>
-      </div>
-      <div class="login"><button>로그인</button><button>마이페이지</button></div>
-    </header>
-
-
+	<div id="headerArea"></div>
     <main>
       <div class="center-wrapper">
         <div class="logincontainer">

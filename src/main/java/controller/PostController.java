@@ -225,6 +225,18 @@ public class PostController extends HttpServlet {
     
     private void content(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+    	HttpSession session = request.getSession(false);
+    	if (session == null) {
+		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+		    return;
+		}
+ 	    User loginUser = (User) session.getAttribute("loginOkUser");
+ 	   if (loginUser == null) {
+	   	    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
+	   	    return;
+	   	}	
+ 	    String role = (String) session.getAttribute("role");
+ 	    
         int post_num = Integer.parseInt(request.getParameter("seq"));
         PostService service = PostService.getInstance();
         CommentService commentService = CommentService.getInstance();
