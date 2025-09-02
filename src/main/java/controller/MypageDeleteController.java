@@ -30,7 +30,8 @@ public class MypageDeleteController extends HttpServlet {
 		 if(deleteResult) {
 			 session.invalidate(); //로그아웃
 			
-			 request.setAttribute("deleteResult", deleteResult);
+			 request.setAttribute("mode", "delete");
+			 request.setAttribute("result", deleteResult);
 		     RequestDispatcher rd = request.getRequestDispatcher("/mypage/msg.jsp");
 		     rd.forward(request, response);
 		 }
