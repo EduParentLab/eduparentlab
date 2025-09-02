@@ -53,6 +53,7 @@
   <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
   <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
   <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
+  <a href="${pageContext.request.contextPath}/playlist/playlist.jsp" class="navigation-button">학플리</a>
 </div>
 </body>
 </html>
