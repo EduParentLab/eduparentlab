@@ -1,4 +1,3 @@
-
 // 페이지 갈아끼우는 함수는 전역으로 따로 유지
 function loadContent(page) {
   fetch(`admin.do?m=${page}`)
@@ -10,11 +9,10 @@ function loadContent(page) {
         return;
       }
 	  
-	  //금영 수정
 	  target.innerHTML = html;
-
+	
+	  //statistics 탭 script 실행
 	  if (page === "statistics") {
-	      // 삽입된 <script>만 수동 실행
 	      const scripts = target.querySelectorAll('script');
 	      scripts.forEach(oldScript => {
 	          const newScript = document.createElement('script');
@@ -26,11 +24,7 @@ function loadContent(page) {
 	          document.body.appendChild(newScript);
 	      });
 	  }
-			
-      //if (page === "statistics") {
-		 // initStatisticsChart();
-		  //initSignupChart();
-		//}
+	
       const toggleBtn = document.getElementById("toggleNav");
       const leftBox = document.getElementById("leftBox");
       let isHidden = false;
@@ -108,83 +102,8 @@ document.querySelectorAll('.section-menu').forEach(menu => {
   });
 });
 
-function initStatisticsChart() {
-  const ctx = document.getElementById('categoryChart');  
-  if (!ctx) return;
-  //const postCount = JSON.parse(ctx.dataset.post.replace(/'/g, '"'));
-  
-  const postLabels = Object.keys(postCount);
-  const postData = Object.values(postCount);	
-   
-  new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: postLabels,
-      datasets: [{
-        data: postData,
-        backgroundColor: ['#ff9baa', '#9fe3e0', '#9eccfa', '#ffe582']
-      }]
-    },
-    options: {
-      responsive: false,
-      plugins: {
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }
-  });
-}
-
-function initSignupChart() {
-  const ctx = document.getElementById('signupChart');
-  if (!ctx) return;  
-  
-  // Chart.js + datalabels 등록
-  const userCount = JSON.parse(ctx.dataset.user.replace(/'/g, '"'));
-  const userLabels = Object.keys(userCount);
-  const userData = Object.values(userCount);
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: userLabels, // 날짜
-      datasets: [{
-        label: '일별 가입자 수',
-        data: userData,
-        backgroundColor: 'rgba(54, 162, 235, 0.5)'
-      }]
-    },
-    options: {
-      responsive: false,
-      plugins: {
-        legend: {
-          position: 'top'
-        },
-        datalabels: {
-          anchor: 'end',
-          align: 'top',
-          color: '#000',
-          font: {
-            size: 12,
-            weight: 'bold'
-          },
-          formatter: value => value
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            stepSize: 2
-          }
-        }
-      }
-    },
-    plugins: [ChartDataLabels]
-  });
-}
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("headerBox.html")
+  fetch("../main/headerBox.jsp")
     .then(res => res.text())
     .then(html => {
       document.getElementById("headerArea").innerHTML = html;
