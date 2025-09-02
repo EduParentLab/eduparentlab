@@ -19,7 +19,9 @@ public class FileService {
 
     public void saveFiles(HttpServletRequest request, long postNum) {
         try {
+        	
             String uploadPath = request.getServletContext().getRealPath("/upload");
+            
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) uploadDir.mkdirs();
 
