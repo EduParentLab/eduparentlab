@@ -63,7 +63,9 @@
              <label>${dto.post_subject}</label>
             </div>
             <div style="width: 50%;display:flex; justify-content: flex-end;">
-             <a href="#">수정하기</a>
+            	<a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}">
+				  수정하기
+				</a>
             </div>
         </div>
         
