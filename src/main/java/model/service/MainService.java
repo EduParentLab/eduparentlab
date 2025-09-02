@@ -19,10 +19,10 @@ public class MainService {
 	public ArrayList<Post> listS(String sort) {
         return dao.list(sort);
     }
-	public ArrayList<Post> searchWithKeyword(String keyword){
+	public ArrayList<Post> searchWithKeyword(String keyword, int category_num){
 		 if (keyword == null || keyword.isBlank()) {
 		        return new ArrayList<>(); // 빈 리스트 반환
 		    }
-		return dao.searchPost(keyword);
+		return dao.searchPost(keyword, category_num);
 	}
 }
