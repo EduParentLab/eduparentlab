@@ -9,6 +9,7 @@ function loadContent(page) {
         console.error("❌ .box-right 요소를 찾을 수 없습니다!");
         return;
       }
+	  
 	  //금영 수정
 	  target.innerHTML = html;
 
@@ -24,16 +25,12 @@ function loadContent(page) {
 	          }
 	          document.body.appendChild(newScript);
 	      });
-
-	      // 차트 초기화
-	      //drawPostChart(postCount);
-	      //drawUserChart(userCount);
 	  }
 			
-      if (page === "statistics") {
-  initStatisticsChart();
-  initSignupChart();
-}
+      //if (page === "statistics") {
+		 // initStatisticsChart();
+		  //initSignupChart();
+		//}
       const toggleBtn = document.getElementById("toggleNav");
       const leftBox = document.getElementById("leftBox");
       let isHidden = false;
@@ -114,7 +111,7 @@ document.querySelectorAll('.section-menu').forEach(menu => {
 function initStatisticsChart() {
   const ctx = document.getElementById('categoryChart');  
   if (!ctx) return;
-  const postCount = JSON.parse(ctx.dataset.post.replace(/'/g, '"'));
+  //const postCount = JSON.parse(ctx.dataset.post.replace(/'/g, '"'));
   
   const postLabels = Object.keys(postCount);
   const postData = Object.values(postCount);	
@@ -186,3 +183,21 @@ function initSignupChart() {
     plugins: [ChartDataLabels]
   });
 }
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("headerBox.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("headerArea").innerHTML = html;
+
+  // ✅ fetch가 끝난 이후에 실행해야 안전함
+  const isLoggedIn = false;
+
+  const loginBefore = document.getElementById("login-before");
+  const loginAfter = document.getElementById("login-after");
+
+  if (loginBefore && loginAfter) {
+    loginBefore.style.display = isLoggedIn ? "none" : "flex";
+    loginAfter.style.display = isLoggedIn ? "flex" : "none";
+  }
+});
+});

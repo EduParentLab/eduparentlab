@@ -18,7 +18,7 @@
 
 <body>
   <div class="wrapper">
-
+  <div id="headerArea"></div>
 
     <header>
       <div class="logo">

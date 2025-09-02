@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<h1>postCount = ${postCount}</h1>
-<h1>userCount = ${userCount}</h1>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <button id="toggleNav">☰ 메뉴</button>
 <div class="long-divider"></div>
 <div style="display:flex; align-items:center; justify-content:center; flex-direction: column;">
@@ -16,10 +15,7 @@
     <canvas id="signupChart" width="500" height="400"></canvas>
 </div>
     <div class="long-divider"></div>
-<div id="chartData" 
-     data-post='${postCount}' 
-     data-user='${userCount}'
-     style="display:none;"></div>
+
 <style>
 .long-divider {
     width: 100%;           /* 또는 원하는 길이 예: 1200px */
@@ -30,143 +26,68 @@
 </style>
 
 <script>
-  const postCount = {
-    <c:forEach var="entry" items="${postCount}" varStatus="loop">
-      "${entry.key}": ${entry.value}<c:if test="${!loop.last}">,</c:if>
-    </c:forEach>
-  };
-  console.log("postCount=", postCount);
-  const userCount = {
-    <c:forEach var="entry" items="${userCount}" varStatus="loop">
-      "${entry.key}": ${entry.value}<c:if test="${!loop.last}">,</c:if>
-    </c:forEach>
-  };
-  console.log("userCount=", userCount);
-</script>
-<!--  
-<script>
-    // postCount와 userCount를 JS 객체로 변환
-    const postCount = {};
-    <c:forEach var="entry" items="${postCount}">
-        postCount['${entry.key}'] = ${entry.value};
-    </c:forEach>
+(function() {
+    // ===== 1. 카테고리별 게시글 수 =====
+    const categoryLabels = [
+        <c:forEach var="entry" items="${postCount}" varStatus="loop">
+            "${fn:escapeXml(entry.key)}"<c:if test="${!loop.last}">,</c:if>
+        </c:forEach>
+    ];
 
-    const userCount = {};
-    <c:forEach var="entry" items="${userCount}">
-        userCount['${entry.key}'] = ${entry.value};
-    </c:forEach>
+    const categoryData = [
+        <c:forEach var="entry" items="${postCount}" varStatus="loop">
+            ${entry.value}<c:if test="${!loop.last}">,</c:if>
+        </c:forEach>
+    ];
 
-    console.log("postCount:", postCount);
-    console.log("userCount:", userCount);
-</script>
-<script>
-    // EL 값이 문자열로 넘어오므로 JS 객체로 변환
-    let postCount = {};
-    <c:forEach var="entry" items="${postCount}">
-        postCount['${entry.key}'] = ${entry.value};
-    </c:forEach>
-
-    console.log(postCount);
-</script>
-
-<script>
-  // JSP EL로 만든 JS 객체
-  const postCountJS = {
-    <c:forEach var="entry" items="${postCount}" varStatus="loop">
-      "${entry.key}": ${entry.value}<c:if test="${!loop.last}">,</c:if>
-    </c:forEach>
-  };
-
-  // JS 배열로 변환
-  const postLabels = [];
-  const postData = [];
-
-  for (const key in postCountJS) {
-      if (postCountJS.hasOwnProperty(key)) {
-          postLabels.push(key);
-          postData.push(postCountJS[key]);
-      }
-  }
-
-  console.log(postLabels);
-  console.log(postData);
-</script>
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-    const postLabels = [];
-    const postData = [];
-    <c:forEach var="entry" items="${postCount}">
-        postLabels.push("${entry.key}");
-        postData.push(parseInt("${entry.value}"));
-    </c:forEach>
-
-    new Chart(document.getElementById('categoryChart'), {
+    const ctx1 = document.getElementById('categoryChart').getContext('2d');
+    new Chart(ctx1, {
         type: 'pie',
         data: {
-            labels: postLabels,
+            labels: categoryLabels,
             datasets: [{
-                data: postData,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)',
-                    'rgba(255, 206, 86, 0.6)',
-                    'rgba(75, 192, 192, 0.6)',
-                    'rgba(153, 102, 255, 0.6)'
-                ]
+                data: categoryData,
+                backgroundColor: ['#ff9baa','#9fe3e0','#9eccfa','#ffe582']
             }]
         },
         options: {
             responsive: false,
             plugins: {
+                legend: { position: 'bottom' },
                 datalabels: {
-                    display: true,
-                    color: 'white',
-                    font: { weight: 'bold', size: 14 },
-                    formatter: (value) => `${value}개`
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return `${context.label}: ${context.raw}개`;
-                        }
-                    }
-                },
-                legend: { display: true, position: 'bottom' },
-                title: { display: true, text: '카테고리별 게시글 수', font: { size: 18, weight: 'bold' } }
+                    color: '#000',
+                    formatter: (value) => value
+                }
             }
         },
         plugins: [ChartDataLabels]
     });
 
-    // 날짜별 가입자 수
-    const userLabels = [];
-    const userData = [];
-    <c:forEach var="entry" items="${userCount}">
-        userLabels.push("${entry.key}");
-        userData.push(parseInt("${entry.value}"));
-    </c:forEach>
+    // ===== 2. 날짜별 가입자 수 =====
+    const signupLabels = [
+        <c:forEach var="entry" items="${userCount}" varStatus="loop">
+            "${fn:escapeXml(entry.key)}"<c:if test="${!loop.last}">,</c:if>
+        </c:forEach>
+    ];
 
-    new Chart(document.getElementById('signupChart'), {
+    const signupData = [
+        <c:forEach var="entry" items="${userCount}" varStatus="loop">
+            ${entry.value}<c:if test="${!loop.last}">,</c:if>
+        </c:forEach>
+    ];
+
+    const ctx2 = document.getElementById('signupChart').getContext('2d');
+    new Chart(ctx2, {
         type: 'bar',
         data: {
-            labels: userLabels,
+            labels: signupLabels,
             datasets: [{
                 label: '일별 가입자 수',
-                data: userData,
-                borderWidth: 1,
-                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+                data: signupData,
+                backgroundColor: 'rgba(54,162,235,0.5)'
             }]
         },
-        options: {
-            responsive: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 1 }
-                }
-            }
-        }
+        options: { responsive: false }
     });
-});
-</script>-->
-                
+})();
+</script>
