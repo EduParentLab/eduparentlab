@@ -7,13 +7,13 @@
   <button id="toggleNav">☰ 메뉴</button>
 
   <div class="search-box" style="margin-left: 50px; margin-top: 20px; margin-right: 50px;">
-      <select class="search-filter">
-          <option value="title">제목</option>
-          <option value="content">내용</option>
-          <option value="title+content" selected>제목+내용</option>
+      <select id="search-filter" class="search-filter">
+          <option value="post_subject">제목</option>
+          <option value="post_content">내용</option>
+          <option value="subject+content">제목+내용</option>
       </select>
-      <input type="text" class="search-input" placeholder="검색어를 입력하세요" />
-      <button class="search-btn">🔍</button>
+      <input type="text" id="noticeSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
+      <button id="noticeSearchBtn" class="search-btn">🔍</button>
   </div>
 
   <div style="text-align: right;">
@@ -23,42 +23,46 @@
 
 
   <div style="padding:50px; padding-top:20px;">
-  <table class="notice-table">
-  <thead>
-      <tr>
-      <th><input type="checkbox" /></th>
-      <th>글번호</th>
-      <th>글제목</th>
-      <th>작성날짜</th>
-      <th>조회수</th>
-      </tr>
-  </thead>
-  <tbody>
-      <c:choose>
-<c:when test="${empty notice}">
-<tr>
-<td align='center' colspan="5">작성한 글 없음</td>
-</tr>
-</c:when>
-<c:otherwise>
-<c:forEach items="${notice}" var="dto">
-      <tr>
-      <td><input type="checkbox" /></td>
-<td align='center'>${dto.post_num}</td>
-<td align='center'>
-<a href='../post.do?m=content&seq=${dto.post_num}'>${dto.post_subject}</a>
-</td>
-<td align='center'>${dto.post_date}</td>		
-<td align='center'>${dto.post_view}</td>
-</tr>
-      </c:forEach>
-</c:otherwise>	    
-</c:choose>		
-  </tbody>
+  <table id="noticeTable" class="notice-table">
+	 <thead>
+	     <tr>
+	     <th><input type="checkbox" /></th>
+	     <th>글번호</th>
+	     <th>글제목</th>      
+	     <th>작성일</th>
+	     <th>조회수</th>
+	     <th>좋아요</th>
+	     
+	     </tr>
+	 </thead>
+	 <tbody>
+	     <c:choose>
+			<c:when test="${empty notice}">
+				<tr>
+				<td align='center' colspan="5">작성한 글 없음</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+			  <c:forEach items="${notice}" var="dto">
+			      <tr>
+			        <td><input type="checkbox" /></td>
+					<td align='center'>${dto.post_num}</td>
+					<td id="post_subject" align='center'>
+					<a href='../post.do?m=content&seq=${dto.post_num}'>${dto.post_subject}</a>
+					</td>	
+					<td align='center'>${dto.post_date}</td>		
+					<td align='center'>${dto.post_view}</td>
+					<td align='center'>${dto.likes}</td>
+					<td id="post_content" style="position:absolute; left:-9999px;">${dto.post_content}</td>
+				  </tr>
+			  </c:forEach>
+		   </c:otherwise>	    
+	    </c:choose>		
+     </tbody>
   </table>
   	<!-- ✏ 글쓰기 버튼 -->
 	<div class="top-bar">
-    <a href="../post/input.jsp">➕ 글쓰기</a>
+    	<a href="../post/input.jsp">➕ 글쓰기</a>
 	</div>
   </div>
 
