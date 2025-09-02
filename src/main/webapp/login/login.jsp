@@ -71,6 +71,7 @@
 
 <body onload="document.f.email.focus()">
   <div class="wrapper">
+<<<<<<< HEAD
 
     <header>
       <div class="logo">
@@ -98,6 +99,9 @@
     </header>
 
 
+=======
+	<div id="headerArea"></div>
+>>>>>>> 8f2525b461efdd698e49164411f248f423668bd1
     <main>
       <div class="center-wrapper">
         <div class="logincontainer">
