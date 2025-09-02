@@ -75,13 +75,13 @@ public class MainDAO {
             } catch (Exception e) {}
         }
     }
-    public ArrayList<Post> searchPost(String keyword) {
+    public ArrayList<Post> searchPost(String keyword, int category_num) {
     	ArrayList<Post> list = new ArrayList<>();
         
         String sql = "SELECT p.post_num, p.post_subject, p.post_content, p.post_date, " +
                 "p.post_view, p.category_num, p.email, u.nickname, p.likes " +
                 "FROM Post p LEFT JOIN User u ON p.email = u.email " +
-                "WHERE p.post_subject LIKE ? OR p.post_content LIKE ? " +
+                "WHERE (p.post_subject LIKE ? OR p.post_content LIKE ?) AND p.category_num = ? " +
                 "ORDER BY p.post_date DESC";
         
         try (Connection con = ds.getConnection();
@@ -89,7 +89,8 @@ public class MainDAO {
 
                pstmt.setString(1, "%" + keyword + "%");
                pstmt.setString(2, "%" + keyword + "%");
-
+               pstmt.setInt(3, category_num);
+               
                ResultSet rs = pstmt.executeQuery();
 
                while (rs.next()) {

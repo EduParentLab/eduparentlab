@@ -10,15 +10,16 @@
 <body>
 <header>
   <div class="logo">
-    <a href="index.html">
-      <img src="./assets/logoremoveback.png" alt="학부모정보통 로고" />
+    <a href="main.do">
+      <img src="../designer/assets/logoremoveback.png" alt="학부모정보통 로고" />
     </a>
   </div>
   <div class="search-container">
     <div class="search-bar">
       <div class="search-logo">N</div>
       	<form action="${pageContext.request.contextPath}/main/main.do" method="get">
-		    <input type="text" id="searchInput" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해 주세요." />
+      		<input type="hidden" name="m" value="search" />
+		    <input type="text" id="keyword" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해 주세요." />
 		    <button type="submit" class="search-btn">🔍</button>
 		</form>
     </div>
@@ -48,7 +49,6 @@
 </header>
 
 <div class="navigation-button-container">
-  <a href="main.do" class="navigation-button">홈</a>
   <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
   <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
   <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
