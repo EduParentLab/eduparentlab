@@ -12,55 +12,9 @@
 
 <body>
   <div class="wrapper">
-
-	<header>
-	  <div class="logo">
-	    <a href="<%=request.getContextPath()%>/main/main.do">
-         <img src="<%=request.getContextPath()%>/post/assets/logoremoveback.png" alt="학부모정보통 로고" />
-	    </a>
-	  </div>
-	  <div class="search-container">
-	    <div class="search-bar">
-	      <div class="search-logo">N</div>
-	      <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
-	      <a href="#">
-	        <button class="search-btn">🔍</button>
-	      </a>
-	    </div>
-	    <div class="search-dropdown">
-	      <div class="search-section-title">검색 추천</div>
-	      <ul class="search-list">
-	        <li>교육</li>
-	        <li>탐구</li>
-	        <li>연구소</li>
-	      </ul>
-	    </div>
-	  </div>
-	  
-  <div class="login" id="login-before">
-    <a href="login.html">
-       <button>로그인</button>
-    </a>
-    <a href="resist.html">
-      <button>회원가입</button>
-    </a>
-    </div>
-    <div class="login" id="login-after" style="display:none;">
-    <label>진석님 안녕하세요</label><button>마이페이지</button><button>로그아웃</button>
-  </div>
-</header>
-
-
-    <!-- 네비게이션 -->
-    <div class="navigation-button-container">
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
-       <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
-    </div>
-
-    <main>
-      <div class="center-wrapper">
+	<div id="headerArea"></div>
+    <main style="background-color:white;">
+      <div class="center-wrapper" style="background-color:white;">
 
    
     <!-- 타이틀 -->
@@ -214,6 +168,6 @@
 
   <!-- JS 경로 -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="<%=request.getContextPath()%>/post/board_list.js"></script>
+  <script src="<%=request.getContextPath()%>/post/js/board_list.js"></script>
 </body>
 </html>

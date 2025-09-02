@@ -1,0 +1,131 @@
+.center-wrapper {
+  display: flex;               /* flex 컨테이너 */
+  flex-direction: column;         /* 가로 정렬 (기본값이긴 하지만 명시해도 좋아요) */
+  justify-content: center;     /* 가로 가운데 정렬 */
+  align-items: stretch;         /* 세로 가운데 정렬 */
+  gap: 0px;                   /* 자식 간 간격 */
+  background-color: rgb(255, 255, 255);
+  height:auto;
+  padding:0px 0px;
+}
+.section-title {
+  height: 60px; /* or auto */
+  padding: 40px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgb(255, 255, 255);
+  box-sizing: border-box;
+  gap:10px;
+  margin:0px 10px;
+}
+
+.section-banner {
+  width: 100%;
+  height: auto; /* or auto */
+  padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
+  display: block;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+
+.section-popular-recent-posts {
+  height: auto; /* or auto */
+  width: 100%;
+  padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  gap:10px;
+  justify-content:center;
+
+}
+
+.section-notice {
+  height: 60px; /* or auto */
+  margin:5px 10px;
+  padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border:1px solid #ccc;
+  border-radius:5px;
+  gap:10px;
+  background-color: rgb(221, 235, 221);
+}
+
+
+  .popular-board {
+      width: 50%;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      padding: 15px;
+      background-color: #ffffff;
+    }
+
+    .popular-board h3 {
+      font-size: 16px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #aaa;
+      padding-bottom: 6px;
+    }
+
+    .board-item {
+      margin-bottom: 0px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+    }
+
+    .board-title {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .meta-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #333;
+      flex-wrap: wrap;
+    }
+
+    .meta-info span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .meta-info img {
+      width: 14px;
+      height: 14px;
+    }
+
+    .board-item:last-child {
+      margin-bottom: 0;
+    }
+
+
+.section-playlist {
+  height: 440px; /* or auto */
+  margin:5px 10px;
+  padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border:1px solid #ccc;
+  border-radius:5px;
+  gap:10px;
+  flex-direction: column;
+  background-color: rgb(221, 235, 221);
+}
+
+.select-button{
+    width:auto;
+    height:100%;
+    border-radius:70px;
+    padding:0px 15px;
+    font-size:24px;
+}

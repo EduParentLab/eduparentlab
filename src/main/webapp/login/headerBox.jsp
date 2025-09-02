@@ -10,7 +10,7 @@
 <body>
 <header>
   <div class="logo">
-    <a href="main.do">
+    <a href="${pageContext.request.contextPath}/main/main.do">
       <img src="../designer/assets/logoremoveback.png" alt="학부모정보통 로고" />
     </a>
   </div>
