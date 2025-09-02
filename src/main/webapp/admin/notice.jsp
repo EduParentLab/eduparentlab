@@ -31,15 +31,14 @@
 	     <th>글제목</th>      
 	     <th>작성일</th>
 	     <th>조회수</th>
-	     <th>좋아요</th>
-	     
+	     <th>좋아요</th>	     
 	     </tr>
 	 </thead>
 	 <tbody>
 	     <c:choose>
 			<c:when test="${empty notice}">
 				<tr>
-				<td align='center' colspan="5">작성한 글 없음</td>
+				<td align='center' colspan="6">작성한 글 없음</td>
 				</tr>
 			</c:when>
 			<c:otherwise>
