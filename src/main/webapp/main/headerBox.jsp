@@ -10,13 +10,8 @@
 <body>
 <header>
   <div class="logo">
-<<<<<<< HEAD
-    <a href="${pageContext.request.contextPath}/main/main.do">
-      <img src="../designer/assets/logoremoveback.png" alt="학부모정보통 로고" />
-=======
     <a href="/educationlab/main/main.do">
       <img src="<%=request.getContextPath()%>/designer/assets/logoremoveback.png" />
->>>>>>> 8f2525b461efdd698e49164411f248f423668bd1
     </a>
   </div>
   <div class="search-container">
