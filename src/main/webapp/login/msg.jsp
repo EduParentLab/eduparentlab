@@ -13,6 +13,6 @@
 		location.href="login.do?m=form";
 	}else{
 		alert("로그인 성공");
-		location.href="${pageContext.request.contextPath}/main/main_page.jsp";
+		location.href="${pageContext.request.contextPath}/main/main.do";
 	}
 </script>
