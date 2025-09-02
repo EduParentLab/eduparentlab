@@ -64,7 +64,8 @@
           <!-- 버튼 -->
           <div style="width:100%;height: 100px;padding:10px; display:flex;justify-content: flex-end;gap:20px;">
             <button type="button" 
-                    style="background-color:rgb(82, 82, 95);color:white;font-size: 24px;padding: 25px;border-radius: 15px;">
+                    style="background-color:rgb(82, 82, 95);color:white;font-size: 24px;padding: 25px;border-radius: 15px;"
+                    onclick="history.back()">
               취소하기
             </button>
             <button type="submit" 
