@@ -51,6 +51,7 @@ public class CommentController extends HttpServlet {
     		page = Integer.parseInt(strPage);
     	}
     	String strPost_num = request.getParameter("post_num");
+    	System.out.println("@post_num: " + strPost_num);
 		int post_num = (strPost_num != null && !strPost_num.isEmpty()) ? Integer.parseInt(strPost_num) : 1; // 기본값 1
 		
     	int totalCount = service.getTotalComments(post_num);
@@ -64,11 +65,12 @@ public class CommentController extends HttpServlet {
 		System.out.println("@list()호출, post_num="+post_num);
 		System.out.println("list size: "+list.size());
 		
+		request.setAttribute("post_num", post_num);
 		request.setAttribute("comment", list);
 		request.setAttribute("paging", paging);
 		
 	
-		RequestDispatcher rd = request.getRequestDispatcher("/comment/comment.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -81,6 +83,10 @@ public class CommentController extends HttpServlet {
 		CommentService service = CommentService.getInstance();
 
 		String strPost_num = request.getParameter("post_num");
+		if(strPost_num == null || strPost_num.isEmpty()) {
+		    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "post_num is required");
+		    return;
+		}
 		int post_num = Integer.parseInt(strPost_num);
 		String content = request.getParameter("content");
 		Comment comment = new Comment(-1, content, null, 0, 0, loginUser.getEmail(), post_num);
