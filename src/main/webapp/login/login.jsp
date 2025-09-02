@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
-  <link rel="stylesheet" href="../css/layout.css" />
-  <link rel="stylesheet" href="../css/login.css" />
-		<script src="../js/trim.js"></script>
+  <link rel="stylesheet" href="../main/layout.css" />
+  <link rel="stylesheet" href="login.css" />
+		<script src="trim.js"></script>
 		<script language="javascript"> 
 		function check(){
 		    var emailval = f.email.value;   // email

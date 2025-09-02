@@ -16,9 +16,6 @@ public class PostService {
         return instance;
     }
 
-    public ArrayList<Post> listS(String sort) {
-        return dao.list(sort);
-    }
    
     public List<Post> listPagingS(int startRow, int pageSize, String sort, int categoryNum) {
         return dao.listWithPaging(startRow, pageSize, sort, categoryNum);

@@ -26,52 +26,6 @@ public class PostDAO {
         }
     }
 
-    public ArrayList<Post> list(String sort) {
-        ArrayList<Post> list = new ArrayList<>();
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        StringBuilder sql = new StringBuilder(POST);
-        
-        if("views".equals(sort)) {
-        	sql.append(" ORDER BY p.post_view DESC LIMIT 0, 5");
-        }else if("latest".equals(sort)){
-        	sql.append(" ORDER BY p.post_date DESC LIMIT 0, 5");
-        }
-        try {
-            con = ds.getConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(sql.toString());
-
-            while (rs.next()) {
-                int post_num = rs.getInt(1);
-                String post_subject = rs.getString(2);
-                String post_content = rs.getString(3);
-                java.sql.Date post_date = rs.getDate(4);
-                int post_view = rs.getInt(5);
-                int category_num = rs.getInt(6);
-                String email = rs.getString(7);
-                String nickname = rs.getString(8);
-                int likes = rs.getInt(9);
-
-                list.add(new Post(post_num, post_subject, post_content,
-                                  post_date, post_view, category_num, email, nickname, likes));
-            }
-            
-            return list;
-
-        } catch (SQLException se) {
-            se.printStackTrace();
-            return null;
-
-        } finally {
-            try { 
-            	rs.close(); 
-            	stmt.close(); 
-            	con.close(); 
-            } catch (Exception e) {}
-        }
-    }
     
     public List<Post> listWithPaging(int startRow, int pageSize, String sort, int categoryNum) {
         List<Post> list = new ArrayList<>();
