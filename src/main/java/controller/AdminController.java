@@ -16,7 +16,6 @@ import java.util.*;
 import java.sql.Date;
 
 
-
 @WebServlet("/admin/admin.do")
 public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -43,10 +42,7 @@ public class AdminController extends HttpServlet {
 	    case "notice": getNotice(request, response); break;	    
 	    case "user_list": getUser(request, response); break;	
 	    case "withdrawn_list": getGhost(request, response); break;	
-	    case "statistics": countPost(request, response); 
-	    				   countUser(request, response); 	    				   
-					       RequestDispatcher rd = request.getRequestDispatcher("statistics.jsp");
-						   rd.forward(request, response); break;	
+	    case "statistics": getStatistics(request, response); break;	 	    				   				      
 	    default: getNotice(request, response); break;
 	    }   	
 	}
@@ -77,16 +73,37 @@ public class AdminController extends HttpServlet {
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);
 	}
+    private void getStatistics(HttpServletRequest request, HttpServletResponse response) 
+	        throws ServletException, IOException {
+    	countPost(request, response); 
+    	countUser(request, response);
+    	//Map<String,Object> postData = countPost(); 
+    	//Map<String,Object> userData = countUser();
+    	RequestDispatcher rd = request.getRequestDispatcher("statistics.jsp");
+		rd.forward(request, response); 
+		
+		//List<Map<String, Object>> dataList = new ArrayList<>();
+		//dataList.add(postData);
+		//dataList.add(userData);     
+    }
     private void countPost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {    	
     	PostService service = PostService.getInstance();
- 	    LinkedHashMap<String, Integer> map = service.countPostS();	   
- 	    request.setAttribute("postCount", map);		  
+ 	    LinkedHashMap<String, Integer> postCount = service.countPostS();	   
+ 	    request.setAttribute("postCount", postCount);   	    
+ 	    //Map<String, Object> postData = new HashMap<>();
+        //postData.put("name", "postCount");
+        //postData.put("data", postCount);
+        //return postData;
 	}
     private void countUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
     	UserService service = UserService.getInstance();
-    	LinkedHashMap<Date, Integer> map = service.countUserS();
-    	request.setAttribute("userCount", map);    	
+    	LinkedHashMap<Date, Integer> userCount = service.countUserS();
+    	request.setAttribute("userCount", userCount);        	
+    	//Map<String, Object> userData = new HashMap<>();
+        //userData.put("name", "userCount");
+        //userData.put("data", userCount);  
+        //return userData;
     }
 }
