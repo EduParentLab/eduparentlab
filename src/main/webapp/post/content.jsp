@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!DOCTYPE html>
@@ -81,8 +82,10 @@
         </div>
      
         
-        <div class="section-content-info">
-            <label>${dto.post_date}</label>
+        <div class="section-content-info">    
+        		<td>
+					<fmt:formatDate value="${dto.post_date}" pattern="yyyy-MM-dd"/>
+				</td>
             <div style="display: flex; align-items: center; gap: 5px;">
 	            <img src="<%=request.getContextPath()%>/post/assets/eye.png" alt="조회수" class="eye-icon" style="width: 20px; height: 20px;"/>
 	            <label>${dto.post_view}</label>
