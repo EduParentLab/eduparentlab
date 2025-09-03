@@ -44,7 +44,7 @@ public class MainController extends HttpServlet {
         request.setAttribute("popularList", popularList);
         request.setAttribute("latestList", latestList);
         
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("/main/main_page.jsp");
         rd.forward(request, response);
 	}
