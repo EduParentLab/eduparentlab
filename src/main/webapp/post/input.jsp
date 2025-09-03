@@ -12,7 +12,8 @@
 
 <body>
   <div class="wrapper">
-    <div id="headerArea"></div>
+  <div id="headerArea"></div>
+   
     
     <main>
       <div class="center-wrapper">

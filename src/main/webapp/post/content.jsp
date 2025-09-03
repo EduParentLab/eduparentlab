@@ -8,12 +8,14 @@
 <head>
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
+  
    <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_content.css" />
 </head>
 
 <body>
   <div class="wrapper">
+  <div id="headerArea"></div>
   	
     <header>
       <div class="logo">
