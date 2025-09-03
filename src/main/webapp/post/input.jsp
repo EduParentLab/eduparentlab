@@ -6,11 +6,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/layout.css" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/main/all_search.css" />
-  <script>
-		  const contextPath = "<%= request.getContextPath() %>";
-  </script>
+  <link rel="icon" type="image/x-icon" href="<%= request.getContextPath() %>/favicon.ico">
 </head>
 
 <body>
@@ -110,7 +108,10 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="<%=request.getContextPath()%>/main/all_search.js"></script>
   <script src="<%=request.getContextPath()%>/post/js/input.js"></script>
+  
+  <script>
+		  const contextPath = "<%= request.getContextPath() %>";
+  </script>
 </body>
 </html>
