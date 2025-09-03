@@ -9,50 +9,13 @@
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
   
-   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/layout.css" />
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_content.css" />
 </head>
 
 <body>
   <div class="wrapper">
   <div id="headerArea"></div>
-  	
-    <header>
-      <div class="logo">
-       <a href="<%=request.getContextPath()%>/main/main.do">
-         <img src="<%=request.getContextPath()%>/post/assets/logoremoveback.png" alt="학부모정보통 로고" />
-	    </a>
-      </div>
-      <div class="search-container">
-        <div class="search-bar">
-          <div class="search-logo">N</div>
-          <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
-          <button class="search-btn">🔍</button>
-        </div>
-        
-        
-        
-        <!--  아래 추천 검색어 목록 -->
-        <div class="search-dropdown">
-          <div class="search-section-title">검색 추천</div>
-          <ul class="search-list">
-            <li>교육</li>
-            <li>탐구</li>
-            <li>연구소</li>
-          </ul>
-        </div>
-      </div>
-      <div class="login"><button>로그인</button><button>마이페이지</button></div>
-    </header>
-    
-     <!-- 네비게이션 -->
-    <div class="navigation-button-container">
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
-    </div>
-  
     <main> 
     
 	<div class="center-wrapper">
@@ -199,6 +162,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/post/js/board_content.js"></script>
+<script> const contextPath = "<%=request.getContextPath()%>";</script>
 
 
 </body>

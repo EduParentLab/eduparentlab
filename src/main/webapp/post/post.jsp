@@ -108,12 +108,9 @@
                       <td>                      	
                         <a href="<%=request.getContextPath()%>/post.do?m=content&seq=${dto.post_num}&category_num=${category_num}">
                           ${dto.post_subject}
-<<<<<<< HEAD
                         </a>
-                        
-=======
                         </a>                                            
->>>>>>> c9fa428474dc62d12b35bd78b761747dbc158690
+
                       </td>
                       <td>${dto.nickname}</td>
                       
