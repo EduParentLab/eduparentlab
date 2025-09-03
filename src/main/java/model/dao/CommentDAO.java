@@ -46,13 +46,15 @@ public class CommentDAO {
                 if(rs.next()) {
                     int comment_num = rs.getInt(1);
                     dto.setComment_num(comment_num);
-                    // 방금 생성된 comment_num으로 group_num 업데이트
+                    
+                    // 부모 댓글은 자기 자신을 group_num으로 업데이트
                     String updateSql = "UPDATE comments SET group_num = ? WHERE comment_num = ?";
                     try (PreparedStatement upstmt = con.prepareStatement(updateSql)) {
                         upstmt.setInt(1, comment_num);
                         upstmt.setInt(2, comment_num);
                         upstmt.executeUpdate();
                     }
+           
                 }
                 return 1;
             }
@@ -89,11 +91,16 @@ public class CommentDAO {
 				Timestamp date = rs.getTimestamp("comment_date");
 				clist.add(new Comment(comment_num, content, date, -1, -1, email, post_num));
 			}
-			return clist;
+			// 각 부모 댓글에 답댓글 리스트 추가
+            for (Comment comment : clist) {
+                List<Comment> replies = getRecomments(comment.getComment_num());
+                comment.setRecomments(replies);
+            }
 		} catch (SQLException se) {
 			se.printStackTrace();
 			return null;
 		}
+		return clist;
 	}
 	// 특정 글의 전체 댓글 개수 조회
     public int getTotalCount(int post_num) {
@@ -163,12 +170,14 @@ public class CommentDAO {
 		try(Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(RECOMMENT);
 				PreparedStatement pstmt2 = con.prepareStatement(INSERT);){
+			
 			pstmt.setInt(1, dto.getGroup_num());
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				maxOrder = rs.getInt(1);
 			}
 			int newGroupOrder = maxOrder +1;
+			
 			pstmt2.setString(1,dto.getComment_content());
 			pstmt2.setInt(2, dto.getGroup_num());
 			pstmt2.setInt(3, newGroupOrder);
