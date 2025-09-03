@@ -47,7 +47,7 @@
       <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
       <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
       <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">공지사항</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
     </div>
   
     <main> 
