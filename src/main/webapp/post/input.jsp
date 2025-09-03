@@ -8,6 +8,9 @@
   <title>학부모정보통</title>
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/main/all_search.css" />
+  <script>
+		  const contextPath = "<%= request.getContextPath() %>";
+  </script>
 </head>
 
 <body>
@@ -64,12 +67,34 @@
           <!-- 버튼 -->
           <div style="width:100%;height: 100px;padding:10px; display:flex;justify-content: flex-end;gap:20px;">
             <button type="button" 
-                    style="background-color:rgb(82, 82, 95);color:white;font-size: 24px;padding: 25px;border-radius: 15px;"
+                    style="
+			            background-color:rgb(82, 82, 95);
+			            color:white;
+			            font-size: 20px;
+			            padding: 0;
+			            border-radius: 15px;
+			            height: 60px;
+			            width: 130px;
+			            text-align: center;
+			            display: flex;
+			            align-items: center;
+			            justify-content: center;"
                     onclick="history.back()">
               취소하기
             </button>
             <button type="submit" 
-                    style="background-color:blue;color:white;font-size: 24px;padding: 25px;border-radius: 15px;">
+                    style="
+			            background-color:blue;
+			            color:white;
+			            font-size: 20px;
+			            padding: 0;
+			            border-radius: 15px;
+			            height: 60px;
+			            width: 130px;
+			            text-align: center;
+			            display: flex;
+			            align-items: center;
+			            justify-content: center;">
               등록하기
             </button>
           </div>
@@ -85,5 +110,6 @@
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="<%=request.getContextPath()%>/main/all_search.js"></script>
+  <script src="<%=request.getContextPath()%>/post/js/input.js"></script>
 </body>
 </html>
