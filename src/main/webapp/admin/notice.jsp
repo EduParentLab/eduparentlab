@@ -15,13 +15,10 @@
       <input type="text" id="noticeSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
       <button id="noticeSearchBtn" class="search-btn">🔍</button>
   </div>
-
+<form action="?m=delete" method="post">
   <div style="text-align: right;">
-      <button class="delete-btn" style="padding-right:50px; padding-top:20px;">🗑️</button>
+      <button type="submit" class="delete-btn" style="padding-right:50px; padding-top:20px;">🗑️</button>
   </div>
-
-
-
   <div style="padding:50px; padding-top:20px;">
   <table id="noticeTable" class="notice-table">
 	 <thead>
@@ -44,7 +41,7 @@
 			<c:otherwise>
 			  <c:forEach items="${notice}" var="dto">
 			      <tr>
-			        <td><input type="checkbox" /></td>
+			        <td><input type="checkbox" name="del_post_num" value="${dto.post_num}"/></td>
 					<td align='center'>${dto.post_num}</td>
 					<td id="post_subject" align='center'>
 					<a href='../post.do?m=content&seq=${dto.post_num}'>${dto.post_subject}</a>
@@ -59,6 +56,7 @@
 	    </c:choose>		
      </tbody>
   </table>
+ </form>
   	<!-- ✏ 글쓰기 버튼 -->
 	<div class="top-bar">
     	<a href="../post/input.jsp">➕ 글쓰기</a>

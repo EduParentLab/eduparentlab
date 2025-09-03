@@ -43,6 +43,7 @@ public class AdminController extends HttpServlet {
 	    case "user_list": getUser(request, response); break;	
 	    case "withdrawn_list": getGhost(request, response); break;	
 	    case "statistics": getStatistics(request, response); break;	 	    				   				      
+	    case "delete": delete(request, response); break;	 
 	    default: getNotice(request, response); break;
 	    }   	
 	}
@@ -91,5 +92,18 @@ public class AdminController extends HttpServlet {
     	UserService service = UserService.getInstance();
     	LinkedHashMap<Date, Integer> userCount = service.countUserS();
     	request.setAttribute("userCount", userCount);          	
+    }
+    private void delete(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
+    	String[] del_post_num = request.getParameterValues("del_post_num");
+    	//System.out.println(del_post_num);
+    	if (del_post_num != null) {
+            PostService postService = PostService.getInstance();
+            for (String numStr : del_post_num) {
+                int post_num = Integer.parseInt(numStr);
+                postService.deleteS(post_num);
+            }
+        }
+    	response.sendRedirect(request.getContextPath() + "/admin/admin.do");
     }
 }
