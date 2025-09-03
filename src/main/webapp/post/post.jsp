@@ -108,7 +108,9 @@
                       <td>                      	
                         <a href="<%=request.getContextPath()%>/post.do?m=content&seq=${dto.post_num}&category_num=${category_num}">
                           ${dto.post_subject}
+                        </a>
                         </a>                                            
+
                       </td>
                       <td>${dto.nickname}</td>
                       
@@ -120,10 +122,21 @@
                     </tr>
                   </c:forEach>
                 </c:otherwise>
-                
               </c:choose>
+              
             </tbody>
           </table>
+          <div id="preview-box" style="
+  position:absolute;
+  display:none;
+  border:1px solid #ccc;
+  background:#fff;
+  padding:5px;
+  z-index:9999;
+">
+  <img id="preview-img" src="" style="max-width:200px; max-height:150px;" />
+</div>
+          
         </div>
         
 		<c:if test="${loginOkUser.email=='admin@edu_parent.com' or category_num != '4'}">
