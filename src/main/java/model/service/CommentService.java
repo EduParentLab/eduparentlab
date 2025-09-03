@@ -1,6 +1,7 @@
 package model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import domain.Comment;
 import model.dao.CommentDAO;
@@ -16,7 +17,16 @@ public class CommentService {
 		return INSTANCE;
 	}
 	public ArrayList<Comment> selectedByPostNum(int post_num, boolean latestFirst, int startRow, int pageSize){
-		return dao.selectedByPostNum(post_num, latestFirst, startRow, pageSize);
+		
+		ArrayList<Comment> list = dao.selectedByPostNum(post_num, latestFirst, startRow, pageSize);
+
+	    // 각 댓글에 답댓글 리스트 추가
+	    for (Comment comment : list) {
+	        List<Comment> replies = dao.getRecomments(comment.getComment_num());
+	        comment.setRecomments(replies);
+	    }
+
+	    return list;
 	}
 	public int getTotalComments(int post_num) {
 		return dao.getTotalCount(post_num);

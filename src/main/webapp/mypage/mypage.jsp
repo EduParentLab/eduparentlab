@@ -34,13 +34,14 @@
         <div class="section-personal-info-title">
            <label style="font-size:20px; font-weight:bold" >개인정보</label> 
         </div>
-       		<div style="display:flex;justify-content:flex-end;padding:15px" >
+        <c:if test="${loginOkUser.email == sessionScope.loginOkUser.email}">
+			<div style="display:flex;justify-content:flex-end;padding:15px" >
 				<button style="width:width:150px; height:30px;" onclick="location.href='../mypage/edit_info.jsp'">
 				  내 정보 수정
 				</button>
 			</div>
-		</div>
-		
+	    </c:if>       		
+		</div>		
         
         <div class="section-personal-info-content">
             <div class="container">
@@ -143,5 +144,6 @@
 
 
 
+>>>>>>> abb7ee87c4baf5ef202437695f434a4b29d6fa14
 </body>
 </html>
