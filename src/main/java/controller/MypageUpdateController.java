@@ -24,11 +24,24 @@ public class MypageUpdateController extends HttpServlet {
         String email = request.getParameter("email");  // readonly지만 값은 넘어옴
         String nickname = request.getParameter("nickname");
         String password = request.getParameter("password");
+        String passwordConfirm = request.getParameter("passwordConfirm");
         String name = request.getParameter("name"); // readonly
         String birth = request.getParameter("birth");
         String gender = request.getParameter("gender");
+        if ("남".equals(gender)) { gender = "M";
+        } else if ("여".equals(gender)) {gender = "F"; }
         String phone = request.getParameter("phone");
         String cdate = request.getParameter("cdate"); // readonly
+        
+        //비밀번호같은지확인(백엔드)
+        if(password != null && !password.equals(passwordConfirm)) {
+            request.setAttribute("mode", "update");
+            request.setAttribute("result", false); // 실패
+            RequestDispatcher rd = request.getRequestDispatcher("/mypage/msg.jsp");
+            rd.forward(request, response);
+            return; // 더 진행 안 함
+        }
+        
         
         User aa = new User();
         aa.setEmail(email);
@@ -50,6 +63,7 @@ public class MypageUpdateController extends HttpServlet {
 		    session.setAttribute("loginOkUser", aa);
 		
 		//jsp로 포워드 
+		request.setAttribute("mode", "update");
 		request.setAttribute("result", result);
 		RequestDispatcher rd = request.getRequestDispatcher("/mypage/msg.jsp");
 		rd.forward(request, response);
