@@ -44,7 +44,7 @@
 			        <td><input type="checkbox" name="chk" value="${dto.post_num}"/></td>
 					<td align='center'>${dto.post_num}</td>
 					<td id="post_subject" align='center'>
-					<a href='../post.do?m=content&seq=${dto.post_num}'>${dto.post_subject}</a>
+					<a href='../post.do?m=content&seq=${dto.post_num}&path=admin'>${dto.post_subject}</a>
 					</td>	
 					<td align='center'>${dto.post_date}</td>		
 					<td align='center'>${dto.post_view}</td>

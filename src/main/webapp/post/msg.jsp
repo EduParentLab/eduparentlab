@@ -11,7 +11,8 @@
     boolean flag = (Boolean)request.getAttribute("flag");
     String kind = (String)request.getAttribute("kind");
     String path = request.getParameter("path");
-
+	System.out.println("msg.jsp.pate: "+path);
+	
     Object categoryAttr = request.getAttribute("category_num");
     String categoryNum = null;
     
@@ -41,14 +42,22 @@
     }
 <% } else if("update".equals(kind)) { %>
     if (<%=flag%>) {
-        location.href="post.do?m=list&category_num=<%=categoryNum%>";
+    	if("<%=path%>" == "admin"){
+        	location.href="admin/admin.do";    
+        }else{
+        	location.href="post.do?m=list&category_num=<%=categoryNum%>";  
+       	} 
     } else {
         alert("수정실패");
         history.back();
     }
 <% } else if("delete".equals(kind)) { %>
     if (<%=flag%>) {
-        location.href="post.do?m=list&category_num=<%=categoryNum%>";
+    	if("<%=path%>" == "admin"){
+        	location.href="admin/admin.do";    
+        }else{
+        	location.href="post.do?m=list&category_num=<%=categoryNum%>";  
+       	} 
     } else {
         alert("삭제실패");
         history.back();

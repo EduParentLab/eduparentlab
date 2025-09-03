@@ -130,8 +130,7 @@
 			    <p>${dto.post_content}</p>
 			  </div>	  
 		</div>
-		
-		
+	<c:if test="${loginOkUser.email=='admin@edu_parent.com' or category_num != '4'}">	
 		<div style="display:flex;
 		justify-content:flex-end;
 		align-item:center;
@@ -155,15 +154,18 @@
 		  "
 		  onmouseover="this.style.backgroundColor='#ffc2dc'"
 		  onmouseout="this.style.backgroundColor='#ffd6e8'">
-		      <a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}">
+		  	<c:if test="${path == null}"><c:set var="path" value="post"/></c:if>
+		      <a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}&path=${path}">				
 				  수정
-			</a>
+		      </a>
+			
 		  </button>
 		
 		
 		  <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
 			  <input type="hidden" name="seq" value="${dto.post_num}" />
 			  <input type="hidden" name="category_num" value="${dto.category_num}" /> 
+			  <input type="hidden" name="path" value="${path}"><!-- 관리자페이지용 -->
 			  <button type="submit" style="
 			    width: 50px;
 			    height: 25px;
@@ -184,7 +186,7 @@
 			  </button>
 			</form>
 		</div>
-	
+	</c:if>
 
         <div id="commentArea"></div>
     </main>
