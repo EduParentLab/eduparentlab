@@ -29,9 +29,12 @@
             <div class="form-input">
                 <input type="text" name="email" value="${loginOkUser.email}" readonly>
             </div>
+            
             <div class="form-input">
-                <input type="text" name="nickname" value="${loginOkUser.nickname}" placeholder="닉네임">
+                <input type="text" name="nickname" id="nickname" value="${loginOkUser.nickname}" placeholder="닉네임">
+                <button type="button" class="id-check-btn" onclick="checkNickname()">중복확인</button>
             </div>
+            
             <div class="form-input">
                 <input type="password" name="password" placeholder="새 비밀번호 입력">
             </div>
@@ -80,6 +83,8 @@
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script> const contextPath = "${pageContext.request.contextPath}";</script>
+<script src="../register/register.js"></script>
 <script src="search.js"></script>
 <script src="login.js"></script>
 

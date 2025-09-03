@@ -34,7 +34,7 @@ public class MypageController extends HttpServlet {
         }
 
         //내 글 목록 불러오기
-        getMyPost(request, loginUser.getEmail());
+        getMyPost(request, loginUser.getEmail(), request, response);
 
         String view = "/mypage/mypage.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(view);
@@ -42,22 +42,42 @@ public class MypageController extends HttpServlet {
 	}
 	
     // 내가 쓴 글 목록 + 총 글 수 + 총 공감 수 + 총 댓글 수 
-	private void getMyPost(HttpServletRequest request, String email) 
-	        throws ServletException, IOException {
-
-	    PostService postService = PostService.getInstance();
-	    List<Post> list = postService.mypagePostListS(email);
-	    int mypagePostCount = postService.mypagePostCountS(email);
-	    System.out.println("MypageController: email=" + email + ", 글 개수=" + list.size());
-	    int mypostLike = postService.mypageLikeCountS(email);
-	    int mypageCommentCount = postService.mypageCommentCountS(email);
-
-	    request.setAttribute("mypost", list);
-	    request.setAttribute("mypostcount", mypagePostCount);
-	    request.setAttribute("mypostlike", mypostLike);
-	    request.setAttribute("mycommentcount", mypageCommentCount);
-	}
-	
+	private void getMyPost(HttpServletRequest request, String email, 
+            HttpServletRequest req, HttpServletResponse res) 
+            		throws ServletException, IOException {
+		
+		PostService postService = PostService.getInstance();
+		
+		// 페이지 번호, 기본값은 1
+		int pageNum = 1;
+		String pageParam = req.getParameter("page");
+		if (pageParam != null) {
+		try {
+			pageNum = Integer.parseInt(pageParam);
+		} catch (NumberFormatException e) {
+			pageNum = 1;
+			}
+		}
+		
+		int pageSize = 10; // 한 페이지에 10개씩
+		int totalPosts = postService.mypagePostCountS(email);
+		int totalPages = (int)Math.ceil((double)totalPosts / pageSize);
+		
+		// 페이징된 글 목록 가져오기
+		List<Post> list = postService.mypagePostListPagingS(email, pageNum, pageSize);
+		
+		int mypostLike = postService.mypageLikeCountS(email);
+		int mypageCommentCount = postService.mypageCommentCountS(email);
+		
+		// JSP에 전달
+		request.setAttribute("mypost", list);
+		request.setAttribute("mypostcount", totalPosts);
+		request.setAttribute("mypostlike", mypostLike);
+		request.setAttribute("mycommentcount", mypageCommentCount);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("totalPages", totalPages);
+		}
+		    
 	//내가 쓴 글 삭제
     private void deleteMyPost(HttpServletRequest request, HttpServletResponse response) 
             throws IOException {
@@ -71,7 +91,5 @@ public class MypageController extends HttpServlet {
         }
         // 삭제 끝나면 다시 마이페이지로 이동 (갱신)
         response.sendRedirect(request.getContextPath() + "/mypage/mypage.do");
-    }
-	
-	
+    }	
 }

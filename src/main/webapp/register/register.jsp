@@ -33,7 +33,8 @@
                 <input type="password" name="passwordConfirm" placeholder="비밀번호확인" />
             </div>
             <div class="form-input">
-                <input type="text" name="nickname" placeholder="닉네임" />
+                <input type="text" name="nickname" id="nickname" placeholder="닉네임" />
+                <button type="button" class="id-check-btn" onclick="checkNickname()">중복확인</button>
             </div>
             <div class="form-input">
                 <input type="text" name="name" placeholder="이름" />

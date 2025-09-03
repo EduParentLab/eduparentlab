@@ -33,13 +33,19 @@ public class MypageUpdateController extends HttpServlet {
         String phone = request.getParameter("phone");
         String cdate = request.getParameter("cdate"); // readonly
         
-        //비밀번호같은지확인(백엔드)
-        if(password != null && !password.equals(passwordConfirm)) {
-            request.setAttribute("mode", "update");
-            request.setAttribute("result", false); // 실패
-            RequestDispatcher rd = request.getRequestDispatcher("/mypage/msg.jsp");
-            rd.forward(request, response);
-            return; // 더 진행 안 함
+        // 비밀번호 처리
+        if (password == null || password.isEmpty()) {
+            // 비밀번호 입력 안 했으면 null로 세팅 → DAO에서 UPDATE_NO_PW 실행
+            password = null;
+        } else {
+            // 새 비밀번호 입력했는데 확인칸이 다르면 에러
+            if (!password.equals(passwordConfirm)) {
+                request.setAttribute("mode", "update");
+                request.setAttribute("result", false); // 실패
+                RequestDispatcher rd = request.getRequestDispatcher("/mypage/msg.jsp");
+                rd.forward(request, response);
+                return;
+            }
         }
         
         

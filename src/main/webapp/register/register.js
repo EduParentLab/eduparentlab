@@ -23,3 +23,29 @@ function checkEmail() {
         }
     });
 }
+
+function checkNickname() {
+    const nickname = document.getElementById("nickname").value.trim();
+    if(nickname === ""){
+        alert("닉네임을 입력하세요!");
+        return;
+    }
+
+    $.ajax({
+        url: contextPath + "/register/nicknameCheck.do", // 닉네임 중복확인 요청
+        type: "GET",
+        data: { nickname: nickname },
+        success: function(response){
+            if(response === "DUPLICATE"){
+                alert("이미 사용 중인 닉네임입니다.");
+            }else if(response === "AVAILABLE"){
+                alert("사용 가능한 닉네임입니다.");
+            }else{
+                alert("서버 응답 오류");
+            }
+        },
+        error: function(){
+            alert("서버 요청 중 오류가 발생했습니다.");
+        }
+    });
+}
