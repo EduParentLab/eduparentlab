@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- 댓글상단 -->
 	<div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
             <div style="display: flex; align-items: center; gap: 5px; width: 50%; padding-left: 10px;">
                 <P>댓글 5</P>
@@ -18,7 +19,7 @@
             </div>
     </div>
     
-    <!-- 새댓글 입력폼 -->
+    <!-- 새 댓글 입력폼 -->
 	<div class="section-content-comment-input">
         <form id="commentForm" action="comment/comment.do?m=insert" method="post">
           <input type="hidden" name="post_num" value="${post_num}">
@@ -34,6 +35,8 @@
     	<!-- 댓글 리스트 -->
 		<div class="section-content-comment-list">
 		  <c:forEach var="c" items="${comment}">
+		  
+		  <!-- 부모댓글 -->
 			<div class="section-content-comment" data-comment-num="${c.comment_num}">
 	        	<div style="margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
 		            <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ffffff; gap:20px; border:solid rgb(255, 255, 255);">
@@ -43,25 +46,17 @@
 		            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 		                <span class="content">${c.comment_content}</span>
 		            </div>
-		            <!-- 답댓글 폼 -->
-		            <div class="section-content-recomment-list" style="display:none;">
-			            <form class="recommentForm" >
-			                <input type="hidden" name="post_num" value="${c.post_num}">
-			                <input type="hidden" name="parent_num" value="${c.comment_num}">
-			                <textarea name="content" placeholder="답글 입력"></textarea>
-			                <button type="submit">등록</button>
-			            </form>
-					</div>
 	        	</div>
-    	    
-			
-			<!-- 답댓글 리스트 -->
-			
-			<c:forEach var="recomment" items="${c.recomments}">
+		    
+		    
+		    <!-- 답댓글 리스트 -->
+		   <c:if test="${not empty c.recomments}">
+			 <div class="section-content-recomment-list">
+				<c:forEach var="recomment" items="${c.recomments}">
 				<div class="section-content-recomment" data-recomment-num="${recomment.comment_num}">
 			        <div style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
 			            <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:20px; border:solid rgb(255, 255, 255);">
-			                <div>${recomment.email}</div>
+			                <div class="recomment-writer">${recomment.email}</div>
 			                <div>${recomment.comment_date}</div>
 			            </div>
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
@@ -72,10 +67,26 @@
 			            </div>
 			        </div>
 			    </div>
-		    </c:forEach>
+		      </c:forEach>
 		    </div>
-		 </c:forEach>  	
+		  </c:if>
+		    
+		    <!-- 답댓글 폼 -->
+	        <div class="section-content-recomment-input" style="display:none;">
+	            <form class="recommentForm">
+	                <input type="hidden" name="post_num" value="${c.post_num}">
+	                <input type="hidden" name="parent_num" value="${c.comment_num}">
+	                <textarea name="content" placeholder="답글 입력"></textarea>
+	                <button type="submit">등록</button>
+	            </form>
+	        </div>
+	       </div>
+		 </c:forEach>
+		 
+		    	  	
         </div>
+        		
+         
                     
 	<!-- ◀▶ 페이지네이션 -->
 	<div class="pagination">
