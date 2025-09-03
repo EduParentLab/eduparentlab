@@ -121,6 +121,49 @@
 			    <p>${dto.post_content}</p>
 			  </div>	  
 		</div>
+		
+		<div style="display:flex;
+		justify-content:flex-end;
+		align-item:center;
+		border-bottom:1px solid black;
+		gap:5px;
+		padding:15px;">
+		<button style="
+		    width: 50px;
+		    height: 25px;
+		    background-color: #8dc4a4;
+		    color: #333;
+		    font-size: 12px;
+		    font-weight: bold;
+		    border: none;
+		    border-radius: 10px;
+		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		    transition: all 0.2s ease;
+		    cursor: pointer;
+		  "
+		  onmouseover="this.style.backgroundColor='#ffc2dc'"
+		  onmouseout="this.style.backgroundColor='#ffd6e8'">
+		    수정
+		  </button>
+		
+		  <button style="
+		    width: 50px;
+		    height: 25px;
+		    background-color: #bc665c;
+		    color: #333;
+		    font-size: 12px;
+		    font-weight: bold;
+		    border: none;
+		    border-radius: 10px;
+		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		    transition: all 0.2s ease;
+		    cursor: pointer;
+		  "
+		  onmouseover="this.style.backgroundColor='#b5dcfb'"
+		  onmouseout="this.style.backgroundColor='#d0e8ff'">
+		    삭제
+		  </button>
+		</div>
 	
 
         <div id="commentArea"></div>
