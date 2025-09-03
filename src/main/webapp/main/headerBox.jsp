@@ -36,7 +36,7 @@
     <c:choose>
       <c:when test="${empty loginOkUser}">
         <a href="${pageContext.request.contextPath}/login/login.do?m=form"><button>로그인</button></a>
-        <a href="${pageContext.request.contextPath}/login/resist.jsp"><button>회원가입</button></a>
+        <a href="${pageContext.request.contextPath}/register/register.jsp"><button>회원가입</button></a>
       </c:when>
       <c:otherwise>
         <label style="color:green">${loginOkUser.name}</label>님 안녕하세요

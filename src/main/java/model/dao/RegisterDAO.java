@@ -48,4 +48,21 @@ public class RegisterDAO {
 				}catch(SQLException se){}
 		}
 	}
+	
+	public boolean emailCheck(String email) {
+	    String sql = RegisterSQL.EMAILCHECK;
+	    try (Connection con = ds.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setString(1, email);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getInt(1) > 0;
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	
 }
