@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
-  <link rel="stylesheet" href="../designer/layout.css" />
+  <link rel="stylesheet" href="../main/layout.css" />
   <link rel="stylesheet" href="../designer/admin_notice.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
@@ -42,7 +42,7 @@
                 </div>
                 <!-- 4. 메뉴 항목 4개 -->
                 <div class="left-box-section section-menu menu-1" style="font-size:20px; display: flex; justify-content: center; align-items: center;">
-                금영님
+                ${loginOkUser.name}님
                 </div>
                 <!-- 공지사항 -->
                 <div class="left-box-section section-menu menu-1" data-page="notice">
