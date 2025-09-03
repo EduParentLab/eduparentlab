@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("headerBox.jsp")
+  fetch(`${contextPath}/main/headerBox.jsp`)
     .then(res => res.text())
     .then(html => {
       document.getElementById("headerArea").innerHTML = html;
