@@ -228,6 +228,11 @@ public class PostController extends HttpServlet {
 
         boolean flag = PostService.getInstance().updateS(dto);
         
+       
+        if (flag) {
+            FileService.getInstance().updateFilesByPost(request, dto.getPost_num());
+        }
+        
         request.setAttribute("flag", flag);
         request.setAttribute("kind", "update");
         request.getRequestDispatcher("/post/msg.jsp")

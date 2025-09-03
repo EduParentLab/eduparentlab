@@ -11,6 +11,7 @@ import jakarta.servlet.http.Part;
 import model.dao.PostFileDAO;
 import domain.PostFile;
 
+
 public class FileService {
     private static final FileService instance = new FileService();
     private PostFileDAO dao = new PostFileDAO();
@@ -61,5 +62,28 @@ public class FileService {
 
     public void deleteFilesByPost(long postNum) {
         dao.deleteByPost(postNum);
+    }
+    
+    
+    
+    public void updateFilesByPost(HttpServletRequest request, long postNum) {
+        try {
+            boolean newFile = false;  
+
+            for (Part part : request.getParts()) {
+                if (part.getName().equals("files") && part.getSize() > 0) {
+                    newFile = true; 
+                    break;
+                }
+            }
+
+            if (newFile) {  
+            	 dao.deleteByPost(postNum);
+                saveFiles(request, postNum);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
