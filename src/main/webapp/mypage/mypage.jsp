@@ -17,8 +17,8 @@
 <body>
   <div class="wrapper">
 
- <jsp:include page="../login/headerBox.jsp"/>
-
+ <%--<jsp:include page="../login/headerBox.jsp"/> ... --%>
+ 	<div id="headerArea"></div>
     <main>
       <div class="center-wrapper">
 
@@ -34,8 +34,13 @@
         <div class="section-personal-info-title">
            <label style="font-size:20px; font-weight:bold" >개인정보</label> 
         </div>
-        
-		<a href="../mypage/edit_info.jsp" style="display:flex; justify-content:flex-end;">수정하기</a>
+       		<div style="display:flex;justify-content:flex-end;padding:15px" >
+				<button style="width:width:150px; height:30px;" onclick="location.href='../mypage/edit_info.jsp'">
+				  내 정보 수정
+				</button>
+			</div>
+		</div>
+		
         
         <div class="section-personal-info-content">
             <div class="container">
@@ -131,7 +136,8 @@
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="board_list.js"></script>
+<script src="mypage.js"></script>
+<script> const contextPath = "<%=request.getContextPath()%>";</script>
 
 
 

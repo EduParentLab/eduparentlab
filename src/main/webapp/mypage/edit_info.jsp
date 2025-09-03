@@ -15,7 +15,7 @@
 <body>
   <div class="wrapper">
 
- <jsp:include page="../login/headerBox.jsp"/>
+<div id="headerArea"></div>
 
     <main>
       <div class="center-wrapper">
@@ -87,6 +87,8 @@
 <script src="../register/register.js"></script>
 <script src="search.js"></script>
 <script src="login.js"></script>
+<script src="edit_info.js"></script>
+<script> const contextPath = "<%=request.getContextPath()%>";</script>
 
 
 

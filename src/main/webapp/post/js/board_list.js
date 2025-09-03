@@ -19,7 +19,7 @@
 
   
   document.addEventListener("DOMContentLoaded", function () {
-    fetch("./main/headerBox.jsp")
+    fetch(`${contextPath}/main/headerBox.jsp`)
       .then(res => res.text())
       .then(html => {
         document.getElementById("headerArea").innerHTML = html;
