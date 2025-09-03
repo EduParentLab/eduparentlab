@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -50,7 +51,7 @@ public class MainDAO {
                 int post_num = rs.getInt(1);
                 String post_subject = rs.getString(2);
                 String post_content = rs.getString(3);
-                java.sql.Date post_date = rs.getDate(4);
+                Timestamp post_date = rs.getTimestamp(4);
                 int post_view = rs.getInt(5);
                 int category_num = rs.getInt(6);
                 String email = rs.getString(7);
@@ -98,7 +99,7 @@ public class MainDAO {
                    dto.setPost_num(rs.getInt("post_num"));
                    dto.setPost_subject(rs.getString("post_subject"));
                    dto.setPost_content(rs.getString("post_content"));
-                   dto.setPost_date(rs.getDate("post_date"));
+                   dto.setPost_date(rs.getTimestamp("post_date"));
                    dto.setPost_view(rs.getInt("post_view"));
                    dto.setCategory_num(rs.getInt("category_num"));
                    dto.setEmail(rs.getString("email"));

@@ -85,7 +85,7 @@
             <label>${dto.post_date}</label>
             <div style="display: flex; align-items: center; gap: 5px;">
 	            <img src="<%=request.getContextPath()%>/post/assets/eye.png" alt="조회수" class="eye-icon" style="width: 20px; height: 20px;"/>
-	            <label>조회수 ${dto.post_view}</label>
+	            <label>${dto.post_view}</label>
             </div>
             
             <label>${dto.nickname}</label>
@@ -94,7 +94,6 @@
                 <label>${dto.likes}</label>
             </button>
             <label>${dto.post_num}</label>
-            <label>신고하기</label>
             
 		            <!-- 비이미지 파일 다운로드 -->
 		    <c:forEach var="file" items="${fileList}">
@@ -132,12 +131,15 @@
 			  </div>	  
 		</div>
 		
+		
 		<div style="display:flex;
 		justify-content:flex-end;
 		align-item:center;
 		border-bottom:1px solid black;
 		gap:5px;
 		padding:15px;">
+		
+		
 		<button style="
 		    width: 50px;
 		    height: 25px;
@@ -161,6 +163,7 @@
 		
 		  <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
 			  <input type="hidden" name="seq" value="${dto.post_num}" />
+			  <input type="hidden" name="category_num" value="${dto.category_num}" /> 
 			  <button type="submit" style="
 			    width: 50px;
 			    height: 25px;
