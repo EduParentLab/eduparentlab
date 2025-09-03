@@ -42,7 +42,7 @@
 				<c:forEach var="popular" items="${popularList}">
 	                <div class="board-item">
 		                <div class="board-title">
-		                  <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${popular.post_num}">${popular.post_subject}</a>
+		                  <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${popular.post_num}" style="text-decoration: none;">${popular.post_subject}</a>
 		                </div>
 		                <div class="meta-info">
 		                    <span>${popular.nickname}</span>
@@ -59,7 +59,7 @@
                 <c:forEach var="latest" items="${latestList}">
 	                <div class="board-item">
 		                <div class="board-title">
-		                  <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${latest.post_num}">${latest.post_subject}</a>
+		                  <a style="text-decoration: none;" href="${pageContext.request.contextPath}/post.do?m=content&seq=${latest.post_num}">${latest.post_subject}</a>
 		                </div>
 		                <div class="meta-info">
 		                    <span>${latest.nickname}</span>
@@ -72,29 +72,8 @@
         </div>
         <h3 style="margin:10px";>학플리</h3>
         
-		<div class="section-playlist">
-          <div style="display:flex; width: 100%;height: 200px;justify-content: center;gap:20px;">  
-            <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
-            </a>
-            <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
-            </a>
-            <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
-            </a>
-          </div>   
-          <div style="display:flex; width: 100%;height: 200px;justify-content: center;gap:20px;">  
-            <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
-            </a>
-            <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
-            </a>
-            <a href="#" style=" width: 33%;height: 200px; display:flex">
-              <img src="../designer/assets/youtube.png" style="width:100%; height:100%">
-            </a>
-          </div>   
+		<div class="section-playlist" id="playlist-container">
+          <!-- JS로 삽입 -->
         </div>
 
 
@@ -105,12 +84,13 @@
 
     <footer>
       <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
-      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
+      <p>© 2025 - 2025 eduparents. All rights reserved.</p>
     </footer>
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="main_page.js"></script>
+<script src="${pageContext.request.contextPath}/playlist/playlist.js"></script>
 
 
 

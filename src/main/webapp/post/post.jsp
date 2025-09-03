@@ -6,7 +6,7 @@
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
   <!-- CSS 경로 -->
-  <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/layout.css" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_list.css" />
 </head>
 
