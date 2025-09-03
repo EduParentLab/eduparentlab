@@ -20,7 +20,7 @@
                 <h2>회원가입</h2>
             </div>
             
-            <form name="f" action="${pageContext.request.contextPath}/register/register.do" method="post">
+            <form name="f" action="${pageContext.request.contextPath}/register/register.do" method="post" onsubmit="return validateRegisterForm()">
             
             <div class="form-input">
                 <input type="text" name="email" id="email" placeholder="이메일" />

@@ -24,24 +24,61 @@ import java.sql.*;
 	        String password = request.getParameter("password");
 	        String passwordConfirm = request.getParameter("passwordConfirm");
 	        String nickname = request.getParameter("nickname");
-	        
-	        String gender = request.getParameter("gender");
-	        if ("남".equals(gender)) gender = "M";
-	        else if ("여".equals(gender)) gender = "F";
-	        
-	        String strBirth = request.getParameter("birth"); //getParameter는 String만 가능해. 근데 우리는 birth를 Date로 정했으니 변환을 해줘야해. 
-	        Date birth = Date.valueOf(strBirth); //이 형식으로 변환한다. 
+	        String gender = request.getParameter("gender");	        
+	        String strBirth = request.getParameter("birth");
 	        String name = request.getParameter("name");
 	        String phone = request.getParameter("phone");
-	        int role_num = 2; //기본값은 2 (기본회원)
+	        int role_num = 2; //기본회원
 	        
-	        //비밀번호같은지확인(백엔드)
-	        if(password != null && !password.equals(passwordConfirm)) {
-	            request.setAttribute("registerResult", false); // 실패
+	        // 필수 입력값 체크
+	        if (email == null || email.isBlank() ||
+	            password == null || password.isBlank() ||
+	            passwordConfirm == null || passwordConfirm.isBlank() ||
+	            nickname == null || nickname.isBlank() ||
+	            gender == null || gender.isBlank() ||
+	            strBirth == null || strBirth.isBlank() ||
+	            name == null || name.isBlank() ||
+	            phone == null || phone.isBlank()) {
+
+	            request.setAttribute("registerResult", false);
+	            request.setAttribute("registerErrorMsg", "모든 항목을 입력해야 합니다.");
+	            RequestDispatcher rd = request.getRequestDispatcher("/register/result.jsp");
+	            rd.forward(request, response);
+	            return;
+	        }
+	        
+	        // 비밀번호 일치 여부 확인
+	        if (!password.equals(passwordConfirm)) {
+	            request.setAttribute("registerResult", false);
 	            request.setAttribute("registerErrorMsg", "비밀번호가 일치하지 않습니다.");
 	            RequestDispatcher rd = request.getRequestDispatcher("/register/result.jsp");
 	            rd.forward(request, response);
-	            return; // 더 진행 안 함
+	            return;
+	        }
+	        
+	        // gender 변환
+	        if ("남".equals(gender)) gender = "M";
+	        else if ("여".equals(gender)) gender = "F";
+	        
+	        // 생년월일 변환
+	        Date birth = null;
+	        try {
+	            birth = Date.valueOf(strBirth);
+	        } catch (IllegalArgumentException e) {
+	            request.setAttribute("registerResult", false);
+	            request.setAttribute("registerErrorMsg", "생년월일 형식이 잘못되었습니다. (예: 1999-01-01)");
+	            RequestDispatcher rd = request.getRequestDispatcher("/register/result.jsp");
+	            rd.forward(request, response);
+	            return;
+	        }
+	        
+	        // 전화번호 형식 확인 (010-XXXX-XXXX)
+	        if (!phone.matches("^010-\\d{4}-\\d{4}$")) {
+	            request.setAttribute("registerResult", false);
+	            request.setAttribute("registerErrorMsg", "전화번호는 010-1111-2222 형식으로 입력해야 합니다.");
+	            RequestDispatcher rd = request.getRequestDispatcher("/register/result.jsp");
+	            rd.forward(request, response);
+	            return;
 	        }
 	        
 	        User dto = new User (email, password, nickname, gender, birth, name, phone, null, role_num);
@@ -51,9 +88,13 @@ import java.sql.*;
 			boolean result = service.insert(dto);
 			
 			//JSP로 포워딩을 해야해!! 결과를 전달해야해.
-			request.setAttribute("registerResult", result);
+	        request.setAttribute("registerResult", result);
+	        if (!result) {
+	            request.setAttribute("registerErrorMsg", "회원가입 중 오류가 발생했습니다.");
+	        }
+
 	        RequestDispatcher rd = request.getRequestDispatcher("/register/result.jsp");
-	        rd.forward(request, response);	
+	        rd.forward(request, response);
 		}
 	}
 
