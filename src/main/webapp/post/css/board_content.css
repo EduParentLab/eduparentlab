@@ -102,7 +102,7 @@
 }
 
 
-.section-content-recomment {
+.section-content-recomment-list {
   height: 150px; /* or auto */
   padding: 20px 20px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;

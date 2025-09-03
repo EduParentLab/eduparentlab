@@ -206,11 +206,14 @@ public class CommentController extends HttpServlet {
 		int result = service.recomment(recomment, post_num);
 		System.out.println("recommnet의 result: "+result);
 		if(result == 1) {
-			response.sendRedirect(request.getContextPath() + "/post.do?m=content&seq=" + post_num);
-			System.out.println("댓글 등록 성공");
+			// 새 답댓글 정보를 JSON으로 반환
+	        response.setContentType("application/json;charset=UTF-8");
+	        String json = String.format("{\"comment_num\": %d, \"email\": \"%s\", \"comment_content\": \"%s\"}", 
+	                                     recomment.getComment_num(), recomment.getEmail(), recomment.getComment_content());
+	        response.getWriter().write(json);
 		}
 		else {
-			System.out.println("댓글 등록 실패");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "답댓글 등록 실패");
 		}
 	}
 	private void checkReplyAuth(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
