@@ -23,4 +23,7 @@ public class UserService {
 	public LinkedHashMap<Date, Integer> countUserS(){
 		return dao.countUser();
 	}
+	public User getUserByEmailS(String email) {
+		return dao.getUserByEmail(email);
+	}
 }

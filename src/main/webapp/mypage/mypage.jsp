@@ -11,10 +11,12 @@
 </head>
 <body>
 	<h1>마이페이지</h1>
-	${loginOkUser.name}님 안녕하세요!
-	<a href="../mypage/mypage_update.jsp">
-    <button>개인정보수정</button>
-	</a>
+	${loginOkUser.name}님 안녕하세요! 
+	<c:if test="${loginOkUser.email == sessionScope.loginOkUser.email}">
+		<a href="../mypage/mypage_update.jsp">
+	    <button>개인정보수정</button>
+		</a>
+	</c:if> 
 	
 	<h2>개인정보</h2>
 	
@@ -48,42 +50,49 @@
 	<!-- 내가 쓴 글 -->
 	<h2>내가 쓴 글</h2>
 	
-<form action="../mypage/mypage.do?m=delete" method="post">
-	<table border="1" width="100%">
-	
-		 <tr>
-	        <th>선택</th>
-	        <th>제목</th>
-	        <th>작성일</th>
-	        <th>조회수</th>
-	        <th>공감수</th>
-	    </tr>
-    
-	<c:forEach var="p" items="${mypost}">
-
-        <tr>
-            <td><input type="checkbox" name="chk" value="${p.post_num}"></td>
-            <td>${p.post_subject}</td>
-            <td><fmt:formatDate value="${p.post_date}" pattern="yyyy-MM-dd"/></td>
-            <td>${p.post_view}</td>
-            <td>${p.likes}</td>
-        </tr>
-    </c:forEach>
-	
-	</table>
-	
-	
-	<!-- 페이지 네비게이션 -->
-<div style="text-align:center; margin-top:10px;">
-    <a href="#">1</a> 
-    <a href="#">2</a> 
-    <a href="#">3</a> 
-    <a href="#">4</a> 
-    ...
-</div>
-
-<button type="submit">삭제</button>
-</form>
+<c:choose>
+    <c:when test="${loginOkUser.email == sessionScope.loginOkUser.email}">    
+        <form action="../mypage/mypage.do?m=delete" method="post">        
+    </c:when>
+    <c:otherwise>
+        <form action="../admin/admin.do?m=delete&email=${loginOkUser.email}" method="post">        
+    </c:otherwise>
+</c:choose>
+			<table border="1" width="100%">
+			
+				 <tr>
+			        <th>선택</th>
+			        <th>제목</th>
+			        <th>작성일</th>
+			        <th>조회수</th>
+			        <th>공감수</th>
+			    </tr>
+		    
+			<c:forEach var="p" items="${mypost}">
+		
+		        <tr>
+		            <td><input type="checkbox" name="chk" value="${p.post_num}"></td>
+		            <td>${p.post_subject}</td>
+		            <td><fmt:formatDate value="${p.post_date}" pattern="yyyy-MM-dd"/></td>
+		            <td>${p.post_view}</td>
+		            <td>${p.likes}</td>
+		        </tr>
+		    </c:forEach>
+			
+			</table>
+			
+			
+			<!-- 페이지 네비게이션 -->
+		<div style="text-align:center; margin-top:10px;">
+		    <a href="#">1</a> 
+		    <a href="#">2</a> 
+		    <a href="#">3</a> 
+		    <a href="#">4</a> 
+		    ...
+		</div>
+		
+		<button type="submit">삭제</button>
+	  </form>
 	
 </body>
 </html>

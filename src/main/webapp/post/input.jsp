@@ -36,6 +36,7 @@
           <!-- hidden 값들 -->
           <input type="hidden" name="category_num" value="${param.category_num}">
           <input type="hidden" name="email" value="${sessionScope.loginOkUser.email}">
+          <input type="hidden" name="path" value="${path}"><!-- 관리자페이지용 -->
 
           <div class="divide-block" style="width:100%;height:30px;background-color: white;"></div>
 

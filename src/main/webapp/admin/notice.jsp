@@ -41,7 +41,7 @@
 			<c:otherwise>
 			  <c:forEach items="${notice}" var="dto">
 			      <tr>
-			        <td><input type="checkbox" name="del_post_num" value="${dto.post_num}"/></td>
+			        <td><input type="checkbox" name="chk" value="${dto.post_num}"/></td>
 					<td align='center'>${dto.post_num}</td>
 					<td id="post_subject" align='center'>
 					<a href='../post.do?m=content&seq=${dto.post_num}'>${dto.post_subject}</a>
@@ -56,13 +56,20 @@
 	    </c:choose>		
      </tbody>
   </table>
- </form>
-  	<!-- ✏ 글쓰기 버튼 -->
-	<div class="top-bar">
-    	<a href="../post/input.jsp">➕ 글쓰기</a>
-	</div>
   </div>
-
+ </form>
+ <form action="../post.do?m=input&category_num=4" method="post">
+  	<input type="hidden" name="path" value="admin">	
+  	<!-- 글쓰기 버튼 -->
+        <div class="section-write-btn" style="gap:10px">
+          <img src="<%=request.getContextPath()%>/post/assets/plus-circle.svg" class="icon" alt="글쓰기 아이콘" style="width: 40px; height: 40px;"/>
+          <button class="write-btn" 
+                  onclick="location.href='<%=request.getContextPath()%>/post.do?m=input&category_num=${param.category_num}'"
+                  style="background-color: rgb(164, 183, 247); padding:10px; border-radius: 10px;">
+            글쓰기
+          </button>
+        </div>
+  </form>
 
   <div class="pagination">
       <a href="#" class="page current">1</a>
