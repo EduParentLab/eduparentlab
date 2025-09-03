@@ -5,19 +5,20 @@
 <button id="toggleNav">☰ 메뉴</button>
 
 <div class="search-box" style="margin-left: 50px; margin-top: 20px; margin-right: 50px;">
-    <select class="search-filter">
-        <option value="title">제목</option>
-        <option value="content">내용</option>
-        <option value="title+content" selected>제목+내용</option>
+    <select id="search-filter" class="search-filter">
+        <option value="email">이메일</option>
+        <option value="nickname">닉네임</option>
+        <option value="gender">성별</option>
+        <option value="name">이름</option>   
     </select>
-    <input type="text" class="search-input" placeholder="검색어를 입력하세요" />
-    <button class="search-btn">🔍</button>
+    <input type="text" id="userListSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
+    <button id="userListSearchBtn" class="search-btn">🔍</button>
 </div>
 
 
 
 <div style="padding:50px; padding-top:20px;">
-<table class="notice-table">
+<table id="userTable" class="notice-table">
 <thead>
     <tr>
     <th>이메일</th>
@@ -39,11 +40,11 @@
 	    <c:otherwise>
 	        <c:forEach items="${ghost}" var="dto">
 	        <tr>
-				<td align='center'><a href='../mypage/mypage.jsp'>${dto.email}</td>			
-				<td align='center'>${dto.nickname}</td>		
-				<td align='center'>${dto.gender}</td>
+				<td id="email" align='center'><a href='admin.do?m=mypage&email=${dto.email}'>${dto.email}</td>			
+				<td id="nickname" align='center'>${dto.nickname}</td>		
+				<td id="gender" align='center'>${dto.gender}</td>
 				<td align='center'>${dto.birth}</td>
-				<td align='center'>${dto.name}</a></td>						
+				<td id="name" align='center'>${dto.name}</a></td>						
 				<td align='center'>${dto.phone}</td>
 				<td align='center'>${dto.cdate}</td>
 			</tr>		

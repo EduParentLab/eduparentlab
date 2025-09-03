@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.*;
 import java.sql.Date;
 
-
 @WebServlet("/admin/admin.do")
 public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -43,6 +42,8 @@ public class AdminController extends HttpServlet {
 	    case "user_list": getUser(request, response); break;	
 	    case "withdrawn_list": getGhost(request, response); break;	
 	    case "statistics": getStatistics(request, response); break;	 	    				   				      
+	    case "delete": delete(request, response); break;	 
+	    case "mypage": getMypageWithdrawnUser(request, response); break;	 
 	    default: getNotice(request, response); break;
 	    }   	
 	}
@@ -76,34 +77,66 @@ public class AdminController extends HttpServlet {
     private void getStatistics(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
     	countPost(request, response); 
-    	countUser(request, response);
-    	//Map<String,Object> postData = countPost(); 
-    	//Map<String,Object> userData = countUser();
+    	countUser(request, response);    	
     	RequestDispatcher rd = request.getRequestDispatcher("statistics.jsp");
-		rd.forward(request, response); 
-		
-		//List<Map<String, Object>> dataList = new ArrayList<>();
-		//dataList.add(postData);
-		//dataList.add(userData);     
+		rd.forward(request, response); 	  
     }
     private void countPost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {    	
     	PostService service = PostService.getInstance();
  	    LinkedHashMap<String, Integer> postCount = service.countPostS();	   
- 	    request.setAttribute("postCount", postCount);   	    
- 	    //Map<String, Object> postData = new HashMap<>();
-        //postData.put("name", "postCount");
-        //postData.put("data", postCount);
-        //return postData;
+ 	    request.setAttribute("postCount", postCount);   	    	  
 	}
     private void countUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
     	UserService service = UserService.getInstance();
     	LinkedHashMap<Date, Integer> userCount = service.countUserS();
-    	request.setAttribute("userCount", userCount);        	
-    	//Map<String, Object> userData = new HashMap<>();
-        //userData.put("name", "userCount");
-        //userData.put("data", userCount);  
-        //return userData;
+    	request.setAttribute("userCount", userCount);          	
     }
+    private void delete(HttpServletRequest request, HttpServletResponse response) 
+            throws IOException {
+    	String[] chk = request.getParameterValues("chk");
+    	System.out.println(chk);
+    	if (chk != null) {
+            PostService postService = PostService.getInstance();
+            for (String numStr : chk) {
+                int post_num = Integer.parseInt(numStr);
+                postService.deleteS(post_num);
+            }
+        }
+    	String useremail = request.getParameter("email");
+    	//System.out.println("0. email:"+useremail);
+    	if(useremail != null) {
+    		response.sendRedirect(request.getContextPath() + "/admin/admin.do?m=mypage&email="+useremail);
+    	}else {
+    		response.sendRedirect(request.getContextPath() + "/admin/admin.do");
+    	}
+    
+    	// 현재 URL로 리다이렉트
+    	//response.sendRedirect(currentUrl);
+    	
+        //response.sendRedirect(request.getRequestURI());
+    }
+    private void getMypageWithdrawnUser(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {    	
+    	String email = request.getParameter("email");
+    	UserService userService = UserService.getInstance();
+    	User user = userService.getUserByEmailS(email);    	
+    	//System.out.println("user: "+user);
+    	PostService postService = PostService.getInstance();
+ 	    List<Post> list = postService.mypagePostListS(email);
+ 	    int mypagePostCount = postService.mypagePostCountS(email);
+ 	   // System.out.println("AdminController: email=" + email + ", 글 개수=" + list.size());
+ 	    int mypostLike = postService.mypageLikeCountS(email);
+ 	    int mypageCommentCount = postService.mypageCommentCountS(email);
+	    
+ 	    request.setAttribute("mypost", list);
+ 	    request.setAttribute("mypostcount", mypagePostCount);
+ 	    request.setAttribute("mypostlike", mypostLike);
+ 	    request.setAttribute("mycommentcount", mypageCommentCount);
+ 	    request.setAttribute("loginOkUser", user);
+ 	    String view = "/mypage/mypage.jsp";        
+	    RequestDispatcher rd = request.getRequestDispatcher(view);
+	    rd.forward(request, response);        
+    }    
 }

@@ -36,7 +36,7 @@ header {
   padding: 5px 10px;
   border: 1px solid #aaa;
   border-radius: 15px;
-  background: #fff0f0;
+  background: rgb(255, 255, 255);
   cursor: pointer;
 }
 .login button:hover {
@@ -78,6 +78,7 @@ footer {
   position: relative;
   margin: 0 auto;
   display:flex;
+  justify-content:center;
 }
 
 .search-bar {
@@ -164,7 +165,9 @@ footer {
     display: flex;
     gap: 10px;
     justify-content: right;
-    padding:10px;
+    padding-top:10px;
+    padding-right:40px;
+    
 }
 .navigation-button {
   display: inline-block;

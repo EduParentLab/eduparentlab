@@ -8,21 +8,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-<header>
+<header style="padding-left:40px;padding-right:40px;">
   <div class="logo">
-
-    <a href="${pageContext.request.contextPath}/main/main.do">
-      <img src="../designer/assets/logoremoveback.png" alt="학부모정보통 로고" />
 
     <a href="/educationlab/main/main.do">
       <img src="<%=request.getContextPath()%>/designer/assets/logoremoveback.png" />
 
     </a>
   </div>
-  <div class="search-container">
+  <div class="search-container" style="justify-content:center;">
     <div class="search-bar">
       <div class="search-logo">H</div>
-      	<form action="${pageContext.request.contextPath}/main/main.do" method="get">
+      	<form action="${pageContext.request.contextPath}/main/main.do" method="get" style="margin:0px;padding:0px;display:flex;">
       		<input type="hidden" name="m" value="search" />
 		    <input style="width:200px;"type="text" id="keyword" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해 주세요." />
 		    <button type="submit" class="search-btn">🔍</button>
@@ -41,7 +38,7 @@
     <c:choose>
       <c:when test="${empty loginOkUser}">
         <a href="${pageContext.request.contextPath}/login/login.do?m=form"><button>로그인</button></a>
-        <a href="${pageContext.request.contextPath}/login/resist.jsp"><button>회원가입</button></a>
+        <a href="${pageContext.request.contextPath}/register/register.jsp"><button>회원가입</button></a>
       </c:when>
       <c:otherwise>
         <label style="color:green">${loginOkUser.name}</label>님 안녕하세요

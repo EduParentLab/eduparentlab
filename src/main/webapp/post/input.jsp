@@ -1,93 +1,118 @@
 <%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>게시판 글쓰기</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f9f9f9;
-            margin: 0;
-            padding: 40px;
-        }
-        .container {
-            width: 600px;
-            margin: auto;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            padding: 30px;
-        }
-        h2 {
-            text-align: center;
-            color: #0077cc;
-            margin-bottom: 20px;
-        }
-        table { width: 100%; border-collapse: collapse; }
-        td { padding: 10px; }
-        td.label { width: 25%; text-align: right; font-weight: bold; color: #555; }
-        input[type="text"], textarea, input[type="file"], select {
-            width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;
-        }
-        textarea { resize: none; height: 120px; }
-        .buttons { text-align: center; margin-top: 20px; }
-        .buttons input {
-            padding: 8px 20px; margin: 0 5px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;
-        }
-        .btn-submit { background-color: #0077cc; color: white; }
-        .btn-reset { background-color: #f0f0f0; color: #333; }
-        .top-links { text-align: right; margin-bottom: 10px; }
-        .top-links a { color: #0077cc; text-decoration: none; font-size: 14px; }
-        .top-links a:hover { text-decoration: underline; }
-    </style>
+  <meta charset="UTF-8" />
+  <title>학부모정보통</title>
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/main/all_search.css" />
+  <link rel="icon" type="image/x-icon" href="<%= request.getContextPath() %>/favicon.ico">
 </head>
-<body onload="document.input.email.focus()">
 
-<div class="container">
-    <div class="top-links">
-        <a href="<%=request.getContextPath()%>/post.do?m=list">글목록</a>
-    </div>
-    <h2>게시글 작성</h2>
+<body>
+  <div class="wrapper">
+  <div id="headerArea"></div>
+   
+    
+    <main>
+      <div class="center-wrapper">
+        <form action="<%=request.getContextPath()%>/post.do?m=insert" 
+              method="post" 
+              enctype="multipart/form-data">   
+          
+          <!-- 게시판명 출력 -->
+          <div style="border-top:2px solid black;border-bottom:2px solid black;padding-top:20px;padding-bottom:20px;">
+            <label style="font-size:46px; margin:10px; margin-bottom:0px">
+              <c:choose>
+                <c:when test="${param.category_num eq '1'}">자유게시판</c:when>
+                <c:when test="${param.category_num eq '2'}">입시정보 게시판</c:when>
+                <c:when test="${param.category_num eq '3'}">고등학교 게시판</c:when>
+                <c:when test="${param.category_num eq '4'}">공지사항</c:when>
+                <c:otherwise>본 게시판입니다.</c:otherwise>
+              </c:choose>
+            </label>
+          </div>
+          
+          <!-- hidden 값들 -->
+          <input type="hidden" name="category_num" value="${param.category_num}">
+          <input type="hidden" name="email" value="${sessionScope.loginOkUser.email}">
+          <input type="hidden" name="path" value="${path}"><!-- 관리자페이지용 -->
 
+          <div class="divide-block" style="width:100%;height:30px;background-color: white;"></div>
 
-    <form name="input" method="post" action="<%=request.getContextPath()%>/post.do?m=insert" enctype="multipart/form-data">
-        <table>
-            <tr>
-                <td class="label">이메일</td>
-                <td><input type="text" name="email" required></td>
-            </tr>
-            <tr>
-                <td class="label">글제목</td>
-                <td><input type="text" name="post_subject" required></td>
-            </tr>
-            <tr>
-                <td class="label">글내용</td>
-                <td><textarea name="post_content" required></textarea></td>
-            </tr>
+          <!-- 제목 -->
+          <div style="height: 20px;padding:10px; display:flex;">
+            <input type="text" name="post_subject" style="width:100%;height:100%;" placeholder="제목을 입력해주세요" required>
+          </div> 
 
-            <tr>
-                <td class="label">게시판</td>
-                <td>
-                    <select name="category_num" required>
-                        <option value="1">공지게시판</option>
-                        <option value="2">입시게시판</option>
-                        <option value="3">자유게시판</option>
-                    </select>
-                </td>
-            </tr>
-         
-            <tr>
-                <td class="label">첨부파일</td>
-                <td><input type="file" name="files" multiple></td>
-            </tr>
-        </table>
-        <div class="buttons">
-            <input type="submit" value="등록" class="btn-submit">
-            <input type="reset" value="초기화" class="btn-reset">
-        </div>
-    </form>
-</div>
+          <!-- 안내문구 -->
+          <div style="height: 20px;padding:10px; display:flex;">
+            <label>음란물, 차별, 비하 혐오 및 초상권, 저작권 침해 게시물은 민·형사상의 책임을 질 수 있습니다.</label>
+          </div>
 
+          <!-- 파일첨부 -->
+          <div style="height: 20px;padding:10px; display:flex;">
+            <img src="post/assets/file.svg" style="width:20px;height:20px;">
+            <label for="files" style="color:blue;text-decoration: underline;cursor:pointer;">파일첨부</label>
+            <input type="file" id="files" name="files" multiple style="display:none;">
+          </div>
+
+          <!-- 본문 -->
+          <div style="width:100%;height: 400px;padding:10px; display:flex;">
+            <textarea name="post_content" style="width:100%;" placeholder="내용을 입력해주세요" required></textarea>
+          </div>
+
+          <!-- 버튼 -->
+          <div style="width:100%;height: 100px;padding:10px; display:flex;justify-content: flex-end;gap:20px;">
+            <button type="button" 
+                    style="
+			            background-color:rgb(82, 82, 95);
+			            color:white;
+			            font-size: 20px;
+			            padding: 0;
+			            border-radius: 15px;
+			            height: 60px;
+			            width: 130px;
+			            text-align: center;
+			            display: flex;
+			            align-items: center;
+			            justify-content: center;"
+                    onclick="history.back()">
+              취소하기
+            </button>
+            <button type="submit" 
+                    style="
+			            background-color:blue;
+			            color:white;
+			            font-size: 20px;
+			            padding: 0;
+			            border-radius: 15px;
+			            height: 60px;
+			            width: 130px;
+			            text-align: center;
+			            display: flex;
+			            align-items: center;
+			            justify-content: center;">
+              등록하기
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
+      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="<%=request.getContextPath()%>/post/js/input.js"></script>
+  
+  <script>
+		  const contextPath = "<%= request.getContextPath() %>";
+  </script>
 </body>
 </html>

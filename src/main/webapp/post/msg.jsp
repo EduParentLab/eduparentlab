@@ -1,34 +1,68 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>처리 결과</title>
+</head>
+<body>
 <script>
 <%
     boolean flag = (Boolean)request.getAttribute("flag");
     String kind = (String)request.getAttribute("kind");
-    if(kind.equals("insert")){
+    String path = request.getParameter("path");
+	System.out.println("msg.jsp.pate: "+path);
+	
+    Object categoryAttr = request.getAttribute("category_num");
+    String categoryNum = null;
+    
+    if (categoryAttr != null) {
+        categoryNum = String.valueOf(categoryAttr);
+        
+    } else {
+        categoryNum = request.getParameter("category_num");
+        
+    }
+
+    if (categoryNum == null || categoryNum.equals("null") || categoryNum.isEmpty()) {
+        categoryNum = "1";
+    }   
 %>
-	if(<%=flag%>){
-    	alert("입력성공");
-	} else {
-    	alert("입력실패");
-	}
-<%
-	} else if("update".equals(kind)){
-%>
-	if(<%=flag%>){
-    	alert("수정성공");
-	} else {
-  		 alert("수정실패");
-}
-<%
-	} else if("delete".equals(kind)){
-%>
-	if(<%=flag%>){
-    alert("삭제성공");
-	} else {
-    alert("삭제실패");
-}
-<%
-}
-%>
-location.href="post.do";
+
+<% if("insert".equals(kind)) { %>
+    if (<%=flag%>) {
+    	if("<%=path%>" == "admin"){
+        	location.href="admin/admin.do";    
+        }else{
+        	location.href="post.do?m=list&category_num=<%=categoryNum%>";  
+       	}  
+    } else {
+        alert("입력실패");
+        history.back();
+    }
+<% } else if("update".equals(kind)) { %>
+    if (<%=flag%>) {
+    	if("<%=path%>" == "admin"){
+        	location.href="admin/admin.do";    
+        }else{
+        	location.href="post.do?m=list&category_num=<%=categoryNum%>";  
+       	} 
+    } else {
+        alert("수정실패");
+        history.back();
+    }
+<% } else if("delete".equals(kind)) { %>
+    if (<%=flag%>) {
+    	if("<%=path%>" == "admin"){
+        	location.href="admin/admin.do";    
+        }else{
+        	location.href="post.do?m=list&category_num=<%=categoryNum%>";  
+       	} 
+    } else {
+        alert("삭제실패");
+        history.back();
+    }
+<% } %>
 </script>
+</body>
+</html>
