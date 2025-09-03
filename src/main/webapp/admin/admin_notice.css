@@ -92,12 +92,6 @@
   cursor: pointer;
 }
 
-
-
-
-
-
-
 .notice-table {
   width: 100%;
   border-collapse: collapse;
@@ -116,9 +110,16 @@
   font-weight: bold;
 }
 
-
-
-
+.section-write-btn {
+  display:flex;
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: felx-end;
+  align-items: center;
+  box-sizing: border-box;
+  padding :10px 10px;
+}
 
 .pagination {
   display: flex;

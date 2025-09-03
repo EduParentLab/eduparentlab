@@ -134,19 +134,6 @@ $(function() {
          })
          .fail(function() { alert("삭제 중 오류 발생"); });
     });
-	
-    //답글 버튼 클릭 -> 입력폼 토글
-    $(document).on("click", ".showReformBtn", function(){
-    	const $li = $(this).closest("li");
-    	const commentNum = $li.data("comment-num");
-    	$.get("${pageContext.request.contextPath}/comment/comment.do", { m: "checkReplyAuth", comment_num: commentNum })
-        .done(function() {
-            $li.find(".recommentForm").toggle();
-        })
-        .fail(function() {
-            alert("답글 권한이 없습니다.");
-        });
-    });
    
 });
 

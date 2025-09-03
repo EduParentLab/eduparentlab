@@ -15,13 +15,10 @@
       <input type="text" id="noticeSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
       <button id="noticeSearchBtn" class="search-btn">🔍</button>
   </div>
-
+<form action="?m=delete" method="post">
   <div style="text-align: right;">
-      <button class="delete-btn" style="padding-right:50px; padding-top:20px;">🗑️</button>
+      <button type="submit" class="delete-btn" style="padding-right:50px; padding-top:20px;">🗑️</button>
   </div>
-
-
-
   <div style="padding:50px; padding-top:20px;">
   <table id="noticeTable" class="notice-table">
 	 <thead>
@@ -44,10 +41,10 @@
 			<c:otherwise>
 			  <c:forEach items="${notice}" var="dto">
 			      <tr>
-			        <td><input type="checkbox" /></td>
+			        <td><input type="checkbox" name="chk" value="${dto.post_num}"/></td>
 					<td align='center'>${dto.post_num}</td>
 					<td id="post_subject" align='center'>
-					<a href='../post.do?m=content&seq=${dto.post_num}'>${dto.post_subject}</a>
+					<a href='../post.do?m=content&seq=${dto.post_num}&path=admin'>${dto.post_subject}</a>
 					</td>	
 					<td align='center'>${dto.post_date}</td>		
 					<td align='center'>${dto.post_view}</td>
@@ -59,12 +56,20 @@
 	    </c:choose>		
      </tbody>
   </table>
-  	<!-- ✏ 글쓰기 버튼 -->
-	<div class="top-bar">
-    	<a href="../post/input.jsp">➕ 글쓰기</a>
-	</div>
   </div>
-
+ </form>
+ <form action="../post.do?m=input&category_num=4" method="post">
+  	<input type="hidden" name="path" value="admin">	
+  	<!-- 글쓰기 버튼 -->
+        <div class="section-write-btn" style="gap:10px">
+          <img src="<%=request.getContextPath()%>/post/assets/plus-circle.svg" class="icon" alt="글쓰기 아이콘" style="width: 40px; height: 40px;"/>
+          <button class="write-btn" 
+                  onclick="location.href='<%=request.getContextPath()%>/post.do?m=input&category_num=${param.category_num}'"
+                  style="background-color: rgb(164, 183, 247); padding:10px; border-radius: 10px;">
+            글쓰기
+          </button>
+        </div>
+  </form>
 
   <div class="pagination">
       <a href="#" class="page current">1</a>

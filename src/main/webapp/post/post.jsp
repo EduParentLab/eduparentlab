@@ -105,10 +105,15 @@
                 <c:otherwise>
                   <c:forEach var="dto" items="${list}">
                     <tr>
-                      <td>
+                      <td>                      	
                         <a href="<%=request.getContextPath()%>/post.do?m=content&seq=${dto.post_num}&category_num=${category_num}">
                           ${dto.post_subject}
+<<<<<<< HEAD
                         </a>
+                        
+=======
+                        </a>                                            
+>>>>>>> c9fa428474dc62d12b35bd78b761747dbc158690
                       </td>
                       <td>${dto.nickname}</td>
                       
@@ -120,22 +125,34 @@
                     </tr>
                   </c:forEach>
                 </c:otherwise>
-                
               </c:choose>
+              
             </tbody>
           </table>
+          <div id="preview-box" style="
+  position:absolute;
+  display:none;
+  border:1px solid #ccc;
+  background:#fff;
+  padding:5px;
+  z-index:9999;
+">
+  <img id="preview-img" src="" style="max-width:200px; max-height:150px;" />
+</div>
+          
         </div>
-
-        <!-- 글쓰기 버튼 -->
-        <div class="section-write-btn" style="gap:10px">
-          <img src="<%=request.getContextPath()%>/post/assets/plus-circle.svg" class="icon" alt="글쓰기 아이콘" style="width: 40px; height: 40px;"/>
-          <button class="write-btn" 
-                  onclick="location.href='<%=request.getContextPath()%>/post.do?m=input&category_num=${param.category_num}'"
-                  style="background-color: rgb(164, 183, 247); padding:10px; border-radius: 10px;">
-            글쓰기
-          </button>
-        </div>
-
+        
+		<c:if test="${loginOkUser.email=='admin@edu_parent.com' or category_num != '4'}">
+	        <!-- 글쓰기 버튼 -->
+	        <div class="section-write-btn" style="gap:10px">
+	          <img src="<%=request.getContextPath()%>/post/assets/plus-circle.svg" class="icon" alt="글쓰기 아이콘" style="width: 40px; height: 40px;"/>
+	          <button class="write-btn" 
+	                  onclick="location.href='<%=request.getContextPath()%>/post.do?m=input&category_num=${param.category_num}'"
+	                  style="background-color: rgb(164, 183, 247); padding:10px; border-radius: 10px;">
+	            글쓰기
+	          </button>
+	        </div>
+		</c:if>
         <!-- 검색 -->
         <div class="section-searchbar">
           <form action="<%=request.getContextPath()%>/post.do" method="get" class="search-bar-container">

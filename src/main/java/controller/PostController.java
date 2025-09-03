@@ -81,7 +81,7 @@ public class PostController extends HttpServlet {
         } else {
             list = service.listPagingS(paging.getStartRow(), pageSize, sort, categoryNum);
         }
-
+               
         request.setAttribute("list", list);
         request.setAttribute("paging", paging);
         request.setAttribute("sort", sort);
@@ -113,8 +113,13 @@ public class PostController extends HttpServlet {
     	//권한 체크 
     	if(!checkAuth(request,response,"write", email)) return;
     	
+    	//관리자페이지용 
+        String path = request.getParameter("path");       
+        request.setAttribute("path", path);
+    	
         RequestDispatcher rd = request.getRequestDispatcher("/post/input.jsp");
-        rd.forward(request, response);
+        rd.forward(request, response);      
+      
     }
 
     
@@ -161,6 +166,10 @@ public class PostController extends HttpServlet {
 
         request.setAttribute("flag", flag);
         request.setAttribute("kind", "insert");
+        
+        //관리자페이지용 
+        String path = request.getParameter("path");       
+        request.setAttribute("path", path);
 
         RequestDispatcher rd = request.getRequestDispatcher("/post/msg.jsp");
         rd.forward(request, response);
@@ -191,6 +200,10 @@ public class PostController extends HttpServlet {
         request.setAttribute("flag", flag);  
         request.setAttribute("kind", "delete");
         request.setAttribute("category_num", post.getCategory_num());
+        
+        //관리자페이지용 
+        String path = request.getParameter("path");       
+        request.setAttribute("path", path);
         
         String view = "/post/msg.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(view);
@@ -232,6 +245,9 @@ public class PostController extends HttpServlet {
         if (flag) {
             FileService.getInstance().updateFilesByPost(request, dto.getPost_num());
         }
+        //관리자페이지용 
+        String path = request.getParameter("path");       
+        request.setAttribute("path", path);
         
         request.setAttribute("flag", flag);
         request.setAttribute("kind", "update");
@@ -265,6 +281,10 @@ public class PostController extends HttpServlet {
         request.setAttribute("dto", dto);
         request.setAttribute("post_num", post_num);
         request.setAttribute("fileList", fileList);
+        
+        //관리자페이지용 
+        String path = request.getParameter("path");       
+        request.setAttribute("path", path);        
 
         RequestDispatcher rd = request.getRequestDispatcher("/post/content.jsp");
         rd.forward(request, response);
@@ -291,6 +311,11 @@ public class PostController extends HttpServlet {
 	      
 	    //권한 체크
 	    if(!checkAuth(request,response, "update", dto.getEmail())) return;
+	    
+	    //관리자페이지용 
+        String path = request.getParameter("path");       
+        request.setAttribute("path", path);
+        
         request.setAttribute("dto", dto);
         request.getRequestDispatcher("/post/postUpdate.jsp").forward(request, response);
     }

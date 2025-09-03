@@ -90,6 +90,8 @@ public class MypageController extends HttpServlet {
             }
         }
         // 삭제 끝나면 다시 마이페이지로 이동 (갱신)
+
         response.sendRedirect(request.getContextPath() + "/mypage/mypage.do");
     }	
+	
 }
