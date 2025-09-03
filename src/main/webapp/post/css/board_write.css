@@ -132,7 +132,7 @@
 
 
 .section-board {
-  height: auto; /* or auto */
+  height: 450px; /* or auto */
   margin:5px 10px;
   padding: 10px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;

@@ -1,6 +1,7 @@
 package domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Comment {
 	private int comment_num;
@@ -10,7 +11,7 @@ public class Comment {
 	private int group_order;
 	private String email;
 	private int post_num;
-	
+	private List<Comment> recomments;
 	public Comment() {
 		
 	}
@@ -81,6 +82,15 @@ public class Comment {
 	public void setPost_num(int post_num) {
 		this.post_num = post_num;
 	}
+
+	public List<Comment> getRecomments() {
+		return recomments;
+	}
+
+	public void setRecomments(List<Comment> recomments) {
+		this.recomments = recomments;
+	}
+	
 	
 	
 	

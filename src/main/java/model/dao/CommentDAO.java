@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -184,6 +185,33 @@ public class CommentDAO {
 			se.printStackTrace();
 			return 0;
 		}
+	}
+	public List<Comment> getRecomments(int groupNum){
+		List<Comment> list = new ArrayList<>();
+		try {
+			Connection con = ds.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(RECOMMENT);
+			
+			pstmt.setInt(1, groupNum);
+			
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Comment c = new Comment();
+                c.setComment_num(rs.getInt("comment_num"));
+                c.setPost_num(rs.getInt("post_num"));
+                c.setGroup_num(rs.getInt("group_num"));
+                c.setComment_content(rs.getString("comment_content"));
+                c.setEmail(rs.getString("email"));
+                c.setComment_date(rs.getDate("comment_date"));
+                
+                list.add(c);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+			return null;
+		}
+		return list;
 	}
 	
 }

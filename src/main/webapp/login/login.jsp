@@ -71,10 +71,11 @@
 
 <body onload="document.f.email.focus()">
   <div class="wrapper">
+<<<<<<< HEAD
 
     <header>
       <div class="logo">
-        <a href="index.html"> 
+        <a href="../main/main.do"> 
           <img src="./assets/logoremoveback.png" alt="학부모정보통 로고" />
         </a>
       </div>
@@ -98,6 +99,9 @@
     </header>
 
 
+=======
+	<div id="headerArea"></div>
+>>>>>>> 8f2525b461efdd698e49164411f248f423668bd1
     <main>
       <div class="center-wrapper">
         <div class="logincontainer">

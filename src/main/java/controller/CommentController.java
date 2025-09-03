@@ -51,6 +51,7 @@ public class CommentController extends HttpServlet {
     		page = Integer.parseInt(strPage);
     	}
     	String strPost_num = request.getParameter("post_num");
+    	System.out.println("@post_num: " + strPost_num);
 		int post_num = (strPost_num != null && !strPost_num.isEmpty()) ? Integer.parseInt(strPost_num) : 1; // 기본값 1
 		
     	int totalCount = service.getTotalComments(post_num);
@@ -64,11 +65,12 @@ public class CommentController extends HttpServlet {
 		System.out.println("@list()호출, post_num="+post_num);
 		System.out.println("list size: "+list.size());
 		
+		request.setAttribute("post_num", post_num);
 		request.setAttribute("comment", list);
 		request.setAttribute("paging", paging);
 		
 	
-		RequestDispatcher rd = request.getRequestDispatcher("/comment/comment.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -81,6 +83,10 @@ public class CommentController extends HttpServlet {
 		CommentService service = CommentService.getInstance();
 
 		String strPost_num = request.getParameter("post_num");
+		if(strPost_num == null || strPost_num.isEmpty()) {
+		    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "post_num is required");
+		    return;
+		}
 		int post_num = Integer.parseInt(strPost_num);
 		String content = request.getParameter("content");
 		Comment comment = new Comment(-1, content, null, 0, 0, loginUser.getEmail(), post_num);
@@ -200,11 +206,14 @@ public class CommentController extends HttpServlet {
 		int result = service.recomment(recomment, post_num);
 		System.out.println("recommnet의 result: "+result);
 		if(result == 1) {
-			response.sendRedirect(request.getContextPath() + "/post.do?m=content&seq=" + post_num);
-			System.out.println("댓글 등록 성공");
+			// 새 답댓글 정보를 JSON으로 반환
+	        response.setContentType("application/json;charset=UTF-8");
+	        String json = String.format("{\"comment_num\": %d, \"email\": \"%s\", \"comment_content\": \"%s\"}", 
+	                                     recomment.getComment_num(), recomment.getEmail(), recomment.getComment_content());
+	        response.getWriter().write(json);
 		}
 		else {
-			System.out.println("댓글 등록 실패");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "답댓글 등록 실패");
 		}
 	}
 	private void checkReplyAuth(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
