@@ -18,7 +18,7 @@
       <div class="center-wrapper">
         <div class="section-banner">
           <a href="#">
-           <img src="../designer/assets/banner.jpg" style="width:100%; height:auto;display: block;" />
+           <img src="../designer/assets/banner2.png" style="width:100%; height:auto;display: block;" />
           </a>
         </div>
         <c:forEach var="notice" items="${notice}">
@@ -69,11 +69,6 @@
 	                </div>
 			    </c:forEach>
             </div>
-        </div>
-        <div class="section-banner">
-          <a href="#">
-           <img src="../designer/assets/banner.jpg" style="width:100%; height:auto;display: block;" />
-          </a>
         </div>
         <h3 style="margin:10px";>학플리</h3>
         
