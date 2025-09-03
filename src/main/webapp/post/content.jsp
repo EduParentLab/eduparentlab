@@ -29,6 +29,9 @@
           <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
           <button class="search-btn">🔍</button>
         </div>
+        
+        
+        
         <!--  아래 추천 검색어 목록 -->
         <div class="search-dropdown">
           <div class="search-section-title">검색 추천</div>
@@ -54,22 +57,29 @@
     
 	<div class="center-wrapper">
 	
-        <div class="section-title">
-           <p style="font-size:35px; font-weight:bold" >입시게시판</p> 
-        </div>
-        
-        
-        
+      <div class="section-title">
+		  <c:choose>
+		    <c:when test="${dto.category_num == 1}">
+		      <p style="font-size:35px; font-weight:bold">자유게시판</p>
+		    </c:when>
+		    <c:when test="${dto.category_num == 2}">
+		      <p style="font-size:35px; font-weight:bold">입시정보</p>
+		    </c:when>
+		    <c:when test="${dto.category_num == 3}">
+		      <p style="font-size:35px; font-weight:bold">고등학교</p>
+		    </c:when>
+		    <c:when test="${dto.category_num == 4}">
+		      <p style="font-size:35px; font-weight:bold">공지사항</p>
+		    </c:when>
+		  </c:choose>
+		</div>
+         
         <div class="section-content-title">
             <div style="width: 50%;">
              <label>${dto.post_subject}</label>
-            </div>
-            <div style="width: 50%;display:flex; justify-content: flex-end;">
-            	<a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}">
-				  수정하기
-				</a>
-            </div>
+            </div>               
         </div>
+     
         
         <div class="section-content-info">
             <label>${dto.post_date}</label>
@@ -143,26 +153,33 @@
 		  "
 		  onmouseover="this.style.backgroundColor='#ffc2dc'"
 		  onmouseout="this.style.backgroundColor='#ffd6e8'">
-		    수정
+		      <a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}">
+				  수정
+			</a>
 		  </button>
 		
-		  <button style="
-		    width: 50px;
-		    height: 25px;
-		    background-color: #bc665c;
-		    color: #333;
-		    font-size: 12px;
-		    font-weight: bold;
-		    border: none;
-		    border-radius: 10px;
-		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		    transition: all 0.2s ease;
-		    cursor: pointer;
-		  "
-		  onmouseover="this.style.backgroundColor='#b5dcfb'"
-		  onmouseout="this.style.backgroundColor='#d0e8ff'">
-		    삭제
-		  </button>
+		
+		  <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
+			  <input type="hidden" name="seq" value="${dto.post_num}" />
+			  <button type="submit" style="
+			    width: 50px;
+			    height: 25px;
+			    background-color: #bc665c;
+			    color: #333;
+			    font-size: 12px;
+			    font-weight: bold;
+			    border: none;
+			    border-radius: 10px;
+			    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			    transition: all 0.2s ease;
+			    cursor: pointer;
+			  "
+			  onclick="return confirm('정말 삭제하시겠습니까?');"
+			  onmouseover="this.style.backgroundColor='#b5dcfb'"
+			  onmouseout="this.style.backgroundColor='#d0e8ff'">
+			    삭제
+			  </button>
+			</form>
 		</div>
 	
 
