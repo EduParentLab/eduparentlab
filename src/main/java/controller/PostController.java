@@ -278,9 +278,25 @@ public class PostController extends HttpServlet {
 
         List<PostFile> fileList = FileService.getInstance().findFilesByPost(post_num);
 
+        boolean canEdit = false;
+        boolean canDelete = false;
+
+        if (dto.getCategory_num() == 4) { 
+            if ("admin".equals(role)) {
+                canEdit = true;
+                canDelete = true;
+            }
+        } else { 
+            if ("admin".equals(role) || loginUser.getEmail().equals(dto.getEmail())) {
+                canEdit = true;
+                canDelete = true;
+            }
+        }
         request.setAttribute("dto", dto);
         request.setAttribute("post_num", post_num);
         request.setAttribute("fileList", fileList);
+        request.setAttribute("canEdit", canEdit);
+        request.setAttribute("canDelete", canDelete);
         
         //관리자페이지용 
         String path = request.getParameter("path");       
