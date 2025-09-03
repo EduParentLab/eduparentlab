@@ -96,63 +96,72 @@
 			    <p>${dto.post_content}</p>
 			  </div>	  
 		</div>
-	<c:if test="${loginOkUser.email=='admin@edu_parent.com' or category_num != '4'}">	
-		<div style="display:flex;
-		justify-content:flex-end;
-		align-item:center;
-		border-bottom:1px solid black;
-		gap:5px;
-		padding:15px;">
 		
 		
-		<button style="
-		    width: 50px;
-		    height: 25px;
-		    background-color: #8dc4a4;
-		    color: #333;
-		    font-size: 12px;
-		    font-weight: bold;
-		    border: none;
-		    border-radius: 10px;
-		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		    transition: all 0.2s ease;
-		    cursor: pointer;
-		  "
-		  onmouseover="this.style.backgroundColor='#ffc2dc'"
-		  onmouseout="this.style.backgroundColor='#ffd6e8'">
-		  	<c:if test="${path == null}"><c:set var="path" value="post"/></c:if>
-		      <a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}&path=${path}">				
-				  수정
-		      </a>
-			
-		  </button>
+		<c:if test="${canEdit or canDelete}">
+  <div style="display:flex;
+              justify-content:flex-end;
+              align-items:center;
+              border-bottom:1px solid black;
+              gap:5px;
+              padding:15px;">
+
+		    <!-- 수정 버튼 -->
+		    <c:if test="${canEdit}">
+		      <form action="<%=request.getContextPath()%>/post.do" method="get" style="display:inline;">
+		        <input type="hidden" name="m" value="edit" />
+		        <input type="hidden" name="seq" value="${dto.post_num}" />
+		        <input type="hidden" name="path" value="${path}" />
+		        <button type="submit" style="
+		            width: 50px;
+		            height: 25px;
+		            background-color: #8dc4a4;
+		            color: #333;
+		            font-size: 12px;
+		            font-weight: bold;
+		            border: none;
+		            border-radius: 10px;
+		            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		            transition: all 0.2s ease;
+		            cursor: pointer;"
+		          onmouseover="this.style.backgroundColor='#ffc2dc'"
+		          onmouseout="this.style.backgroundColor='#ffd6e8'">
+		          수정
+		        </button>
+		      </form>
+		    </c:if>
 		
+		    <!-- 삭제 버튼 -->
+		    <c:if test="${canDelete}">
+		      <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
+		        <input type="hidden" name="seq" value="${dto.post_num}" />
+		        <input type="hidden" name="category_num" value="${dto.category_num}" />
+		        <input type="hidden" name="path" value="${path}" /> <!-- 관리자 페이지용 -->
+		        <button type="submit" style="
+		            width: 50px;
+		            height: 25px;
+		            background-color: #bc665c;
+		            color: #333;
+		            font-size: 12px;
+		            font-weight: bold;
+		            border: none;
+		            border-radius: 10px;
+		            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		            transition: all 0.2s ease;
+		            cursor: pointer;"
+		          onclick="return confirm('정말 삭제하시겠습니까?');"
+		          onmouseover="this.style.backgroundColor='#b5dcfb'"
+		          onmouseout="this.style.backgroundColor='#d0e8ff'">
+		          삭제
+		        </button>
+		      </form>
+		    </c:if>
 		
-		  <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
-			  <input type="hidden" name="seq" value="${dto.post_num}" />
-			  <input type="hidden" name="category_num" value="${dto.category_num}" /> 
-			  <input type="hidden" name="path" value="${path}"><!-- 관리자페이지용 -->
-			  <button type="submit" style="
-			    width: 50px;
-			    height: 25px;
-			    background-color: #bc665c;
-			    color: #333;
-			    font-size: 12px;
-			    font-weight: bold;
-			    border: none;
-			    border-radius: 10px;
-			    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-			    transition: all 0.2s ease;
-			    cursor: pointer;
-			  "
-			  onclick="return confirm('정말 삭제하시겠습니까?');"
-			  onmouseover="this.style.backgroundColor='#b5dcfb'"
-			  onmouseout="this.style.backgroundColor='#d0e8ff'">
-			    삭제
-			  </button>
-			</form>
-		</div>
-	</c:if>
+		  </div>
+		</c:if>
+
+		
+	
 
         <div id="commentArea"></div>
     </main>
