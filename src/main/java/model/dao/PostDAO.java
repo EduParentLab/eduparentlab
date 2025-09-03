@@ -9,6 +9,7 @@ import domain.Post;
 import static model.sql.PostSQL.*;
 import static model.sql.AdminSQL.*;
 import model.sql.PostSQL;
+import java.sql.Timestamp;
 
 public class PostDAO {
 
@@ -47,7 +48,7 @@ public class PostDAO {
                         rs.getInt("post_num"),
                         rs.getString("post_subject"),
                         rs.getString("post_content"),
-                        rs.getDate("post_date"),
+                        rs.getTimestamp("post_date"),
                         rs.getInt("post_view"),
                         rs.getInt("category_num"),
                         rs.getString("email"),
@@ -95,7 +96,7 @@ public class PostDAO {
                         rs.getInt("post_num"),
                         rs.getString("post_subject"),
                         rs.getString("post_content"),
-                        rs.getDate("post_date"),
+                        rs.getTimestamp("post_date"),
                         rs.getInt("post_view"),
                         rs.getInt("category_num"),
                         rs.getString("email"),
@@ -243,7 +244,7 @@ public class PostDAO {
                     rs.getInt("post_num"),
                     rs.getString("post_subject"),
                     rs.getString("post_content"),
-                    rs.getDate("post_date"),
+                    rs.getTimestamp("post_date"),
                     rs.getInt("post_view"),
                     rs.getInt("category_num"),
                     rs.getString("email"),
@@ -330,7 +331,7 @@ public class PostDAO {
 	                Post post = new Post();
 	                post.setPost_num(rs.getInt("post_num"));
 	                post.setPost_subject(rs.getString("post_subject"));
-	                post.setPost_date(rs.getDate("post_date"));
+	                post.setPost_date(rs.getTimestamp("post_date"));
 	                post.setPost_view(rs.getInt("post_view"));
 	                post.setLikes(rs.getInt("likes"));
 	                post.setCategory_num(rs.getInt("category_num")); // 상세보기 링크 위해 필요
@@ -342,6 +343,7 @@ public class PostDAO {
 	    }
 	    return list;
 	}
+	
     
     //민영 추가- 내가 쓴 글 총 개수
     public int mypagePostCount(String email) {
@@ -411,6 +413,7 @@ public class PostDAO {
 	    }
 	    return total;
 	}
+	
 	//관리자페이지 공지사항 가져오기
 	public ArrayList<Post> listNotice() {
         ArrayList<Post> list = new ArrayList<>();
@@ -427,7 +430,7 @@ public class PostDAO {
                 int post_num = rs.getInt(1);
                 String post_subject = rs.getString(2);
                 String post_content = rs.getString(3);
-                java.sql.Date post_date = rs.getDate(4);
+                Timestamp post_date = rs.getTimestamp(4);
                 int post_view = rs.getInt(5);
                 int category_num = rs.getInt(6);
                 String email = rs.getString(7);               

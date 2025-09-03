@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -99,6 +101,7 @@
                 <c:when test="${empty list}">
                   <tr><td colspan="5">등록된 게시글이 없습니다.</td></tr>
                 </c:when>
+                
                 <c:otherwise>
                   <c:forEach var="dto" items="${list}">
                     <tr>
@@ -108,12 +111,16 @@
                         </a>
                       </td>
                       <td>${dto.nickname}</td>
-                      <td>${dto.post_date}</td>
+                      
+                      <td>
+						  <fmt:formatDate value="${dto.post_date}" pattern="yyyy-MM-dd"/>
+					 </td>
                       <td>${dto.post_view}</td>
                       <td>${dto.likes}</td>
                     </tr>
                   </c:forEach>
                 </c:otherwise>
+                
               </c:choose>
             </tbody>
           </table>
