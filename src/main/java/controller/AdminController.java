@@ -76,34 +76,20 @@ public class AdminController extends HttpServlet {
     private void getStatistics(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
     	countPost(request, response); 
-    	countUser(request, response);
-    	//Map<String,Object> postData = countPost(); 
-    	//Map<String,Object> userData = countUser();
+    	countUser(request, response);    	
     	RequestDispatcher rd = request.getRequestDispatcher("statistics.jsp");
-		rd.forward(request, response); 
-		
-		//List<Map<String, Object>> dataList = new ArrayList<>();
-		//dataList.add(postData);
-		//dataList.add(userData);     
+		rd.forward(request, response); 	  
     }
     private void countPost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {    	
     	PostService service = PostService.getInstance();
  	    LinkedHashMap<String, Integer> postCount = service.countPostS();	   
- 	    request.setAttribute("postCount", postCount);   	    
- 	    //Map<String, Object> postData = new HashMap<>();
-        //postData.put("name", "postCount");
-        //postData.put("data", postCount);
-        //return postData;
+ 	    request.setAttribute("postCount", postCount);   	    	  
 	}
     private void countUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
     	UserService service = UserService.getInstance();
     	LinkedHashMap<Date, Integer> userCount = service.countUserS();
-    	request.setAttribute("userCount", userCount);        	
-    	//Map<String, Object> userData = new HashMap<>();
-        //userData.put("name", "userCount");
-        //userData.put("data", userCount);  
-        //return userData;
+    	request.setAttribute("userCount", userCount);          	
     }
 }
