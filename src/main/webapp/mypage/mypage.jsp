@@ -119,7 +119,11 @@
                     <!-- 반복되는 글 -->
                     <tr>
                     <td><input type="checkbox" name="chk" value="${p.post_num}"></td>
-                    <td>${p.post_subject}</td>
+                    <td>
+				     	<a href="<%=request.getContextPath()%>/post.do?m=content&seq=${p.post_num}&category_num=${p.category_num}">
+				          ${p.post_subject}
+				        </a>
+				    </td>
                     <td><fmt:formatDate value="${p.post_date}" pattern="yyyy-MM-dd"/></td>
                     <td>${p.post_view}</td>
                     <td>${p.likes}</td>
