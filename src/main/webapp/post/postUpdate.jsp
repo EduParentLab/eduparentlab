@@ -22,7 +22,8 @@
         <form action="<%=request.getContextPath()%>/post.do?m=update" 
               method="post" 
               enctype="multipart/form-data">   
-          
+              
+          <input type="hidden" name="path" value="${path}"><!-- 관리자페이지용 -->
     
           <div style="border-top:2px solid black;border-bottom:2px solid black;padding-top:20px;padding-bottom:20px;">
             <label style="font-size:46px; margin:10px; margin-bottom:0px">
