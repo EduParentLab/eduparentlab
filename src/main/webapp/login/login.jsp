@@ -75,21 +75,15 @@
     <main>
       <div class="center-wrapper">
         <div class="logincontainer">
-        
             <div class="login-title">
                 <h2>Login</h2>
             </div>
-            
             <form name="f" action="login.do?m=check" method="post">
             <div class="login-input">
             <input type="text" name="email" placeholder="아이디(이메일)" onkeydown="enterCheck(this)" />
             </div>
             <div class="password-input">
             <input type="password" name="password" placeholder="비밀번호" onkeydown="enterCheck(this)" />
-            </div>
-            <div class="login-constant-button keep-login">
-                <input type="checkbox" name="keepLogin" />
-                <label for="keepLogin">로그인 유지</label>
             </div>
             <button type="submit" class="login-btn" onclick="check()">로그인</button>
             </form>

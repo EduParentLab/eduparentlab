@@ -14,7 +14,7 @@
       <img src="<%=request.getContextPath()%>/designer/assets/logoremoveback.png" />
     </a>
   </div>
-  <div class="search-container">
+  <div class="search-container" style="justify-content:center;">
     <div class="search-bar">
       <div class="search-logo">H</div>
       	<form action="${pageContext.request.contextPath}/main/main.do" method="get">
