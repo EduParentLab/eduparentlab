@@ -183,13 +183,23 @@ public class PostController extends HttpServlet {
         PostService service = PostService.getInstance();
         Post post = service.get(seq);
         
+        if (post == null) {
+            request.setAttribute("flag", false);
+            request.setAttribute("kind", "delete");
+            RequestDispatcher rd = request.getRequestDispatcher("/post/msg.jsp");
+            rd.forward(request, response);
+            return;
+        }
         //권한 체크
-        if(!checkAuth(request,response, "delete", post.getEmail())) return;
+        if(!checkAuth(request,response, "delete", post.getEmail())) {
+        return;
+        }
         
         boolean flag = service.deleteS(seq);
-        
-        request.setAttribute("flag", flag);
+
+        request.setAttribute("flag", flag);  
         request.setAttribute("kind", "delete");
+        request.setAttribute("category_num", post.getCategory_num());
         
         String view = "/post/msg.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(view);
@@ -226,6 +236,11 @@ public class PostController extends HttpServlet {
         Post dto = new Post(post_num, post_subject, post_content, null, 0, category_num, null, null, 0);
 
         boolean flag = PostService.getInstance().updateS(dto);
+        
+       
+        if (flag) {
+            FileService.getInstance().updateFilesByPost(request, dto.getPost_num());
+        }
         
         request.setAttribute("flag", flag);
         request.setAttribute("kind", "update");

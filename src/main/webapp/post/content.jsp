@@ -8,12 +8,14 @@
 <head>
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
+  
    <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_content.css" />
 </head>
 
 <body>
   <div class="wrapper">
+  <div id="headerArea"></div>
   	
     <header>
       <div class="logo">
@@ -27,6 +29,9 @@
           <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
           <button class="search-btn">🔍</button>
         </div>
+        
+        
+        
         <!--  아래 추천 검색어 목록 -->
         <div class="search-dropdown">
           <div class="search-section-title">검색 추천</div>
@@ -45,35 +50,42 @@
       <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
       <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
       <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">공지사항</a>
+      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
     </div>
   
     <main> 
     
 	<div class="center-wrapper">
 	
-        <div class="section-title">
-           <p style="font-size:35px; font-weight:bold" >입시게시판</p> 
-        </div>
-        
-        
-        
+      <div class="section-title">
+		  <c:choose>
+		    <c:when test="${dto.category_num == 1}">
+		      <p style="font-size:35px; font-weight:bold">자유게시판</p>
+		    </c:when>
+		    <c:when test="${dto.category_num == 2}">
+		      <p style="font-size:35px; font-weight:bold">입시정보</p>
+		    </c:when>
+		    <c:when test="${dto.category_num == 3}">
+		      <p style="font-size:35px; font-weight:bold">고등학교</p>
+		    </c:when>
+		    <c:when test="${dto.category_num == 4}">
+		      <p style="font-size:35px; font-weight:bold">공지사항</p>
+		    </c:when>
+		  </c:choose>
+		</div>
+         
         <div class="section-content-title">
             <div style="width: 50%;">
              <label>${dto.post_subject}</label>
-            </div>
-            <div style="width: 50%;display:flex; justify-content: flex-end;">
-            	<a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}">
-				  수정하기
-				</a>
-            </div>
+            </div>               
         </div>
+     
         
         <div class="section-content-info">
             <label>${dto.post_date}</label>
             <div style="display: flex; align-items: center; gap: 5px;">
 	            <img src="<%=request.getContextPath()%>/post/assets/eye.png" alt="조회수" class="eye-icon" style="width: 20px; height: 20px;"/>
-	            <label>조회수 ${dto.post_view}</label>
+	            <label>${dto.post_view}</label>
             </div>
             
             <label>${dto.nickname}</label>
@@ -82,7 +94,6 @@
                 <label>${dto.likes}</label>
             </button>
             <label>${dto.post_num}</label>
-            <label>신고하기</label>
             
 		            <!-- 비이미지 파일 다운로드 -->
 		    <c:forEach var="file" items="${fileList}">
@@ -118,6 +129,60 @@
 			   <div style="margin-bottom:20px;">
 			    <p>${dto.post_content}</p>
 			  </div>	  
+		</div>
+		
+		
+		<div style="display:flex;
+		justify-content:flex-end;
+		align-item:center;
+		border-bottom:1px solid black;
+		gap:5px;
+		padding:15px;">
+		
+		
+		<button style="
+		    width: 50px;
+		    height: 25px;
+		    background-color: #8dc4a4;
+		    color: #333;
+		    font-size: 12px;
+		    font-weight: bold;
+		    border: none;
+		    border-radius: 10px;
+		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		    transition: all 0.2s ease;
+		    cursor: pointer;
+		  "
+		  onmouseover="this.style.backgroundColor='#ffc2dc'"
+		  onmouseout="this.style.backgroundColor='#ffd6e8'">
+		      <a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}">
+				  수정
+			</a>
+		  </button>
+		
+		
+		  <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
+			  <input type="hidden" name="seq" value="${dto.post_num}" />
+			  <input type="hidden" name="category_num" value="${dto.category_num}" /> 
+			  <button type="submit" style="
+			    width: 50px;
+			    height: 25px;
+			    background-color: #bc665c;
+			    color: #333;
+			    font-size: 12px;
+			    font-weight: bold;
+			    border: none;
+			    border-radius: 10px;
+			    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			    transition: all 0.2s ease;
+			    cursor: pointer;
+			  "
+			  onclick="return confirm('정말 삭제하시겠습니까?');"
+			  onmouseover="this.style.backgroundColor='#b5dcfb'"
+			  onmouseout="this.style.backgroundColor='#d0e8ff'">
+			    삭제
+			  </button>
+			</form>
 		</div>
 	
 

@@ -9,6 +9,7 @@ import domain.Post;
 import static model.sql.PostSQL.*;
 import static model.sql.AdminSQL.*;
 import model.sql.PostSQL;
+import java.sql.Timestamp;
 
 public class PostDAO {
 
@@ -47,7 +48,7 @@ public class PostDAO {
                         rs.getInt("post_num"),
                         rs.getString("post_subject"),
                         rs.getString("post_content"),
-                        rs.getDate("post_date"),
+                        rs.getTimestamp("post_date"),
                         rs.getInt("post_view"),
                         rs.getInt("category_num"),
                         rs.getString("email"),
@@ -95,7 +96,7 @@ public class PostDAO {
                         rs.getInt("post_num"),
                         rs.getString("post_subject"),
                         rs.getString("post_content"),
-                        rs.getDate("post_date"),
+                        rs.getTimestamp("post_date"),
                         rs.getInt("post_view"),
                         rs.getInt("category_num"),
                         rs.getString("email"),
@@ -243,7 +244,7 @@ public class PostDAO {
                     rs.getInt("post_num"),
                     rs.getString("post_subject"),
                     rs.getString("post_content"),
-                    rs.getDate("post_date"),
+                    rs.getTimestamp("post_date"),
                     rs.getInt("post_view"),
                     rs.getInt("category_num"),
                     rs.getString("email"),
@@ -326,7 +327,7 @@ public class PostDAO {
                        Post post = new Post();
                        post.setPost_num(rs.getInt("post_num"));
                        post.setPost_subject(rs.getString("post_subject"));
-                       post.setPost_date(rs.getDate("post_date"));
+                       post.setPost_date(rs.getTimestamp("post_date"));
                        post.setPost_view(rs.getInt("post_view"));
                        post.setLikes(rs.getInt("likes")); //여기 추가
                        list.add(post);
@@ -423,7 +424,7 @@ public class PostDAO {
                 int post_num = rs.getInt(1);
                 String post_subject = rs.getString(2);
                 String post_content = rs.getString(3);
-                java.sql.Date post_date = rs.getDate(4);
+                Timestamp post_date = rs.getTimestamp(4);
                 int post_view = rs.getInt(5);
                 int category_num = rs.getInt(6);
                 String email = rs.getString(7);               

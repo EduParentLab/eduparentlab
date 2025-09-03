@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
-  <link rel="stylesheet" href="../main/layout.css" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="playlist.css" />
 </head>
 

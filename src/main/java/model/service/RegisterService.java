@@ -21,4 +21,9 @@ public class RegisterService {
 		return dao.insert(dto);
 	}
 	
+
+	public boolean emailCheckS(String email) {
+		return dao.emailCheck(email);
+	}
+	
 }

@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="../main/layout.css" />
   <link rel="stylesheet" href="login.css" />
 		<script src="trim.js"></script>
+		<script>
+		  const contextPath = "<%= request.getContextPath() %>";
+		</script>
 		<script language="javascript"> 
 		function check(){
 		    var emailval = f.email.value;   // email
@@ -72,6 +75,7 @@
 <body onload="document.f.email.focus()">
   <div class="wrapper">
 	<div id="headerArea"></div>
+
     <main>
       <div class="center-wrapper">
         <div class="logincontainer">

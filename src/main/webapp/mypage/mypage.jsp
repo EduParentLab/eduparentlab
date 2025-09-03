@@ -3,96 +3,147 @@
 <jsp:include page = "../login/login_check_modul.jsp"/>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>마이페이지</title>
+  <meta charset="UTF-8" />
+  <title>학부모정보통</title>
+  <link rel="stylesheet" href="../main/layout.css"/>
+  <link rel="stylesheet" href="../mypage/mypage.css"/>
 </head>
+
+
 <body>
-	<h1>마이페이지</h1>
-	${loginOkUser.name}님 안녕하세요! 
-	<c:if test="${loginOkUser.email == sessionScope.loginOkUser.email}">
-		<a href="../mypage/mypage_update.jsp">
-	    <button>개인정보수정</button>
-		</a>
-	</c:if> 
-	
-	<h2>개인정보</h2>
-	
-	<table>
-		<tr>
-		<!-- 왼쪽 표 -->
-		<td>
-			<table border="1">
-				<tr><th>이름</th><td>${loginOkUser.name}</td></tr>
-				<tr><th>닉네임</th><td>${loginOkUser.nickname}</td></tr>
-		        <tr><th>이메일</th><td>${loginOkUser.email}</td></tr>
-		        <tr><th>전화번호</th><td>${loginOkUser.phone}</td></tr>
-		        <tr><th>성별</th><td>${loginOkUser.gender}</td></tr>
-		        <tr><th>생년월일</th><td>${loginOkUser.birth}</td></tr>
-		        <tr><th>가입일</th><td>${loginOkUser.cdate}</td></tr>
-	        </table>
-    	</td>
-              
-        <!-- 오른쪽 표 -->
-		<td>
-	   		<table border="1">
-		        <tr><td>총 게시글 : ${mypostcount}</td></tr>
-		        <tr><td>총 댓글 : ${mycommentcount}</td></tr>
-		        <tr><td>받은 총 공감수 : ${mypostlike}</td></tr>
-	     	</table>
-    	</td>
-		</tr>
-	</table>
-	
-	
-	<!-- 내가 쓴 글 -->
-	<h2>내가 쓴 글</h2>
-	
-<c:choose>
-    <c:when test="${loginOkUser.email == sessionScope.loginOkUser.email}">    
-        <form action="../mypage/mypage.do?m=delete" method="post">        
-    </c:when>
-    <c:otherwise>
-        <form action="../admin/admin.do?m=delete&email=${loginOkUser.email}" method="post">        
-    </c:otherwise>
-</c:choose>
-			<table border="1" width="100%">
-			
-				 <tr>
-			        <th>선택</th>
-			        <th>제목</th>
-			        <th>작성일</th>
-			        <th>조회수</th>
-			        <th>공감수</th>
-			    </tr>
-		    
-			<c:forEach var="p" items="${mypost}">
-		
-		        <tr>
-		            <td><input type="checkbox" name="chk" value="${p.post_num}"></td>
-		            <td>${p.post_subject}</td>
-		            <td><fmt:formatDate value="${p.post_date}" pattern="yyyy-MM-dd"/></td>
-		            <td>${p.post_view}</td>
-		            <td>${p.likes}</td>
-		        </tr>
-		    </c:forEach>
-			
-			</table>
-			
-			
-			<!-- 페이지 네비게이션 -->
-		<div style="text-align:center; margin-top:10px;">
-		    <a href="#">1</a> 
-		    <a href="#">2</a> 
-		    <a href="#">3</a> 
-		    <a href="#">4</a> 
-		    ...
-		</div>
-		
-		<button type="submit">삭제</button>
-	  </form>
-	
+  <div class="wrapper">
+
+ <%--<jsp:include page="../login/headerBox.jsp"/> ... --%>
+ 	<div id="headerArea"></div>
+    <main>
+      <div class="center-wrapper">
+
+        <div class="section-title">
+           <p style="font-size:35px; font-weight:bold" >마이페이지</p> 
+        </div>
+        <div class="section-discription">
+            <div class="profile-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="사용자 아이콘" />
+    <div class="profile-name">${loginOkUser.name}님 안녕하세요</div>
+  </div>
+        </div>
+        <div class="section-personal-info-title">
+           <label style="font-size:20px; font-weight:bold" >개인정보</label> 
+        </div>
+        <c:if test="${loginOkUser.email == sessionScope.loginOkUser.email}">
+			<div style="display:flex;justify-content:flex-end;padding:15px" >
+				<button style="width:width:150px; height:30px;" onclick="location.href='../mypage/edit_info.jsp'">
+				  내 정보 수정
+				</button>
+			</div>
+	    </c:if>       		
+		</div>		
+        
+        <div class="section-personal-info-content">
+            <div class="container">
+                <div class="info-box">
+                <h2>개인정보</h2>
+                <div class="info-row"><div class="label">이름</div><div class="value">${loginOkUser.name}</div></div>
+                <div class="info-row"><div class="label">닉네임</div><div class="value">${loginOkUser.nickname}</div></div>
+                <div class="info-row"><div class="label">이메일</div><div class="value">${loginOkUser.email}</div></div>
+                <div class="info-row"><div class="label">전화번호</div><div class="value">${loginOkUser.phone}</div></div>
+                <div class="info-row"><div class="label">성별</div><div class="value">${loginOkUser.gender}</div></div>
+                <div class="info-row"><div class="label">생년월일</div><div class="value">${loginOkUser.birth}</div></div>
+                <div class="info-row"><div class="label">가입일</div><div class="value">${loginOkUser.cdate}</div></div>
+                </div>
+
+                <div class="stat-box">
+                <h2>활동 통계</h2>
+                <div class="stat-row"><div class="label">총 게시글</div><div class="value">${mypostcount}</div></div>
+                <div class="stat-row"><div class="label">총 댓글</div><div class="value">${mycommentcount}</div></div>
+                <div class="stat-row"><div class="label">받은 총 공감수</div><div class="value">${mypostlike}</div></div>
+                </div>
+            </div>
+           
+        </div>
+        <div class="section-self-write-title">
+           <label style="font-size:20px; font-weight:bold" >내가 쓴 글</label> 
+        </div>
+        
+     <form action="../mypage/mypage.do?m=delete" method="post">
+        <div class="section-self-write-content">
+            <div class="post-container">
+                <h2>내가 쓴 글</h2>
+                <table>
+                <thead>
+                    <tr>
+                    <th>선택</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                    <th>공감수</th>
+                    </tr>
+               </thead>
+                
+     <c:forEach var="p" items="${mypost}">
+                
+                <tbody>
+                    <!-- 반복되는 글 -->
+                    <tr>
+                    <td><input type="checkbox" name="chk" value="${p.post_num}"></td>
+                    <td>
+				     	<a href="<%=request.getContextPath()%>/post.do?m=content&seq=${p.post_num}&category_num=${p.category_num}">
+				          ${p.post_subject}
+				        </a>
+				    </td>
+                    <td><fmt:formatDate value="${p.post_date}" pattern="yyyy-MM-dd"/></td>
+                    <td>${p.post_view}</td>
+                    <td>${p.likes}</td>
+                    </tr>
+     </c:forEach>       
+                    
+
+                </tbody>
+                </table>
+
+                <div class="pagination">
+                <span class="active">1</span>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>▶</a>
+                </div>
+
+                <div class="delete-icon">
+                <button type="submit" title="삭제">
+                <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="삭제" />
+                </button>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      
+    </main>
+
+
+    <footer>
+      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
+      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
+    </footer>
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="mypage.js"></script>
+<script> const contextPath = "<%=request.getContextPath()%>";</script>
+
+
+
+>>>>>>> abb7ee87c4baf5ef202437695f434a4b29d6fa14
 </body>
 </html>
