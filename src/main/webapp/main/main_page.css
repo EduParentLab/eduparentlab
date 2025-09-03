@@ -57,7 +57,7 @@
 
   .popular-board {
       width: 50%;
-      border: 2px solid #ccc;
+      border: 2px solid rgb(0, 0, 0);
       border-radius: 6px;
       padding: 15px;
       background-color: #ffffff;
