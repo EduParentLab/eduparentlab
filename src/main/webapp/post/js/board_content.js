@@ -19,6 +19,22 @@ function loadComments() {
 }
 
 function events(){
+		// 댓글 작성 submit
+	    $(document).on("submit", "#commentForm", function(e){
+	        e.preventDefault();
+	        const $form = $(this);
+	        const postNum = $form.find('input[name="post_num"]').val();
+	        const content = $form.find('textarea[name="content"]').val();
+
+			$.post(`${BASE_URL}/comment/comment.do?m=insert`, 
+			    { post_num: postNum, content: content }
+			).done(function() {
+			    $form.find('textarea[name="content"]').val('');
+			    loadComments(); // 댓글 리스트 전체를 새로 렌더링
+			}).fail(function() {
+			    alert("댓글 등록 중 오류 발생");
+			});
+	    });
 	    //댓글쓴 클릭 -> 입력폼 토글
 	    $(document).on("click", ".comment-writer", function(e){
 			e.stopPropagation();
@@ -26,7 +42,7 @@ function events(){
 	    	const commentNum = $commentDiv.data("comment-num");
 	    	$.get(`${BASE_URL}/comment/comment.do`, { m: "checkReplyAuth", comment_num: commentNum })
 	        .done(function() {
-	            $commentDiv.find(".section-content-recomment-input").toggle();
+	            $commentDiv.find(".section-content-recomment-list").toggle();
 	        })
 	        .fail(function() {
 	            alert("답글 권한이 없습니다.");
@@ -45,23 +61,14 @@ function events(){
 		    const parentNum = $form.find('input[name="parent_num"]').val();
 		    const content = $form.find('textarea[name="content"]').val();
 
-		    $.post(`${BASE_URL}/comment/comment.do?m=recomment`, 
-		        { post_num: postNum, parent_num: parentNum, content: content },
-		        function(newReply) {
-		            // 서버에서 새 답댓글 JSON 반환
-		            const $container = $commentDiv.find(".section-content-recomment-list");
-		            
-					// createRecommentHTML() 사용
-		            const html = createRecommentHTML(newReply);
-		            $container.append(html);
-					
-					//입력창 초기화 및 숨기기
-		            $form.find('textarea[name="content"]').val('');
-		            $form.hide();
-		        }
-		    ).fail(function() {
-		        alert("답댓글 등록 중 오류 발생");
-		    });
+			$.post(`${BASE_URL}/comment/comment.do?m=recomment`, 
+			    { post_num: postNum, parent_num: parentNum, content: content }
+			).done(function() {
+			    $form.find('textarea[name="content"]').val('');
+			    loadComments(); // 전체 댓글 새로 렌더링
+			}).fail(function() {
+			    alert("답댓글 등록 중 오류 발생");
+			});
 		});
 		
 		// 댓글 수정 버튼 클릭
@@ -136,22 +143,3 @@ function events(){
 		         .fail(function() { alert("삭제 중 오류 발생"); });
 		    });
 }
-function createRecommentHTML(recomment) {
-    return `
-    <div class="section-content-recomment" data-recomment-num="${recomment.comment_num}">
-        <div style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
-            <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:20px; border:solid rgb(255, 255, 255);">
-                <div>${recomment.email}</div>
-                <div>${recomment.comment_date || ''}</div>
-            </div>
-            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
-                <label>
-                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px;">
-                    ${recomment.comment_content}
-                </label>
-            </div>
-        </div>
-    </div>`;
-}
-
-	

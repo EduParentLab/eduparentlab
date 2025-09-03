@@ -31,50 +31,52 @@
         </form>
     </div>
     
-    <!-- 댓글 리스트 -->
-	<c:forEach var="c" items="${comment}">
-		<div class="section-content-comment" data-comment-num="${c.comment_num}">
-          <!-- 댓글 헤더 -->
-          <div style="margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
-	          <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ffffff; gap:20px; border:solid rgb(255, 255, 255);">
-	            <div class="comment-writer">${c.email}</div>
-	            <div>${c.comment_date}</div>
-	            <div style="display: flex; align-items: center; gap: 5px;">
-	                <img src="post/assets/like.png" alt="좋아요" class="like-icon" style="width: 20px; height: 20px;"/>
-	              <div>24</div>
-	            </div>
-	          </div>
-	          <!-- 댓글 내용 -->
-	          <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
-	            <label>
-	              <span class="content">${c.comment_content}</span>
-	            </label>
-	          </div>
-          </div>
-          
-          <!-- 답댓글 입력폼 -->
-	          <div class="section-content-recomment-input" style="display:none;">
-		        <form class="recommentForm" action="comment/comment.do?m=recomment" method="post">
-			      <input type="hidden" name="post_num" value="${post_num}">
-				  <input type="hidden" name="parent_num" value="${c.comment_num}">
-		          <div style="display: flex; justify-content: flex-end; width: 100%; align-items: center; gap:10px;">
-		               <textarea name="content" class="comment-input" placeholder="댓글을 입력하세요." style="width:90%; height:100px; border:solid rgb(0, 0, 0);"></textarea>
-		          </div>
-		          <div style="display: flex; justify-content: flex-end; width: 100%; margin-top:10px;">
-		            <button style="width:150px; height:40px;">등록</button>
-		          </div>
-		        </form> 
-			</div>
+    	<!-- 댓글 리스트 -->
+		<div class="section-content-comment-list">
+		  <c:forEach var="c" items="${comment}">
+			<div class="section-content-comment" data-comment-num="${c.comment_num}">
+	        	<div style="margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
+		            <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ffffff; gap:20px; border:solid rgb(255, 255, 255);">
+		                <div class="comment-writer">${c.email}</div>
+		                <div>${c.comment_date}</div>
+		            </div>
+		            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
+		                <span class="content">${c.comment_content}</span>
+		            </div>
+		            <!-- 답댓글 폼 -->
+		            <div class="section-content-recomment-list" style="display:none;">
+			            <form class="recommentForm" >
+			                <input type="hidden" name="post_num" value="${c.post_num}">
+			                <input type="hidden" name="parent_num" value="${c.comment_num}">
+			                <textarea name="content" placeholder="답글 입력"></textarea>
+			                <button type="submit">등록</button>
+			            </form>
+					</div>
+	        	</div>
+    	    
+			
 			<!-- 답댓글 리스트 -->
-			  <div class="section-content-recomment-list">
-				  
-			  </div>  
+			
+			<c:forEach var="recomment" items="${c.recomments}">
+				<div class="section-content-recomment" data-recomment-num="${recomment.comment_num}">
+			        <div style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
+			            <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:20px; border:solid rgb(255, 255, 255);">
+			                <div>${recomment.email}</div>
+			                <div>${recomment.comment_date}</div>
+			            </div>
+			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
+			                <label>
+			                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px;">
+			                    ${recomment.comment_content}
+			                </label>
+			            </div>
+			        </div>
+			    </div>
+		    </c:forEach>
+		    </div>
+		 </c:forEach>  	
         </div>
-    </c:forEach>
-      
-    
-    		  
-	          
+                    
 	<!-- ◀▶ 페이지네이션 -->
 	<div class="pagination">
 	    <c:if test="${paging.hasPrev()}">

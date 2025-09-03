@@ -11,6 +11,8 @@ import model.service.CommentService;
 import util.PagingUtil;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import domain.Comment;
 import domain.User;
@@ -31,12 +33,18 @@ public class CommentController extends HttpServlet {
 				case "recomment" : recomment(request,response); break;
 				case "checkUpdateAuth":checkUpdateAuth(request,response); break;
 				case "checkReplyAuth":checkReplyAuth(request,response); break;
-				default: list(request,response); break;
+				case "list":list(request,response); break;
 			}
 		}else {
 			list(request,response);
 		}	
 		
+	}
+	private void form(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int postNum = Integer.parseInt(request.getParameter("post_num"));
+		request.setAttribute("post_num", postNum);
+		RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
+		rd.forward(request, response);
 	}
 	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CommentService service = CommentService.getInstance();
@@ -89,16 +97,24 @@ public class CommentController extends HttpServlet {
 		}
 		int post_num = Integer.parseInt(strPost_num);
 		String content = request.getParameter("content");
-		Comment comment = new Comment(-1, content, null, 0, 0, loginUser.getEmail(), post_num);
+		
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		
+		
+		Comment comment = new Comment(-1, content, now, 0, 0, loginUser.getEmail(), post_num);
 		System.out.println("@insert()호출, post_num = "+post_num+", content = "+content+", email = "+loginUser.getEmail());
 		int result = service.insert(comment, post_num);
-		if(result == 1) {
-			System.out.println("댓글 등록 성공");
-			response.sendRedirect(request.getContextPath() + "/post.do?m=content&seq=" + post_num);
-		}
-		else {
-			System.out.println("댓글 등록 실패");
-		}
+		if (result == 1) {
+	        // JSP로 포워딩해서 전체 댓글 영역 렌더링
+	        request.setAttribute("post_num", post_num);
+	        ArrayList<Comment> list = service.selectedByPostNum(post_num, true, 0, 10); // 예: 최신순 10개
+	        request.setAttribute("comment", list);
+
+	        RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
+	        rd.forward(request, response);
+	    } else {
+	        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "댓글 등록 실패");
+	    }
 	}
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CommentService service = CommentService.getInstance();
@@ -205,16 +221,17 @@ public class CommentController extends HttpServlet {
 		
 		int result = service.recomment(recomment, post_num);
 		System.out.println("recommnet의 result: "+result);
-		if(result == 1) {
-			// 새 답댓글 정보를 JSON으로 반환
-	        response.setContentType("application/json;charset=UTF-8");
-	        String json = String.format("{\"comment_num\": %d, \"email\": \"%s\", \"comment_content\": \"%s\"}", 
-	                                     recomment.getComment_num(), recomment.getEmail(), recomment.getComment_content());
-	        response.getWriter().write(json);
-		}
-		else {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "답댓글 등록 실패");
-		}
+		if (result == 1) {
+	        // JSP로 전체 댓글 영역 다시 렌더링
+	        request.setAttribute("post_num", post_num);
+	        ArrayList<Comment> list = service.selectedByPostNum(post_num, true, 0, 10); // 최신순 예시
+	        request.setAttribute("recomments", list);
+
+	        RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
+	        rd.forward(request, response);
+	    } else {
+	        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "답댓글 등록 실패");
+	    }
 	}
 	private void checkReplyAuth(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);

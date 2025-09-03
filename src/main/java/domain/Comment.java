@@ -1,12 +1,13 @@
 package domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Comment {
 	private int comment_num;
 	private String comment_content;
-	private Date comment_date;
+	private Timestamp comment_date;
 	private int group_num;
 	private int group_order;
 	private String email;
@@ -16,7 +17,7 @@ public class Comment {
 		
 	}
 
-	public Comment(int comment_num, String comment_content, Date comment_date, int group_num, int group_order,
+	public Comment(int comment_num, String comment_content, Timestamp comment_date, int group_num, int group_order,
 			String email, int post_num) {
 		this.comment_num = comment_num;
 		this.comment_content = comment_content;
@@ -43,11 +44,11 @@ public class Comment {
 		this.comment_content = comment_content;
 	}
 
-	public Date getComment_date() {
+	public Timestamp getComment_date() {
 		return comment_date;
 	}
 
-	public void setComment_date(Date comment_date) {
+	public void setComment_date(Timestamp comment_date) {
 		this.comment_date = comment_date;
 	}
 

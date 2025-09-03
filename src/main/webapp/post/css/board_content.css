@@ -90,7 +90,7 @@
 }
 
 
-.section-content-comment {
+.section-content-comment-list {
   height: 120px; /* or auto */
   padding: 20px 20px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
