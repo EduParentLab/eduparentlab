@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.service.RegisterService;
 import domain.User;
-import java.sql.*;
 
 	
 	@WebServlet("/register/register.do")
@@ -24,11 +24,24 @@ import java.sql.*;
 	        String password = request.getParameter("password");
 	        String passwordConfirm = request.getParameter("passwordConfirm");
 	        String nickname = request.getParameter("nickname");
-	        String gender = request.getParameter("gender");	        
-	        String strBirth = request.getParameter("birth");
-	        String name = request.getParameter("name");
-	        String phone = request.getParameter("phone");
-	        int role_num = 2; //기본회원
+	        String gender = request.getParameter("gender");        
+	        String name = request.getParameter("name");        
+	        
+	        String birth1 = request.getParameter("birth");
+	        String birth2 = request.getParameter("birth2");
+	        String birth3 = request.getParameter("birth3");
+	        String strBirth = (birth1 != null && birth2 != null && birth3 != null)
+	                ? birth1 + "-" + birth2 + "-" + birth3
+	                : null;
+	        
+	        String phone1 = request.getParameter("phone1");
+	        String phone2 = request.getParameter("phone2");
+	        String phone3 = request.getParameter("phone3");
+	        String phone = (phone1 != null && phone2 != null && phone3 != null)
+	                ? phone1 + "-" + phone2 + "-" + phone3
+	                : null;
+	        
+	        int role_num = 2; // 기본회원
 	        
 	        // 필수 입력값 체크
 	        if (email == null || email.isBlank() ||
@@ -57,8 +70,8 @@ import java.sql.*;
 	        }
 	        
 	        // gender 변환
-	        if ("남".equals(gender)) gender = "M";
-	        else if ("여".equals(gender)) gender = "F";
+	        if ("male".equals(gender)) gender = "M";
+	        else if ("female".equals(gender)) gender = "F";
 	        
 	        // 생년월일 변환
 	        Date birth = null;

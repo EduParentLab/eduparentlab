@@ -29,10 +29,30 @@ public class MypageUpdateController extends HttpServlet {
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("passwordConfirm");
         String name = request.getParameter("name"); // readonly
-        String strBirth = request.getParameter("birth");
-        String gender = request.getParameter("gender");
-        String phone = request.getParameter("phone");
-        String cdate = request.getParameter("cdate"); // readonly
+        
+        // 생년월일 (YYYY-MM-DD 로 합치기)
+        String birthYear = request.getParameter("birth");
+        String birthMonth = request.getParameter("birth2");
+        String birthDay = request.getParameter("birth3");
+        String strBirth = null;
+        if (birthYear != null && !birthYear.isBlank()
+                && birthMonth != null && !birthMonth.isBlank()
+                && birthDay != null && !birthDay.isBlank()) {
+            strBirth = String.format("%s-%02d-%02d",
+                    birthYear,
+                    Integer.parseInt(birthMonth),
+                    Integer.parseInt(birthDay));
+        }
+        
+        // 전화번호 (010-XXXX-XXXX 형태로 합치기)
+        String phone1 = request.getParameter("phone1");
+        String phone2 = request.getParameter("phone2");
+        String phone3 = request.getParameter("phone3");
+        String phone = null;
+        if (phone1 != null && phone2 != null && phone3 != null &&
+                !phone1.isBlank() && !phone2.isBlank() && !phone3.isBlank()) {
+            phone = phone1 + "-" + phone2 + "-" + phone3;
+        }
 
         // 비밀번호 일치 확인 (비워뒀으면 기존 비밀번호 유지)
         if (password != null && !password.isBlank()) {
@@ -70,14 +90,6 @@ public class MypageUpdateController extends HttpServlet {
             }
         }
 
-        // 성별 빈칸이면 기존값 유지
-        if (gender == null || gender.isBlank()) {
-            gender = loginUser.getGender();
-        } else {
-            if ("남".equals(gender)) gender = "M";
-            else if ("여".equals(gender)) gender = "F";
-        }
-
         // 전화번호 빈칸이면 기존값 유지
         if (phone == null || phone.isBlank()) {
             phone = loginUser.getPhone();
@@ -99,9 +111,10 @@ public class MypageUpdateController extends HttpServlet {
         updatedUser.setPassword(password);
         updatedUser.setName(name);
         updatedUser.setBirth(birth);
-        updatedUser.setGender(gender);
         updatedUser.setPhone(phone);
-        updatedUser.setCdate(Date.valueOf(cdate));
+
+        updatedUser.setGender(loginUser.getGender());
+        updatedUser.setCdate(loginUser.getCdate());
 
         // Service 호출
         MypageUpdateService service = MypageUpdateService.getInstance();

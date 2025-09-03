@@ -41,9 +41,6 @@
             <div class="form-input">
                 <input type="text" name="name" placeholder="이름" />
             </div>
-			<div class="form-input">
-    			<input type="text" name="gender" placeholder="성별 (예: 남 / 여)" />
-			</div>
 			<div>
 			  <select id="gender" name="gender" style="
 			    width: 100%;
@@ -65,9 +62,6 @@
 			    <option value="female">여</option>
 			  </select>
 			</div>
-			<div class="form-input">
-    			<input type="text" name="birth" placeholder="생년월일 (예: 1999-01-01)" />
-			</div>
 			<div>
 				<label>생년월일</label>
 			</div>
@@ -75,11 +69,7 @@
     			<input type="text" name="birth" placeholder="1997" style="text-align:center; border:1px solid black" />
     			<input type="text" name="birth2" placeholder="05" style="text-align:center; border:1px solid black"/>
     			<input type="text" name="birth3" placeholder="09" style="text-align:center; border:1px solid black"/>
-			</div>
-			
-			
-			
-			
+			</div>	
 			<div>
 				<label>전화번호</label>
 			</div>
@@ -89,12 +79,6 @@
     			<input type="text" name="phone2" placeholder="1234" style="text-align:center; border:1px solid black"/>
     			<input type="text" name="phone3" placeholder="5678" style="text-align:center; border:1px solid black"/>
 			</div>
-			
-			
-			
-            <div class="form-input">
-                <input type="text" name="phone" placeholder="전화번호 (예: 010-1111-2222)" />
-            </div>
                 <button type="submit" class="resist-btn">회원가입</button>
             </form>
         </div>

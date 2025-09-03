@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page = "../login/login_check_modul.jsp"/>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -11,70 +13,70 @@
   <link rel="stylesheet" href="../mypage/edit_info.css" />
 </head>
 
-
 <body>
   <div class="wrapper">
-
-<div id="headerArea"></div>
-
+    <div id="headerArea"></div>
     <main>
       <div class="center-wrapper">
         <div class="resistcontainer">
-        
-            <div class="reist-title">
-                <h2>개인정보수정</h2>
-            </div>
+          <div class="reist-title">
+            <h2>개인정보수정</h2>
+          </div>
           
-        <form action="mypage_update.do" method="post">
+          <form action="mypage_update.do" method="post">
+            <!-- 이메일 -->
             <div class="form-input">
-                <input type="text" name="email" value="${loginOkUser.email}" readonly>
+              <input type="text" name="email" value="${loginOkUser.email}" readonly>
             </div>
             
+            <!-- 닉네임 -->
             <div class="form-input">
-                <input type="text" name="nickname" id="nickname" value="${loginOkUser.nickname}" placeholder="닉네임">
-                <button type="button" class="id-check-btn" onclick="checkNickname()">중복확인</button>
+              <input type="text" name="nickname" id="nickname" value="${loginOkUser.nickname}" placeholder="닉네임">
+              <button type="button" class="id-check-btn" onclick="checkNickname()">중복확인</button>
             </div>
             
+            <!-- 비밀번호 -->
             <div class="form-input">
-                <input type="password" name="password" placeholder="새 비밀번호 입력">
+              <input type="password" name="password" placeholder="새 비밀번호 입력">
             </div>
             <div class="form-input">
-                <input type="password" name="passwordConfirm" placeholder="비밀번호 확인">
-            </div>
-            <div class="form-input">
-                <input type="text" name="name" value="${loginOkUser.name}" readonly>
-            </div>
-            
-            
-   
-            <div class="form-input">
-                <input type="text" name="birth" value="${loginOkUser.birth}" placeholder="생년월일 (예: 1999-01-01)">
-            </div>
-            <div class="form-input">
-                <input type="text" name="gender"
-         		value="${loginOkUser.gender eq 'M' ? '남' : (loginOkUser.gender eq 'F' ? '여' : '')}" placeholder="성별 (예: 남 / 여)">
+              <input type="password" name="passwordConfirm" placeholder="비밀번호 확인">
             </div>
 
-            
-            
+            <!-- 이름 -->
             <div class="form-input">
-                <input type="text" name="phone" value="${loginOkUser.phone}" placeholder="전화번호 (예: 010-1111-2222)">
+              <input type="text" name="name" value="${loginOkUser.name}" readonly>
             </div>
-            <div class="form-input">
-                <input type="text" name="cdate" value="${loginOkUser.cdate}" readonly >
+
+            <!-- 생년월일 (분리된 입력) -->
+            <div>
+              <label>생년월일</label>
+            </div>
+            <div class="form-input" style="border:none; display:flex; gap:10px;">
+              <input type="text" name="birth"  placeholder="YYYY" value="${fn:substring(loginOkUser.birth,0,4)}" style="text-align:center; border:1px solid black" />
+              <input type="text" name="birth2" placeholder="MM"   value="${fn:substring(loginOkUser.birth,5,7)}" style="text-align:center; border:1px solid black"/>
+              <input type="text" name="birth3" placeholder="DD"   value="${fn:substring(loginOkUser.birth,8,10)}" style="text-align:center; border:1px solid black"/>
+            </div>
+
+            <!-- 전화번호 (분리된 입력) -->
+            <div>
+              <label>전화번호</label>
+            </div>
+            <div class="form-input" style="border:none; display:flex; gap:10px;">
+              <input type="text" name="phone1" value="${fn:substring(loginOkUser.phone,0,3)}" placeholder="010" style="text-align:center; border:1px solid black" />
+              <input type="text" name="phone2" value="${fn:substring(loginOkUser.phone,4,8)}" placeholder="1234" style="text-align:center; border:1px solid black"/>
+              <input type="text" name="phone3" value="${fn:substring(loginOkUser.phone,9,13)}" placeholder="5678" style="text-align:center; border:1px solid black"/>
             </div>
            
-                <button type="submit" class="resist-btn">수정완료</button>
-         </form>
+            <button type="submit" class="resist-btn">수정완료</button>
+          </form>
                            
-         <form action="${pageContext.request.contextPath}/mypage/delete.do" method="post">
-    			<button type="submit" class="withdraw-btn">회원탈퇴</button>
-		 </form>
-           
-            </div>
+          <form action="${pageContext.request.contextPath}/mypage/delete.do" method="post">
+            <button type="submit" class="withdraw-btn">회원탈퇴</button>
+          </form>
         </div>
+      </div>
     </main>
-
 
     <footer>
       <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
@@ -88,9 +90,5 @@
 <script src="search.js"></script>
 <script src="login.js"></script>
 <script src="edit_info.js"></script>
-<script> const contextPath = "<%=request.getContextPath()%>";</script>
-
-
-
 </body>
 </html>
