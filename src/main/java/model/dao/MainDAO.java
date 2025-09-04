@@ -1,5 +1,6 @@
 package model.dao;
 
+import static model.sql.AdminSQL.NOTICELIST;
 import static model.sql.PostSQL.POST;
 
 import java.sql.Connection;
@@ -114,5 +115,45 @@ public class MainDAO {
         }
         
     }
+  //관리자페이지 공지사항 가져오기
+  	public ArrayList<Post> listNotice() {
+          ArrayList<Post> list = new ArrayList<>();
+          Connection con = null;
+          Statement stmt = null;
+          ResultSet rs = null;
+          String sql = "select * from POST where category_num=4 order by post_num desc LIMIT 2";
+          try {
+              con = ds.getConnection();
+              stmt = con.createStatement();
+              rs = stmt.executeQuery(sql);
+
+              while (rs.next()) {
+                  int post_num = rs.getInt(1);
+                  String post_subject = rs.getString(2);
+                  String post_content = rs.getString(3);
+                  Timestamp post_date = rs.getTimestamp(4);
+                  int post_view = rs.getInt(5);
+                  int category_num = rs.getInt(6);
+                  String email = rs.getString(7);               
+                  int likes = rs.getInt(8);
+                  String nickname = "관리자";
+
+                  list.add(new Post(post_num, post_subject, post_content,
+                                    post_date, post_view, category_num, email, nickname, likes));
+              }          
+              return list;
+
+          } catch (SQLException se) {
+              se.printStackTrace();
+              return null;
+
+          } finally {
+              try { 
+              	rs.close(); 
+              	stmt.close(); 
+              	con.close(); 
+              } catch (Exception e) {}
+          }
+      } 
 
 }

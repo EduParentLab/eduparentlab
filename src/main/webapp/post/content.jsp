@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="util.FileUtil" %>
 
 
 <!DOCTYPE html>
@@ -13,14 +14,11 @@
    <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_content.css" />
 </head>
-
 <body>
   <div class="wrapper">
   <div id="headerArea"></div>
     <main> 
-    
 	<div class="center-wrapper">
-	
       <div class="section-title">
 		  <c:choose>
 		    <c:when test="${dto.category_num == 1}">
@@ -36,15 +34,12 @@
 		      <p style="font-size:35px; font-weight:bold">공지사항</p>
 		    </c:when>
 		  </c:choose>
-		</div>
-         
+		</div>   
         <div class="section-content-title">
             <div style="width: 50%;">
              <label>${dto.post_subject}</label>
             </div>               
-        </div>
-     
-        
+        </div>     
         <div class="section-content-info">    
         		<td>
 					<fmt:formatDate value="${dto.post_date}" pattern="yyyy-MM-dd"/>
@@ -61,43 +56,36 @@
             </button>
             <label>${dto.post_num}</label>
             
-		            <!-- 비이미지 파일 다운로드 -->
-		    <c:forEach var="file" items="${fileList}">
-		      <c:set var="ext" value="${fn:toLowerCase(fn:substringAfter(file.file_name, '.'))}" />
-		      <c:if test="${not (ext eq 'jpg' or ext eq 'jpeg' or ext eq 'png' or ext eq 'gif')}">
-		        <div style="display:flex; align-items:center; margin-left:10px;">
-		          <img src="<%=request.getContextPath()%>/post/assets/file.svg"
-		               style="width:20px; height:20px; margin-right:5px;" alt="파일 아이콘"/>
-		                        
-		          <a href="${pageContext.request.contextPath}/download.do?file=${file.file_name}"          
-		             style="color:blue; text-decoration: underline;">
-		            ${file.file_origin_name}
-		          </a>     
-		        </div>
-		      </c:if>
-		    </c:forEach>
-   	   </div>
-   	    
-   	    
-   	    	
-   	    <div class="section-content-body">	  		
-			  <!-- 이미지 파일만 출력 -->
-			  <c:forEach var="file" items="${fileList}">
-			    <c:set var="ext" value="${fn:toLowerCase(fn:substringAfter(file.file_name, '.'))}" />
-			    <c:if test="${ext eq 'jpg' or ext eq 'jpeg' or ext eq 'png' or ext eq 'gif'}">
-			      <div style="width:100%; text-align:center; margin:10px 0;">
-			        <img src="${pageContext.request.contextPath}/download.do?file=${file.file_name}&mode=view"
-			             alt="${file.file_origin_name}"
-			             style="width:400px; height:300px;  height:auto;"/>
-			      </div>
-			    </c:if>
-			  </c:forEach>
-			   <div style="margin-bottom:20px;">
-			    <p>${dto.post_content}</p>
-			  </div>	  
+		   <c:forEach var="file" items="${fileList}">
+		     <c:if test="${!file.image}">
+		       <div style="display:flex; align-items:center; margin-left:10px;">
+		         <img src="<%=request.getContextPath()%>/post/assets/file.svg"
+		              style="width:20px; height:20px; margin-right:5px;" alt="파일 아이콘"/>
+		         <a href="${pageContext.request.contextPath}/download.do?file=${file.file_name}"          
+		            style="color:blue; text-decoration: underline;">
+		           ${file.file_origin_name}
+		         </a>
+		       </div>
+		     </c:if>
+		   </c:forEach>
 		</div>
+	            
+   	 <div class="section-content-body"> 
+		   <c:forEach var="file" items="${fileList}">
+		     <c:if test="${file.image}">
+		       <div style="width:100%; text-align:center; margin:10px 0;">
+		         <img src="${pageContext.request.contextPath}/download.do?file=${file.file_name}&mode=view"
+		              alt="${file.file_origin_name}"
+		              style="width:400px; height:300px; height:auto;"/>
+		       </div>
+		     </c:if>
+		   </c:forEach>
 		
-		
+		   <div style="margin-bottom:20px;">
+		     <p>${dto.post_content}</p>
+  		 </div>
+  	  </div>
+   	 
 		<c:if test="${canEdit or canDelete}">
   <div style="display:flex;
               justify-content:flex-end;
@@ -105,8 +93,6 @@
               border-bottom:1px solid black;
               gap:5px;
               padding:15px;">
-
-		    <!-- 수정 버튼 -->
 		    <c:if test="${canEdit}">
 		      <form action="<%=request.getContextPath()%>/post.do" method="get" style="display:inline;">
 		        <input type="hidden" name="m" value="edit" />
@@ -130,8 +116,7 @@
 		        </button>
 		      </form>
 		    </c:if>
-		
-		    <!-- 삭제 버튼 -->
+
 		    <c:if test="${canDelete}">
 		      <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
 		        <input type="hidden" name="seq" value="${dto.post_num}" />
@@ -160,22 +145,22 @@
 		  </div>
 		</c:if>
 
-		
-	
-
         <div id="commentArea"></div>
+
+        <div id="commentArea" style="display:flex; width:1210px; flex-direction:column;">
+          <div id="commentList" style="display:flex; width:1210px; flex-direction:column;"></div>
+          <div id="pagination" style="display:flex; width:1000px;"></div>
+        </div>
+          
     </main>
 
-    <footer>
-      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
-      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
-    </footer>
+    <div id="footerArea"></div>
+
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/post/js/board_content.js"></script>
+<script src="<%=request.getContextPath()%>/main_page.js"></script>
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
-
-
 </body>
 </html>

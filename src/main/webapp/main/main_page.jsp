@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,7 +24,6 @@
         </div>
         <c:forEach var="notice" items="${notice}">
         <div class="section-notice">
-	        
 	           <div style="display:flex; justify-content:center; width: 5%;">
 	            <label style="border:2px solid red; color:red; font-weight: bold;">공지</label>
 	           </div>
@@ -31,9 +31,8 @@
 	            <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${notice.post_num}" style="font-weight:bold">${notice.post_subject}</a>
 	           </div>
 	           <div style="display:flex; justify-content:flex-end; width: 40%;">
-	            <label>${notice.post_date}</label>
+	            <label><fmt:formatDate value="${notice.post_date}" pattern="yyyy-MM-dd"/></label>
 	           </div>
-	        
         </div>
         </c:forEach>
         <div class="section-popular-recent-posts">
@@ -46,7 +45,7 @@
 		                </div>
 		                <div class="meta-info">
 		                    <span>${popular.nickname}</span>
-		                    <span><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="clock" />${popular.post_date}</span>
+		                    <span><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="clock" /><fmt:formatDate value="${popular.post_date}" pattern="yyyy-MM-dd"/></span>
 		                    <span><img src="https://cdn-icons-png.flaticon.com/512/889/889140.png" alt="like" />${popular.post_view}</span>
 		                </div>
 	                </div>
@@ -63,7 +62,7 @@
 		                </div>
 		                <div class="meta-info">
 		                    <span>${latest.nickname}</span>
-		                    <span><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="clock" />${latest.post_date}</span>
+		                    <span><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="clock" /><fmt:formatDate value="${latest.post_date}" pattern="yyyy-MM-dd"/></span>
 		                    <span><img src="https://cdn-icons-png.flaticon.com/512/889/889140.png" alt="like" />${latest.post_view}</span>
 		                </div>
 	                </div>
@@ -80,12 +79,7 @@
         </div>
       </div>
     </main>
-
-
-    <footer>
-      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
-      <p>© 2025 - 2025 eduparents. All rights reserved.</p>
-    </footer>
+    <div id="footerArea"></div>
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

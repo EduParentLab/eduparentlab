@@ -5,6 +5,7 @@ public class PostFile {
 	private String file_name;
 	private String file_origin_name;
 	private String file_path;
+	private boolean image;
 	
 	public PostFile(long file_num, String file_name, String file_origin_name, String file_path) {
 		super();
@@ -34,7 +35,7 @@ public class PostFile {
 		return file_origin_name;
 	}
 
-	public void setFile_oname(String file_origin_name) {
+	public void setFile_origin_name(String file_origin_name) {
 		this.file_origin_name = file_origin_name;
 	}
 
@@ -45,5 +46,11 @@ public class PostFile {
 	public void setFile_path(String file_path) {
 		this.file_path = file_path;
 	}
-	
+	 public boolean isImage() {
+	        return image;
+    }
+	 
+    public void setImage(boolean image) {
+        this.image = image;
+    }
 }

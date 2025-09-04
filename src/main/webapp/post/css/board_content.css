@@ -5,8 +5,9 @@
   align-items: stretch;         /* 세로 가운데 정렬 */
   gap: 0px;                   /* 자식 간 간격 */
   background-color: rgb(255, 255, 255);
-  height:2000px;
+  height:100%;
   padding:0px 0px;
+  top-padding:0px;
 }
 
 .section-title {
@@ -65,7 +66,7 @@
 }
 
 .section-content-comment-input {
- width: 100%;
+ width: 1210px;
   height: auto; /* or auto */
   padding: 0px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
@@ -78,7 +79,7 @@
 }
 
 .comment-input {
-  width: 100%;
+  width: 1210px;
   height: 200px;
   padding: 10px;
   line-height: 1.4;
@@ -90,7 +91,7 @@
 
 
 .section-content-comment-list {
-  height: 120px; /* or auto */
+  height: auto; /* or auto */
   padding: 20px 20px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
   justify-content: flex-start;
@@ -111,6 +112,7 @@
 }
 
 .section-content-recomment-input {
+	
   padding-top:0px;
   padding-right:20px;
   padding-bottom:20px;

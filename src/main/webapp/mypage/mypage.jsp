@@ -147,18 +147,15 @@
       </div>
       </form>
       
+
     </main>
+    <div id="footerArea"></div>
 
-
-    <footer>
-      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
-      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
-    </footer>
-  </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="mypage.js"></script>
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
+<script src="<%=request.getContextPath()%>/main_page.js"></script>
+<script src="mypage.js"></script>
 
 
 </body>

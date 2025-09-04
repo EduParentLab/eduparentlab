@@ -33,12 +33,11 @@ public class MainController extends HttpServlet {
 	
     }
 	private void main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PostService postService = PostService.getInstance();
 		MainService mainService = MainService.getInstance();
 		
         ArrayList<Post> popularList = mainService.listS("views");
         ArrayList<Post> latestList = mainService.listS("latest");
-        ArrayList<Post> noticeList = postService.listNoticeS();
+        ArrayList<Post> noticeList = mainService.listNotice();
         
 	    request.setAttribute("notice", noticeList);	  	
         request.setAttribute("popularList", popularList);
