@@ -12,6 +12,7 @@ import model.service.FileService;
 import model.service.CommentService;
 import model.service.PostService;
 import util.PagingUtil;
+import util.FileUtil;
 import domain.Comment;
 import domain.Post;
 import domain.PostFile;
@@ -277,7 +278,7 @@ public class PostController extends HttpServlet {
         Post dto = service.get(post_num);    
 
         List<PostFile> fileList = FileService.getInstance().findFilesByPost(post_num);
-
+   
         boolean canEdit = false;
         boolean canDelete = false;
 

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="util.FileUtil" %>
 
 
 <!DOCTYPE html>
@@ -61,41 +62,39 @@
             </button>
             <label>${dto.post_num}</label>
             
-		            <!-- 비이미지 파일 다운로드 -->
-		    <c:forEach var="file" items="${fileList}">
-		      <c:set var="ext" value="${fn:toLowerCase(fn:substringAfter(file.file_name, '.'))}" />
-		      <c:if test="${not (ext eq 'jpg' or ext eq 'jpeg' or ext eq 'png' or ext eq 'gif')}">
-		        <div style="display:flex; align-items:center; margin-left:10px;">
-		          <img src="<%=request.getContextPath()%>/post/assets/file.svg"
-		               style="width:20px; height:20px; margin-right:5px;" alt="파일 아이콘"/>
-		                        
-		          <a href="${pageContext.request.contextPath}/download.do?file=${file.file_name}"          
-		             style="color:blue; text-decoration: underline;">
-		            ${file.file_origin_name}
-		          </a>     
-		        </div>
-		      </c:if>
-		    </c:forEach>
-   	   </div>
-   	    
-   	    
-   	    	
-   	    <div class="section-content-body">	  		
-			  <!-- 이미지 파일만 출력 -->
-			  <c:forEach var="file" items="${fileList}">
-			    <c:set var="ext" value="${fn:toLowerCase(fn:substringAfter(file.file_name, '.'))}" />
-			    <c:if test="${ext eq 'jpg' or ext eq 'jpeg' or ext eq 'png' or ext eq 'gif'}">
-			      <div style="width:100%; text-align:center; margin:10px 0;">
-			        <img src="${pageContext.request.contextPath}/download.do?file=${file.file_name}&mode=view"
-			             alt="${file.file_origin_name}"
-			             style="width:400px; height:300px;  height:auto;"/>
-			      </div>
-			    </c:if>
-			  </c:forEach>
-			   <div style="margin-bottom:20px;">
-			    <p>${dto.post_content}</p>
-			  </div>	  
-		</div>
+             <!-- 파이이이일 -->
+            <!-- 비이미지 파일 다운로드 -->
+	   <c:forEach var="file" items="${fileList}">
+	     <c:if test="${!file.image}">
+	       <div style="display:flex; align-items:center; margin-left:10px;">
+	         <img src="<%=request.getContextPath()%>/post/assets/file.svg"
+	              style="width:20px; height:20px; margin-right:5px;" alt="파일 아이콘"/>
+	         <a href="${pageContext.request.contextPath}/download.do?file=${file.file_name}"          
+	            style="color:blue; text-decoration: underline;">
+	           ${file.file_origin_name}
+	         </a>
+	       </div>
+	     </c:if>
+	   </c:forEach>
+	</div>
+	            
+   	 <div class="section-content-body">
+		   <!-- 이미지 파일 미리보기 -->
+		   <c:forEach var="file" items="${fileList}">
+		     <c:if test="${file.image}">
+		       <div style="width:100%; text-align:center; margin:10px 0;">
+		         <img src="${pageContext.request.contextPath}/download.do?file=${file.file_name}&mode=view"
+		              alt="${file.file_origin_name}"
+		              style="width:400px; height:300px; height:auto;"/>
+		       </div>
+		     </c:if>
+		   </c:forEach>
+		
+		   <div style="margin-bottom:20px;">
+		     <p>${dto.post_content}</p>
+  		 </div>
+  	  </div>
+   	 
 		
 		
 		<c:if test="${canEdit or canDelete}">

@@ -72,6 +72,7 @@ public class PostDAO {
         switch (type) {
             case "title": column = "p.post_subject"; break;
             case "writer": column = "u.nickname"; break;
+            case "content": column = "p.post_content"; break;
             case "title_content": column = "CONCAT(p.post_subject,' ',p.post_content)"; break;
             default: column = "p.post_subject"; break;
         }
