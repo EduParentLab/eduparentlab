@@ -69,7 +69,18 @@
            <label style="font-size:20px; font-weight:bold" >내가 쓴 글</label> 
         </div>
         
-     <form action="../mypage/mypage.do?m=delete" method="post">
+<c:choose>
+
+  <c:when test="${fromAdmin}">
+    <form action="${pageContext.request.contextPath}/admin/admin.do?m=delete&email=${loginOkUser.email}&page=${pageNum}" method="post">
+  </c:when>
+
+
+  <c:otherwise>
+    <form action="${pageContext.request.contextPath}/mypage/mypage.do?m=delete&page=${pageNum}" method="post">
+  </c:otherwise>
+</c:choose>
+        
         <div class="section-self-write-content">
             <div class="post-container">
                 <table>
@@ -134,7 +145,7 @@
             </div>
         </div>
       </div>
-
+      </form>
       
     </main>
 
