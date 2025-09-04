@@ -72,7 +72,6 @@
      <form action="../mypage/mypage.do?m=delete" method="post">
         <div class="section-self-write-content">
             <div class="post-container">
-                <h2>내가 쓴 글</h2>
                 <table>
                 <thead>
                     <tr>
@@ -105,19 +104,27 @@
                 </tbody>
                 </table>
 
-                <div class="pagination">
-                <span class="active">1</span>
-                <a>2</a>
-                <a>3</a>
-                <a>4</a>
-                <a>5</a>
-                <a>6</a>
-                <a>7</a>
-                <a>8</a>
-                <a>9</a>
-                <a>10</a>
-                <a>▶</a>
-                </div>
+				<div class="pagination">
+				  <c:forEach var="i" begin="1" end="${totalPages}">
+				    <c:choose>
+				      <c:when test="${i == pageNum}">
+				        <span class="active">${i}</span>
+				      </c:when>
+				      <c:otherwise>
+				        <c:choose>
+
+				          <c:when test="${fromAdmin}">
+				            <a href="${pageContext.request.contextPath}/admin/admin.do?m=mypage&email=${loginOkUser.email}&page=${i}">${i}</a>
+				          </c:when>
+
+				          <c:otherwise>
+				            <a href="${pageContext.request.contextPath}/mypage/mypage.do?page=${i}">${i}</a>
+				          </c:otherwise>
+				        </c:choose>
+				      </c:otherwise>
+				    </c:choose>
+				  </c:forEach>
+				</div>
 
                 <div class="delete-icon">
                 <button type="submit" title="삭제">
@@ -143,7 +150,5 @@
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
 
 
-
->>>>>>> abb7ee87c4baf5ef202437695f434a4b29d6fa14
 </body>
 </html>

@@ -313,33 +313,38 @@ public class PostDAO {
 	}
 	
 
-	//민영 추가- 내가 쓴 글 목록
-    public List<Post> mypagePostList(String email) {
-        List<Post> list = new ArrayList<>();
-        String sql = PostSQL.MYPAGEPOSTLIST;
+	//민영 추가- 내가 쓴 글 목록(페이징 적용)
+	public List<Post> mypagePostListPaging(String email, int pageNum, int pageSize) {
+	    List<Post> list = new ArrayList<>();
+	    String sql = PostSQL.MYPAGEPOSTLIST_PAGING;
 
-        try (Connection con = ds.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql)) {
-               
-               pstmt.setString(1, email);
-               System.out.println("쿼리 실행 email = " + email); //확인
-               try (ResultSet rs = pstmt.executeQuery()) {
-                   while (rs.next()) {
-                       Post post = new Post();
-                       post.setPost_num(rs.getInt("post_num"));
-                       post.setPost_subject(rs.getString("post_subject"));
-                       post.setPost_date(rs.getTimestamp("post_date"));
-                       post.setPost_view(rs.getInt("post_view"));
-                       post.setLikes(rs.getInt("likes")); //여기 추가
-                       list.add(post);
-                   }
-               }
-           } catch (SQLException e) {
-               e.printStackTrace();
-           }
-           System.out.println("mypagePostList 결과 = " + list.size()); // 확인
-           return list;
-    }
+	    int offset = (pageNum - 1) * pageSize; // 몇 번째부터 가져올지 계산
+
+	    try (Connection con = ds.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	        pstmt.setString(1, email);
+	        pstmt.setInt(2, pageSize); // LIMIT
+	        pstmt.setInt(3, offset);   // OFFSET
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                Post post = new Post();
+	                post.setPost_num(rs.getInt("post_num"));
+	                post.setPost_subject(rs.getString("post_subject"));
+	                post.setPost_date(rs.getTimestamp("post_date"));
+	                post.setPost_view(rs.getInt("post_view"));
+	                post.setLikes(rs.getInt("likes"));
+	                post.setCategory_num(rs.getInt("category_num")); // 상세보기 링크 위해 필요
+	                list.add(post);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	
     
     //민영 추가- 내가 쓴 글 총 개수
     public int mypagePostCount(String email) {
@@ -409,6 +414,7 @@ public class PostDAO {
 	    }
 	    return total;
 	}
+	
 	//관리자페이지 공지사항 가져오기
 	public ArrayList<Post> listNotice() {
         ArrayList<Post> list = new ArrayList<>();
