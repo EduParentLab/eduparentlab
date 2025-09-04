@@ -23,7 +23,6 @@
         </div>
         <c:forEach var="notice" items="${notice}">
         <div class="section-notice">
-	        
 	           <div style="display:flex; justify-content:center; width: 5%;">
 	            <label style="border:2px solid red; color:red; font-weight: bold;">공지</label>
 	           </div>
@@ -33,7 +32,6 @@
 	           <div style="display:flex; justify-content:flex-end; width: 40%;">
 	            <label>${notice.post_date}</label>
 	           </div>
-	        
         </div>
         </c:forEach>
         <div class="section-popular-recent-posts">
@@ -80,12 +78,7 @@
         </div>
       </div>
     </main>
-
-
-    <footer>
-      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
-      <p>© 2025 - 2025 eduparents. All rights reserved.</p>
-    </footer>
+    <div id="footerArea"></div>
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

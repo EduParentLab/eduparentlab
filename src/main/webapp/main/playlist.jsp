@@ -100,19 +100,11 @@
             </a>
           </div>   
         </div>
-        
-
-
       </div>
     </div>
   </main>
-
-
-    <footer>
-      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
-      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
-    </footer>
-  </div>
+  <div id="footerArea"></div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="main_page.js"></script>
