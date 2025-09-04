@@ -155,7 +155,7 @@
     </main>
     <footer>
       <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
-      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
+      <p>© 1999 - 2025 eduparents. All rights reserved.</p>
     </footer>
   </div>
 
