@@ -10,19 +10,15 @@
   <link rel="stylesheet" href="<%=request.getContextPath()%>/main/all_search.css" />
   <link rel="icon" type="image/x-icon" href="<%= request.getContextPath() %>/favicon.ico">
 </head>
-
 <body>
   <div class="wrapper">
-  <div id="headerArea"></div>
-   
-    
+  <div id="headerArea"></div> 
     <main>
       <div class="center-wrapper">
         <form action="<%=request.getContextPath()%>/post.do?m=insert" 
               method="post" 
               enctype="multipart/form-data">   
           
-          <!-- 게시판명 출력 -->
           <div style="border-top:2px solid black;border-bottom:2px solid black;padding-top:20px;padding-bottom:20px;">
             <label style="font-size:46px; margin:10px; margin-bottom:0px">
               <c:choose>
@@ -34,37 +30,26 @@
               </c:choose>
             </label>
           </div>
-          
-          <!-- hidden 값들 -->
+          <!-- 관리자페이지용 -->
           <input type="hidden" name="category_num" value="${param.category_num}">
           <input type="hidden" name="email" value="${sessionScope.loginOkUser.email}">
-          <input type="hidden" name="path" value="${path}"><!-- 관리자페이지용 -->
-
+          <input type="hidden" name="path" value="${path}">
+		  <!-- 관리자페이지용 -->
           <div class="divide-block" style="width:100%;height:30px;background-color: white;"></div>
-
-          <!-- 제목 -->
           <div style="height: 20px;padding:10px; display:flex;">
             <input type="text" name="post_subject" style="width:100%;height:100%;" placeholder="제목을 입력해주세요" required>
           </div> 
-
-          <!-- 안내문구 -->
           <div style="height: 20px;padding:10px; display:flex;">
             <label>음란물, 차별, 비하 혐오 및 초상권, 저작권 침해 게시물은 민·형사상의 책임을 질 수 있습니다.</label>
           </div>
-
-          <!-- 파일첨부 -->
           <div style="height: 20px;padding:10px; display:flex;">
             <img src="post/assets/file.svg" style="width:20px;height:20px;">
             <label for="files" style="color:blue;text-decoration: underline;cursor:pointer;">파일첨부</label>
             <input type="file" id="files" name="files" multiple style="display:none;">
           </div>
-
-          <!-- 본문 -->
           <div style="width:100%;height: 400px;padding:10px; display:flex;">
             <textarea name="post_content" style="width:100%;" placeholder="내용을 입력해주세요" required></textarea>
           </div>
-
-          <!-- 버튼 -->
           <div style="width:100%;height: 100px;padding:10px; display:flex;justify-content: flex-end;gap:20px;">
             <button type="button" 
                     style="
@@ -102,15 +87,12 @@
       </div>
     </main>
 
-    <footer>
-      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
-      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
-    </footer>
+    <div id="footerArea"></div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="<%=request.getContextPath()%>/post/js/input.js"></script>
-  
+  <script src="<%=request.getContextPath()%>/main_page.js"></script>
   <script>
 		  const contextPath = "<%= request.getContextPath() %>";
   </script>

@@ -25,4 +25,7 @@ public class MainService {
 		    }
 		return dao.searchPost(keyword, category_num);
 	}
+	public ArrayList<Post> listNotice(){
+		return dao.listNotice();
+	}
 }

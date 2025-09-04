@@ -13,9 +13,13 @@ public class PostSQL {
 	public final static String MYPAGEPOSTCOUNT = "select count(*) from post where email=?";
 	public final static String MYPAGELIKECOUNT = "select sum(likes) from post where email=?";
 	public final static String MYPAGECOMMENTCOUNT = "select count(*) from comments where email=?";
+	public final static String MYPAGEPOSTLIST_PAGING = 
+			"SELECT post_num, post_subject, post_date, post_view, likes, category_num " +
+		    "FROM post WHERE email=? ORDER BY post_num DESC LIMIT ? OFFSET ?";
 
 	public final static String LIST_PAGING_LATEST = "SELECT p.post_num, p.post_subject, p.post_content, p.post_date, p.post_view, p.category_num, p.email, u.nickname, p.likes FROM Post p LEFT JOIN User u ON p.email = u.email WHERE p.category_num=? ORDER BY p.post_date DESC LIMIT ?, ?";
 	public final static String LIST_PAGING_VIEWS = "SELECT p.post_num, p.post_subject, p.post_content, p.post_date, p.post_view, p.category_num, p.email, u.nickname, p.likes FROM Post p LEFT JOIN User u ON p.email = u.email WHERE p.category_num=? ORDER BY p.post_view DESC LIMIT ?, ?";
+	
 	public final static String LIST_SEARCH_LATEST = "SELECT p.post_num, p.post_subject, p.post_content, p.post_date, p.post_view, p.category_num, p.email, u.nickname, p.likes FROM Post p LEFT JOIN User u ON p.email = u.email WHERE p.category_num=? AND %s LIKE ? ORDER BY p.post_date DESC LIMIT ?, ?";
 	public final static String LIST_SEARCH_VIEWS = "SELECT p.post_num, p.post_subject, p.post_content, p.post_date, p.post_view, p.category_num, p.email, u.nickname, p.likes FROM Post p LEFT JOIN User u ON p.email = u.email WHERE p.category_num=? AND %s LIKE ? ORDER BY p.post_view DESC LIMIT ?, ?";
 	public final static String COUNT_BY_CATEGORY ="SELECT COUNT(*) FROM Post WHERE category_num=?";

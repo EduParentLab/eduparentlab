@@ -65,4 +65,20 @@ public class RegisterDAO {
 	    return false;
 	}
 	
+	public boolean nicknameCheck(String nickname) {
+	    String sql = RegisterSQL.NICKNAMECHECK;
+	    try (Connection con = ds.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setString(1, nickname);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) {
+	                return rs.getInt(1) > 0;
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	
 }

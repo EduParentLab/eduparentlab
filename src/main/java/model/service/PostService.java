@@ -15,7 +15,7 @@ public class PostService {
     public static PostService getInstance() {
         return instance;
     }
-   
+
     public List<Post> listPagingS(int startRow, int pageSize, String sort, int categoryNum) {
         return dao.listWithPaging(startRow, pageSize, sort, categoryNum);
     }
@@ -58,8 +58,8 @@ public class PostService {
 	} 
 	
 	//민영 추가 - 내가 쓴 글 목록
-	public List<Post> mypagePostListS(String email){
-		return dao.mypagePostList(email);
+	public List<Post> mypagePostListPagingS(String email, int pageNum, int pageSize) {
+	    return dao.mypagePostListPaging(email, pageNum, pageSize);
 	}
 	//민영 추가- 내가 쓴 글 총 개수
 	public int mypagePostCountS(String email) {

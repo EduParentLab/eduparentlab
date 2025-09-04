@@ -12,26 +12,21 @@ import model.service.FileService;
 import model.service.CommentService;
 import model.service.PostService;
 import util.PagingUtil;
+import util.FileUtil;
 import domain.Comment;
 import domain.Post;
 import domain.PostFile;
 import domain.User;
 
-import java.sql.Date;
-
-
 @WebServlet("/post.do")
 @MultipartConfig
 public class PostController extends HttpServlet {
-
 	private static final long serialVersionUID = 1L;
        
-
     public void service(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         String m = request.getParameter("m");
         if (m == null) m = "list";
-
         switch(m) {
             case "input": input(request, response); break;
             case "insert": insert(request, response); break;
@@ -43,7 +38,6 @@ public class PostController extends HttpServlet {
             default: list(request, response); break;
         }
     }
-
     private void list(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         int page = 1;
@@ -80,8 +74,7 @@ public class PostController extends HttpServlet {
             list = service.searchWithPagingS(paging.getStartRow(), pageSize, sort, type, keyword, categoryNum);
         } else {
             list = service.listPagingS(paging.getStartRow(), pageSize, sort, categoryNum);
-        }
-               
+        }   
         request.setAttribute("list", list);
         request.setAttribute("paging", paging);
         request.setAttribute("sort", sort);
@@ -92,8 +85,7 @@ public class PostController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/post/post.jsp");
         rd.forward(request, response);
     }
-
-
+    
     private void input(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	HttpSession session = request.getSession(false);
@@ -107,22 +99,14 @@ public class PostController extends HttpServlet {
     	    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
     	    return;
     	}
-
-    	String email = loginUser.getEmail(); // null이 아님 보장
-    	
-    	//권한 체크 
+    	String email = loginUser.getEmail(); 
     	if(!checkAuth(request,response,"write", email)) return;
-    	
-    	//관리자페이지용 
         String path = request.getParameter("path");       
-        request.setAttribute("path", path);
-    	
+        request.setAttribute("path", path);	
         RequestDispatcher rd = request.getRequestDispatcher("/post/input.jsp");
-        rd.forward(request, response);      
-      
+        rd.forward(request, response);         
     }
 
-    
     private void insert(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	HttpSession session = request.getSession(false);
@@ -130,16 +114,12 @@ public class PostController extends HttpServlet {
 		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
 		    return;
 		}
-    	User loginUser = (User) session.getAttribute("loginOkUser");
-    	
+    	User loginUser = (User) session.getAttribute("loginOkUser");	
     	if (loginUser == null) {
     	    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
     	    return;
     	}
-
-    	String email = loginUser.getEmail(); // null이 아님 보장
-    	
-    	//권한 체크 
+    	String email = loginUser.getEmail(); 
     	if(!checkAuth(request,response,"write", email)) return;
         
     	String post_subject = request.getParameter("post_subject");
@@ -150,30 +130,22 @@ public class PostController extends HttpServlet {
         String nickname = request.getParameter("nickname");        
 
         Post dto = new Post(-1, post_subject, post_content, null, 0, category_num, email, nickname, 0);
-
         PostService service = PostService.getInstance();
-
-     
         int postNum = service.insertInt(dto);
-
         boolean flag = false;
-
         if (postNum > 0) {
             FileService.getInstance().saveFiles(request, postNum);
             flag = true;
         }
-
         request.setAttribute("flag", flag);
         request.setAttribute("kind", "insert");
         
         //관리자페이지용 
         String path = request.getParameter("path");       
         request.setAttribute("path", path);
-
         RequestDispatcher rd = request.getRequestDispatcher("/post/msg.jsp");
         rd.forward(request, response);
     }
-
     private void delete(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	
@@ -208,11 +180,8 @@ public class PostController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher(view);
         rd.forward(request, response);
     }
-    
-    
     private void update(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
     	HttpSession session = request.getSession(false);
     	if (session == null) {
 		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
@@ -224,11 +193,9 @@ public class PostController extends HttpServlet {
 	   	    return;
 	   	}	
  	    String role = (String) session.getAttribute("role");
-    	
  	    int post_num = Integer.parseInt(request.getParameter("post_num"));
     	PostService service = PostService.getInstance();
-	    Post post = service.get(post_num);
-	      
+	    Post post = service.get(post_num);     
 	    //권한 체크
 	    if(!checkAuth(request,response, "update", post.getEmail())) return;
       
@@ -237,24 +204,19 @@ public class PostController extends HttpServlet {
         int category_num = Integer.parseInt(request.getParameter("category_num"));
         
         Post dto = new Post(post_num, post_subject, post_content, null, 0, category_num, null, null, 0);
-
         boolean flag = PostService.getInstance().updateS(dto);
-        
-       
+         
         if (flag) {
             FileService.getInstance().updateFilesByPost(request, dto.getPost_num());
         }
         //관리자페이지용 
         String path = request.getParameter("path");       
-        request.setAttribute("path", path);
-        
+        request.setAttribute("path", path);   
         request.setAttribute("flag", flag);
         request.setAttribute("kind", "update");
         request.getRequestDispatcher("/post/msg.jsp")
         .forward(request, response);
     }
-    
-    
     private void content(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	HttpSession session = request.getSession(false);
@@ -267,19 +229,16 @@ public class PostController extends HttpServlet {
 	   	    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
 	   	    return;
 	   	}	
- 	    String role = (String) session.getAttribute("role");
- 	    
+ 	    String role = (String) session.getAttribute("role");  
         int post_num = Integer.parseInt(request.getParameter("seq"));
         PostService service = PostService.getInstance();
         CommentService commentService = CommentService.getInstance();
         service.hit(post_num);               
         Post dto = service.get(post_num);    
-
+        
         List<PostFile> fileList = FileService.getInstance().findFilesByPost(post_num);
-
         boolean canEdit = false;
         boolean canDelete = false;
-
         if (dto.getCategory_num() == 4) { 
             if ("admin".equals(role)) {
                 canEdit = true;
@@ -295,20 +254,15 @@ public class PostController extends HttpServlet {
         request.setAttribute("post_num", post_num);
         request.setAttribute("fileList", fileList);
         request.setAttribute("canEdit", canEdit);
-        request.setAttribute("canDelete", canDelete);
-        
+        request.setAttribute("canDelete", canDelete);   
         //관리자페이지용 
         String path = request.getParameter("path");       
         request.setAttribute("path", path);        
-
         RequestDispatcher rd = request.getRequestDispatcher("/post/content.jsp");
         rd.forward(request, response);
     }
-
-    
     private void edit(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
     	HttpSession session = request.getSession(false);
     	if (session == null) {
 		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
@@ -320,24 +274,18 @@ public class PostController extends HttpServlet {
 	   	    return;
 	   	}	
  	    String role = (String) session.getAttribute("role");
- 	    
         int post_num = Integer.parseInt(request.getParameter("seq"));
-        Post dto = PostService.getInstance().get(post_num);
-	      
+        Post dto = PostService.getInstance().get(post_num);  
 	    //권한 체크
-	    if(!checkAuth(request,response, "update", dto.getEmail())) return;
-	    
+	    if(!checkAuth(request,response, "update", dto.getEmail())) return;  
 	    //관리자페이지용 
         String path = request.getParameter("path");       
         request.setAttribute("path", path);
-        
         request.setAttribute("dto", dto);
         request.getRequestDispatcher("/post/postUpdate.jsp").forward(request, response);
     }
-    
     private boolean checkAuth(HttpServletRequest request, HttpServletResponse response,
             String action, String writerEmail) throws IOException, ServletException {
-
 		HttpSession session = request.getSession(false);
 		if (session == null) {
 		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
@@ -349,17 +297,14 @@ public class PostController extends HttpServlet {
 		    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
 		    return false;
 		}
-		String email = (loginUser != null) ? loginUser.getEmail() : null;
-		
+		String email = (loginUser != null) ? loginUser.getEmail() : null;		
 		// 관리자는 모든 권한 허용
-		if ("admin".equals(role)) return true;
-		
+		if ("admin".equals(role)) return true;	
 		// 비회원/탈퇴회원은 작성/수정/삭제 불가
 		if ("guest".equals(role)) {
 		response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
 		return false;
 		}
-		
 		// 일반회원
 		if ("user".equals(role)) {
 			switch(action) {

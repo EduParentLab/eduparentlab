@@ -6,4 +6,8 @@ public class RegisterSQL {
     
     public static final String EMAILCHECK =
     	"SELECT COUNT(*) FROM user WHERE email = ?";
+    
+    public static final String NICKNAMECHECK =
+        "SELECT COUNT(*) FROM user WHERE nickname = ?";
+    
 }

@@ -14,7 +14,6 @@ import java.sql.Timestamp;
 public class PostDAO {
 
     private DataSource ds;
-
     public PostDAO() {
         try {
             Context initContext = new InitialContext();
@@ -24,26 +23,21 @@ public class PostDAO {
             ne.printStackTrace();
         }
     }
-
-    
     public List<Post> listWithPaging(int startRow, int pageSize, String sort, int categoryNum) {
         List<Post> list = new ArrayList<>();
         String sql = ("views".equals(sort)) ? PostSQL.LIST_PAGING_VIEWS : PostSQL.LIST_PAGING_LATEST;
 
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
-
             pstmt.setInt(1, categoryNum);
             pstmt.setInt(2, startRow);
             pstmt.setInt(3, pageSize);
-
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     String nickname = rs.getString("nickname");
                     if (nickname == null || nickname.isBlank()) {
                         nickname = rs.getString("email");
                     }
-
                     list.add(new Post(
                         rs.getInt("post_num"),
                         rs.getString("post_subject"),
@@ -62,31 +56,26 @@ public class PostDAO {
         }
         return list;
     }
-
     public List<Post> searchWithPaging(int startRow,
     		int pageSize, String sort, String type, String keyword, int categoryNum) {
     	
         List<Post> list = new ArrayList<>();
-
         String column;
         switch (type) {
             case "title": column = "p.post_subject"; break;
             case "writer": column = "u.nickname"; break;
+            case "content": column = "p.post_content"; break;
             case "title_content": column = "CONCAT(p.post_subject,' ',p.post_content)"; break;
             default: column = "p.post_subject"; break;
         }
-
         String baseSql = ("views".equals(sort)) ? PostSQL.LIST_SEARCH_VIEWS : PostSQL.LIST_SEARCH_LATEST;
         String sql = String.format(baseSql, column);
-
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
-
             pstmt.setInt(1, categoryNum);
             pstmt.setString(2, "%" + keyword + "%");
             pstmt.setInt(3, startRow);
             pstmt.setInt(4, pageSize);
-
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     String nickname = rs.getString("nickname");
@@ -110,7 +99,6 @@ public class PostDAO {
         }
         return list;
     }
-
     public int getTotalCount() {
         int total = 0;
         String sql = "SELECT COUNT(*) FROM post";
@@ -123,12 +111,10 @@ public class PostDAO {
         }
         return total;
     }
-    
     public boolean insert(Post dto) {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-
         try {
             con = ds.getConnection();
             int newPostNum = 1;
@@ -144,15 +130,12 @@ public class PostDAO {
             pstmt.setString(3, dto.getPost_content());     
             pstmt.setInt(4, dto.getCategory_num());         
             pstmt.setString(5, dto.getEmail());             
-
             int i = pstmt.executeUpdate();
             if (i > 0) return true;
             else return false;
-
         } catch (SQLException se) {
             se.printStackTrace();
             return false;
-
         } finally {
             try { 
 	            rs.close(); 
@@ -160,17 +143,14 @@ public class PostDAO {
 	            con.close(); 
             }catch (Exception e) {}
         }
-    }
-    
+    }   
     public int insertInt(Post dto) {
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(PostSQL.INSERT, Statement.RETURN_GENERATED_KEYS)) {
-
             pstmt.setString(1, dto.getPost_subject());
             pstmt.setString(2, dto.getPost_content());
             pstmt.setInt(3, dto.getCategory_num());
             pstmt.setString(4, dto.getEmail());
-
             int result = pstmt.executeUpdate();
             if (result > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
@@ -184,8 +164,6 @@ public class PostDAO {
         }
         return -1;
     }
-
-
     public boolean delete(int post_num){
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -204,8 +182,7 @@ public class PostDAO {
             	con.close(); 
         	}catch(Exception e){}
         }
-    }
-    
+    }  
     public boolean update(Post dto){
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -229,7 +206,6 @@ public class PostDAO {
             }catch(Exception e){}
         }
     }
- 
     public Post get(int post_num){
         java.sql.Connection con = null;
         java.sql.PreparedStatement pstmt = null;
@@ -265,8 +241,6 @@ public class PostDAO {
             }catch(Exception e){}
         }
     }
-    
-  
 	public LinkedHashMap<String, Integer> countPost(){
 		LinkedHashMap<String, Integer> map= new LinkedHashMap<>();
 		Connection con = null;
@@ -310,36 +284,38 @@ public class PostDAO {
 	        }catch(Exception e){}
 	    }
 	}
-	
+	//민영 추가- 내가 쓴 글 목록(페이징 적용)
+	public List<Post> mypagePostListPaging(String email, int pageNum, int pageSize) {
+	    List<Post> list = new ArrayList<>();
+	    String sql = PostSQL.MYPAGEPOSTLIST_PAGING;
 
-	//민영 추가- 내가 쓴 글 목록
-    public List<Post> mypagePostList(String email) {
-        List<Post> list = new ArrayList<>();
-        String sql = PostSQL.MYPAGEPOSTLIST;
+	    int offset = (pageNum - 1) * pageSize; // 몇 번째부터 가져올지 계산
 
-        try (Connection con = ds.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql)) {
-               
-               pstmt.setString(1, email);
-               System.out.println("쿼리 실행 email = " + email); //확인
-               try (ResultSet rs = pstmt.executeQuery()) {
-                   while (rs.next()) {
-                       Post post = new Post();
-                       post.setPost_num(rs.getInt("post_num"));
-                       post.setPost_subject(rs.getString("post_subject"));
-                       post.setPost_date(rs.getTimestamp("post_date"));
-                       post.setPost_view(rs.getInt("post_view"));
-                       post.setLikes(rs.getInt("likes")); //여기 추가
-                       list.add(post);
-                   }
-               }
-           } catch (SQLException e) {
-               e.printStackTrace();
-           }
-           System.out.println("mypagePostList 결과 = " + list.size()); // 확인
-           return list;
-    }
-    
+	    try (Connection con = ds.getConnection();
+	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+	        pstmt.setString(1, email);
+	        pstmt.setInt(2, pageSize); // LIMIT
+	        pstmt.setInt(3, offset);   // OFFSET
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                Post post = new Post();
+	                post.setPost_num(rs.getInt("post_num"));
+	                post.setPost_subject(rs.getString("post_subject"));
+	                post.setPost_date(rs.getTimestamp("post_date"));
+	                post.setPost_view(rs.getInt("post_view"));
+	                post.setLikes(rs.getInt("likes"));
+	                post.setCategory_num(rs.getInt("category_num")); // 상세보기 링크 위해 필요
+	                list.add(post);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	   
     //민영 추가- 내가 쓴 글 총 개수
     public int mypagePostCount(String email) {
         int total = 0;
@@ -394,7 +370,6 @@ public class PostDAO {
         return total;
     }
     
-
 	public int getTotalCountByCategory(int categoryNum) {
 	    int total = 0;
 	    try (Connection con = ds.getConnection();
@@ -408,6 +383,7 @@ public class PostDAO {
 	    }
 	    return total;
 	}
+	
 	//관리자페이지 공지사항 가져오기
 	public ArrayList<Post> listNotice() {
         ArrayList<Post> list = new ArrayList<>();
@@ -433,8 +409,7 @@ public class PostDAO {
 
                 list.add(new Post(post_num, post_subject, post_content,
                                   post_date, post_view, category_num, email, nickname, likes));
-            }
-            
+            }          
             return list;
 
         } catch (SQLException se) {
@@ -449,5 +424,4 @@ public class PostDAO {
             } catch (Exception e) {}
         }
     }
-
 }

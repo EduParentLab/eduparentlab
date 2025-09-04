@@ -16,6 +16,12 @@ document.addEventListener("DOMContentLoaded", function () {
       // ✅ header 로드 완료 후 유튜브 목록 로드
       loadCategory("ipsi");
     });
+	
+	fetch("../main/footerBox.jsp")
+	    .then(res => res.text())
+	    .then(html => {
+	      document.getElementById("footerArea").innerHTML = html;
+	    });
 });
 const categories = {
   ipsi: [

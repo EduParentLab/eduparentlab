@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import domain.Comment;
 import domain.User;
 
@@ -40,12 +42,6 @@ public class CommentController extends HttpServlet {
 		}	
 		
 	}
-	private void form(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int postNum = Integer.parseInt(request.getParameter("post_num"));
-		request.setAttribute("post_num", postNum);
-		RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
-		rd.forward(request, response);
-	}
 	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CommentService service = CommentService.getInstance();
 		
@@ -62,14 +58,17 @@ public class CommentController extends HttpServlet {
     	System.out.println("@post_num: " + strPost_num);
 		int post_num = (strPost_num != null && !strPost_num.isEmpty()) ? Integer.parseInt(strPost_num) : 1; // 기본값 1
 		
-    	int totalCount = service.getTotalComments(post_num);
-    	PagingUtil paging = new PagingUtil(totalCount, page, pageSize, pageBlock);
+    	int parentCount = service.getTotalComments(post_num);
+    	PagingUtil paging = new PagingUtil(parentCount, page, pageSize, pageBlock);
     	
-		
+    	System.out.println("startRow: " + paging.getStartRow());
+    	System.out.println("pageSize: " + pageSize);
 		String strLatest = request.getParameter("latest");
 		System.out.println("@댓글정렬: "+strLatest);
 		boolean latestFirst = "true".equals(strLatest);
 		ArrayList<Comment> list = service.selectedByPostNum(post_num, latestFirst, paging.getStartRow(), pageSize);
+		System.out.println("@Controller list comment_nums: " + 
+			    list.stream().map(Comment::getComment_num).collect(Collectors.toList()));
 		for(Comment c : list) {
 		    System.out.println("부모: " + c.getComment_num());
 		    if(c.getRecomments() != null) {
@@ -81,12 +80,15 @@ public class CommentController extends HttpServlet {
 		System.out.println("@list()호출, post_num="+post_num);
 		System.out.println("list size: "+list.size());
 		
+		int totalCount = service.getTotalCommentsIncludingReplies(post_num);
+		
+		request.setAttribute("totalCount", totalCount);
 		request.setAttribute("post_num", post_num);
 		request.setAttribute("comment", list);
 		request.setAttribute("paging", paging);
 		
 	
-		RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/post/comment.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -108,8 +110,7 @@ public class CommentController extends HttpServlet {
 		
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		
-		
-		Comment comment = new Comment(-1, content, now, 0, 0, loginUser.getEmail(), post_num);
+		Comment comment = new Comment(-1, content, now, 0, 0, loginUser.getEmail(), post_num, null);
 		System.out.println("@insert()호출, post_num = "+post_num+", content = "+content+", email = "+loginUser.getEmail());
 		int result = service.insert(comment, post_num);
 		if (result == 1) {
@@ -118,7 +119,7 @@ public class CommentController extends HttpServlet {
 	        ArrayList<Comment> list = service.selectedByPostNum(post_num, true, 0, 10); // 예: 최신순 10개
 	        request.setAttribute("comment", list);
 
-	        RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
+	        RequestDispatcher rd = request.getRequestDispatcher("/post/comment.jsp");
 	        rd.forward(request, response);
 	    } else {
 	        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "댓글 등록 실패");
