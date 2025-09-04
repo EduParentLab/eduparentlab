@@ -51,13 +51,13 @@
   border:1px solid #ccc;
   border-radius:5px;
   gap:10px;
-  background-color: rgb(221, 235, 221);
+  background-color: #b1d4ec
 }
 
 
   .popular-board {
       width: 50%;
-      border: 2px solid rgb(0, 0, 0);
+      border: 1px solid rgb(208, 208, 208);
       border-radius: 6px;
       padding: 15px;
       background-color: rgb(221, 235, 221);
@@ -72,7 +72,7 @@
 
     .board-item {
       margin-bottom: 3px;
-      border: 1px solid rgb(0, 0, 0);
+      border: 1px solid rgb(208, 208, 208);
       border-radius: 4px;
       padding: 10px;
     }
