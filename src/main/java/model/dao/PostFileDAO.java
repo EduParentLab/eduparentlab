@@ -16,7 +16,6 @@ public class PostFileDAO {
             ds = (DataSource)envContext.lookup("jdbc/TestDB");
         } catch (NamingException ne) {}
     }
-
     public boolean insert(PostFile f, long post_num) {
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(INSERT)) {
@@ -33,8 +32,6 @@ public class PostFileDAO {
             return false;
         }
     }
-
-
     public ArrayList<PostFile> listByPost(long post_num) {
         ArrayList<PostFile> list = new ArrayList<>();
         try (Connection con = ds.getConnection();
@@ -53,7 +50,6 @@ public class PostFileDAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return list;
     }
-
     public boolean deleteByPost(long post_num) {
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(DELETE_BY_POST)) {

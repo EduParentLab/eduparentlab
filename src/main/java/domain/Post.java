@@ -12,8 +12,7 @@ public class Post {
     private String email;
     private String nickname;
     private int likes;
-      
-    
+
     public Post(){}
     
 	public Post(int post_num, String post_subject, String post_content, Timestamp post_date, int post_view,
