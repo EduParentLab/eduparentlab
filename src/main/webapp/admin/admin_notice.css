@@ -115,7 +115,7 @@
   height: auto;
   width: 100%;
   display: flex;
-  justify-content: felx-end;
+  justify-content: right;
   align-items: center;
   box-sizing: border-box;
   padding :10px 10px;

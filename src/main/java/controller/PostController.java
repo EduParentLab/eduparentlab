@@ -147,8 +147,7 @@ public class PostController extends HttpServlet {
         int post_view = 0; 
   
         int category_num = Integer.parseInt(request.getParameter("category_num"));
-        String nickname = request.getParameter("nickname");
-        int likes = 0;
+        String nickname = request.getParameter("nickname");        
 
         Post dto = new Post(-1, post_subject, post_content, null, 0, category_num, email, nickname, 0);
 

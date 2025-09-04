@@ -32,4 +32,28 @@ function events(){
 	        });
 	    });
 }
-	
+
+//likes
+document.addEventListener("DOMContentLoaded", () => {
+    // 모든 좋아요 버튼 선택
+    document.querySelector('.likes-button').forEach(button => {
+        button.addEventListener('click', () => {
+            const postNum = button.dataset.postNum;
+            fetch(`/educationlab/likes.do?m=add`, { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `post_num=${postNum}`
+            })
+            .then(response => response.json())
+            //.then(data => {
+                // 서버에서 반환한 최신 좋아요 수
+                //button.querySelector('.like-count').textContent = data.likes;
+            //})
+            .catch(error => {
+                console.error('좋아요 요청 실패', error);
+            });
+        });
+    });
+});

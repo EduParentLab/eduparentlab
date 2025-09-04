@@ -15,7 +15,7 @@
       <input type="text" id="noticeSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
       <button id="noticeSearchBtn" class="search-btn">🔍</button>
   </div>
-<form action="?m=delete" method="post">
+<form action="admin.do?m=delete" method="post">
   <div style="text-align: right;">
       <button type="submit" class="delete-btn" style="padding-right:50px; padding-top:20px;">🗑️</button>
   </div>

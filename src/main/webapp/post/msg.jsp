@@ -11,7 +11,7 @@
     boolean flag = (Boolean)request.getAttribute("flag");
     String kind = (String)request.getAttribute("kind");
     String path = request.getParameter("path");
-	System.out.println("msg.jsp.pate: "+path);
+	//System.out.println("msg.jsp.path: "+path);
 	
     Object categoryAttr = request.getAttribute("category_num");
     String categoryNum = null;

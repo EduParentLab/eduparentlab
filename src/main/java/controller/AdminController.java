@@ -96,7 +96,7 @@ public class AdminController extends HttpServlet {
     private void delete(HttpServletRequest request, HttpServletResponse response) 
             throws IOException {
     	String[] chk = request.getParameterValues("chk");
-    	System.out.println(chk);
+    	System.out.println("delete:"+chk);
     	if (chk != null) {
             PostService postService = PostService.getInstance();
             for (String numStr : chk) {

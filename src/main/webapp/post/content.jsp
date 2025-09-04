@@ -89,10 +89,13 @@
             </div>
             
             <label>${dto.nickname}</label>
+          <form id=likesButton action="likes.do?m=add" method="post">
+           <input type= "hidden" name="post_num" value="${dto.post_num}">                    	
             <button style="display: flex; align-items: center; gap: 5px; background-color:white; border:0px solid white; ">
                 <img src="<%=request.getContextPath()%>/post/assets/like.png" alt="좋아요" class="like-icon" style="width: 20px; height: 20px;"/>
                 <label>${dto.likes}</label>
-            </button>
+            </button>        
+          </form> 
             <label>${dto.post_num}</label>
             
 		            <!-- 비이미지 파일 다운로드 -->
@@ -203,3 +206,21 @@
 
 </body>
 </html>
+<script>
+document.getElementById("likesButton").addEventListener("submit", function(event) {
+    event.preventDefault(); // 기본 submit(새로고침) 막기
+
+    const formData = new FormData(this);
+
+    fetch("/submit", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.text())
+    .then(data => {
+        console.log("서버 응답:", data);
+        alert("비동기 전송 성공!");
+    })
+    .catch(err => console.error(err));
+});
+</script>
