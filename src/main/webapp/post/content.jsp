@@ -163,7 +163,12 @@
 		
 	
 
-        <div id="commentArea"></div>
+        <div id="commentArea">
+          <div id="commentList"></div>
+          <div id="pagination"></div>
+        </div>
+          
+          
     </main>
 
     <footer>
