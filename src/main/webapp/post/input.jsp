@@ -86,6 +86,11 @@
         </form>
       </div>
     </main>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ade8f6a508c90e419d1e6cb12290a2b88723e6be
     <div id="footerArea"></div>
   </div>
 
