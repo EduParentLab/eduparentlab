@@ -16,9 +16,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+});
+
+
   fetch("footerBox.jsp")
     .then(res => res.text())
     .then(html => {
       document.getElementById("footerArea").innerHTML = html;
     });
-});
+
