@@ -3,12 +3,14 @@ package model.service;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
 import model.dao.PostFileDAO;
+import util.FileUtil;
 import domain.PostFile;
 
 
@@ -57,14 +59,16 @@ public class FileService {
     }
 
     public java.util.List<PostFile> findFilesByPost(long postNum) {
-        return dao.listByPost(postNum);
+    	List<PostFile> list = dao.listByPost(postNum);
+    	for (PostFile file : list) {
+            file.setImage(FileUtil.imageFile(file.getFile_name()));
+        }
+        return list;
     }
 
     public void deleteFilesByPost(long postNum) {
         dao.deleteByPost(postNum);
     }
-    
-    
     
     public void updateFilesByPost(HttpServletRequest request, long postNum) {
         try {
