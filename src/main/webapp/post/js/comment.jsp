@@ -44,6 +44,9 @@
 		            <div class="33"style="width: 500px;display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ffffff; gap:20px; border:solid rgb(255, 255, 255);">
 		                <div class="comment-writer">${c.nickName}</div>
 		                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
+		                
+		                <button class="editBtn" type="submit">수정</button>
+		                <button class="deleteBtn" type="submit">삭제</button>
 		            </div>
 		            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 		                <span class="content">${c.comment_content}</span>
