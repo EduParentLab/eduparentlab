@@ -42,6 +42,14 @@ document.addEventListener("DOMContentLoaded", function () {
           loginAfter.style.display = isLoggedIn ? "flex" : "none";
         }
       });
+	  
+	  fetch(`${contextPath}/main/footerBox.jsp`)
+	  	    .then(res => res.text())
+	  	    .then(html => {
+	  	      document.getElementById("footerArea").innerHTML = html;
+	  	    });
+	  
+	 
   });
   
 

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch(`${contextPath}/main/headerBox.jsp`)
+  fetch("headerBox.jsp")
     .then(res => res.text())
     .then(html => {
       document.getElementById("headerArea").innerHTML = html;
@@ -14,5 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
         loginBefore.style.display = isLoggedIn ? "none" : "flex";
         loginAfter.style.display = isLoggedIn ? "flex" : "none";
       }
+    });
+
+  fetch("footerBox.jsp")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footerArea").innerHTML = html;
     });
 });

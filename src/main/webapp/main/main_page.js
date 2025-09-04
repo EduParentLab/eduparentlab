@@ -15,4 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
         loginAfter.style.display = isLoggedIn ? "flex" : "none";
       }
     });
+
+  fetch("footerBox.jsp")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footerArea").innerHTML = html;
+    });
 });

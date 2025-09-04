@@ -51,26 +51,18 @@
 		                    <p>검색 결과가 없습니다.</p>
 		                </c:otherwise>
 		            </c:choose>
-		
-		            
-		        </div> <!-- flex column 닫기 -->
+		        </div>
 		        <div style="display:flex; margin-left: auto;">
-			            <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=${cateNum}&type=title&keyword=${keyword}">
-			            더보기
-			            </a>
+		            <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=${cateNum}&type=title&keyword=${keyword}">
+		            더보기
+		            </a>
 		        </div>
 		    </div> <!-- section-board 닫기 -->
 		    <div class="divide-block" style="background-color:white;width: 100%;height:15px;"></div>
 		</c:forEach>
-
-        
-    </div>
-  </main>
-
-    <footer>
-      <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>
-      <p>© 1999 - 2025 dcinside. All rights reserved.</p>
-    </footer>
+	    </div>
+	  </main>
+    <div id="footerArea"></div>
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
