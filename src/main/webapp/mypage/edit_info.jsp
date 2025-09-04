@@ -44,8 +44,8 @@
               <input type="password" name="password" placeholder="새 비밀번호 입력">
             </div>
             <div class="form-input">
-            <label for="passwordConfirm">비밀번호 확인</label>
-              <input type="password" name="passwordConfirm" placeholder="비밀번호 확인">
+            <label  for="passwordConfirm">비밀번호 확인</label>
+              <input  type="password" name="passwordConfirm" placeholder="비밀번호 확인">
             </div>
 
             <!-- 이름 -->
@@ -83,11 +83,7 @@
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script> const contextPath = "${pageContext.request.contextPath}";</script>
-<script src="../register/register.js"></script>
-<script src="search.js"></script>
-<script src="login.js"></script>
 <script src="edit_info.js"></script>
-<script src="<%=request.getContextPath()%>/main_page.js"></script>
+<script> const contextPath = "<%=request.getContextPath()%>";</script>
 </body>
 </html>

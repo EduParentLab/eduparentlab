@@ -71,9 +71,11 @@
   position: relative;   /* label 위치 기준 */
   border: none;
   display: flex;
+  flex-direction:row;
   gap: 10px;
-  margin-bottom: 20px;
-  padding-top: 15px;    /
+  margin-bottom: 0px;
+  padding-top: 15px;
+  margin-top:10px;
 }
 
 .birth-label {
@@ -87,8 +89,10 @@
   position: relative;  
   border: none;
   display: flex;
+  flex-direction:row;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  margin-top: 5px;
   padding-top: 15px;    
 }
 
@@ -148,3 +152,18 @@
   margin-top: 5px;
   transition: background-color 0.2s ease;
 }
+
+input[type="password"] {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: black;
+  }
+
+  /* 자동완성 상태에서도 동일하게 적용 */
+  input:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: black !important;
+  }
+
