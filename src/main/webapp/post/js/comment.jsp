@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,12 +12,11 @@
 	<!-- 댓글상단 -->
 	<div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
             <div style="display: flex; align-items: center; gap: 5px; width: 50%; padding-left: 10px;">
-                <P>댓글 5</P>
+                <P>댓글 ${fn:length(comment)}</P>
             </div>
             <div style="display: flex; align-items: center; justify-content:right; gap: 5px; width: 50%; padding-right: 10px;">
-                <button class="align-button" style="border-right:solid black;">인기순</button>
-                <button class="align-button " style="border-right:solid black;">최신순</button>
-                <button class="align-button">오래된 순</button>
+                <button class="align-button " style="border-right:solid black;" data-latest="true">최신순</button>
+                <button class="align-button" data-latest="false">오래된 순</button>
             </div>
     </div>
     
@@ -40,8 +41,8 @@
 			<div class="section-content-comment" data-comment-num="${c.comment_num}">
 	        	<div style="margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
 		            <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ffffff; gap:20px; border:solid rgb(255, 255, 255);">
-		                <div class="comment-writer">${c.email}</div>
-		                <div>${c.comment_date}</div>
+		                <div class="comment-writer">${c.nickName}</div>
+		                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
 		            </div>
 		            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 		                <span class="content">${c.comment_content}</span>
@@ -56,8 +57,8 @@
 				<div class="section-content-recomment" data-recomment-num="${recomment.comment_num}">
 			        <div style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
 			            <div style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:20px; border:solid rgb(255, 255, 255);">
-			                <div class="recomment-writer">${recomment.email}</div>
-			                <div>${recomment.comment_date}</div>
+			                <div class="recomment-writer">${recomment.nickName}</div>
+			                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
 			            </div>
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 			                <label>
@@ -81,9 +82,7 @@
 	            </form>
 	        </div>
 	       </div>
-		 </c:forEach>
-		 
-		    	  	
+		 </c:forEach>	  	
         </div>
         		
          
