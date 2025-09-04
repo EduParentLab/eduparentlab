@@ -12,7 +12,7 @@ function loadContent(page) {
 	  target.innerHTML = html;
 	  
 	  //notice 탭 검색 기능
-	  if (page === "notice"){
+	  if (page === "notice"){			
 		    const searchFilter = document.getElementById("search-filter");
 		    const input = target.querySelector("#noticeSearchInput");
 		    const btn = target.querySelector("#noticeSearchBtn");
@@ -43,7 +43,7 @@ function loadContent(page) {
 		        });
             }
 			btn.addEventListener("click", filterRows);
-			input.addEventListener("keyup", filterRows);
+			input.addEventListener("keyup", filterRows);					
 	  }
 	  //user_list 탭 검색 기능 
 	  if (page === "user_list" || page === "withdrawn_list"){
@@ -173,4 +173,29 @@ document.addEventListener("DOMContentLoaded", function () {
     loginAfter.style.display = isLoggedIn ? "flex" : "none";
   }
 });
+});
+
+function loadNotice(page) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "admin.do?m=notice&page=" + page, false); // false -> 동기 요청
+    xhr.send();
+
+    if (xhr.status === 200) {
+        // 서버에서 받은 HTML을 그대로 넣기        
+		document.querySelector(".box.box-right").innerHTML = xhr.responseText;
+    } else {
+        alert("데이터를 불러오는 데 실패했습니다.");
+    }
+}
+
+// 페이지 로딩 시 초기 호출
+window.onload = function() {
+    loadNotice(1);
+};
+
+// 페이징 버튼 클릭 시
+$(document).on("click", ".pagination a", function(e){
+           // e.preventDefault(); // 기본 동작 차단
+            const page = $(this).data("page"); // data-page 가져오기
+            loadNotice(page); // ✅ 정렬 상태(currentLatest)를 자동 반영
 });

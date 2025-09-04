@@ -15,7 +15,7 @@
       <input type="text" id="noticeSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
       <button id="noticeSearchBtn" class="search-btn">🔍</button>
   </div>
-<form action="?m=delete" method="post">
+	<form action="admin.do?m=delete" method="post">
   <div style="text-align: right;">
       <button type="submit" class="delete-btn" style="padding-right:50px; padding-top:20px;">🗑️</button>
   </div>
@@ -38,9 +38,9 @@
 				<td align='center' colspan="6">작성한 글 없음</td>
 				</tr>
 			</c:when>
-			<c:otherwise>
+			<c:otherwise>				  	
 			  <c:forEach items="${notice}" var="dto">
-			      <tr>
+			      <tr>			       
 			        <td><input type="checkbox" name="chk" value="${dto.post_num}"/></td>
 					<td align='center'>${dto.post_num}</td>
 					<td id="post_subject" align='center'>
@@ -49,9 +49,9 @@
 					<td align='center'>${dto.post_date}</td>		
 					<td align='center'>${dto.post_view}</td>
 					<td align='center'>${dto.likes}</td>
-					<td id="post_content" style="position:absolute; left:-9999px;">${dto.post_content}</td>
-				  </tr>
-			  </c:forEach>
+					<td id="post_content" style="position:absolute; left:-9999px;">${dto.post_content}</td>	   
+				  </tr>				
+			</c:forEach>		  
 		   </c:otherwise>	    
 	    </c:choose>		
      </tbody>
@@ -70,23 +70,19 @@
           </button>
         </div>
   </form>
-
-  <div class="pagination">
-      <a href="#" class="page current">1</a>
-      <a href="#" class="page">2</a>
-      <a href="#" class="page">3</a>
-      <a href="#" class="page">4</a>
-      <a href="#" class="page">5</a>
-      <a href="#" class="page">6</a>
-      <a href="#" class="page">7</a>
-      <a href="#" class="page">8</a>
-      <a href="#" class="page">9</a>
-      <a href="#" class="page">10</a>
-      <a href="#" class="page">11</a>
-      <a href="#" class="page">12</a>
-      <a href="#" class="page">13</a>
-      <a href="#" class="page">14</a>
-      <a href="#" class="page">15</a>
-      <span class="next-disabled">▶▶</span>
-  </div>
+  	
+		<!-- ◀▶ 페이지네이션 -->
+		<div class="pagination">
+		    <c:if test="${paging.hasPrev()}">
+		        <a href="#" data-page="${paging.startPage - 1}">◀</a>
+		    </c:if>
+		
+		    <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
+		        <a href="#" data-page="${i}" class="${i == paging.currentPage ? 'active' : ''}">${i}</a>
+		    </c:forEach>
+		
+		    <c:if test="${paging.hasNext()}">
+		        <a href="#" data-page="${paging.endPage + 1}">▶</a>
+		    </c:if>
+		</div>
 

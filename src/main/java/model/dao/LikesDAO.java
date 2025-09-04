@@ -5,7 +5,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.*;
 import static model.sql.LikesSQL.*;
 
 public class LikesDAO {
@@ -17,46 +16,47 @@ public class LikesDAO {
 			ds = (DataSource)envContext.lookup("jdbc/TestDB");
 		}catch(NamingException ne){}
 	}
-	public HashMap<Integer, Integer> countLikes() {
-		HashMap<Integer, Integer> map = new HashMap<>();
+	public int countLikes(int post_num) {		
 		Connection con = null;
-		Statement stmt = null;	
+		PreparedStatement pstmt = null;	
 		ResultSet rs = null;
-		try {
+		try {					
 			con = ds.getConnection();
-			stmt = con.createStatement();			
-			rs = stmt.executeQuery(COUNTLIKES);	
-			while(rs.next()) {
-				int post_num = rs.getInt("post_num");
-				int likes_count = rs.getInt("likes_count");
-				map.put(post_num, likes_count);
+			pstmt = con.prepareStatement(COUNTLIKES);	
+			pstmt.setInt(1, post_num);
+			rs = pstmt.executeQuery();			
+			if(rs.next()) {				
+				int likes_count = rs.getInt("likes");					
+				return likes_count;
 			}
 		}catch(SQLException se){			
 			se.printStackTrace();			
 		}finally {
-			try {				
-				stmt.close();
+			try {
+				rs.close();
+				pstmt.close();
 				con.close();
 			}catch(Exception e) {}
-		}return map;
-	}
+		}return 0;
+	}	
 	public int checkLikes(String email, int post_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;		
+		ResultSet rs = null;
 		try {
 			con = ds.getConnection();			
 			pstmt = con.prepareStatement(CHECKEXISTENCE);
 			pstmt.setString(1, email);
 			pstmt.setInt(2, post_num);
-			ResultSet rs = pstmt.executeQuery();			
+			rs = pstmt.executeQuery();			
 			if(rs.next()) {
 				return EXISTENCE;
 			}			
 		}catch(SQLException se){			
-			se.printStackTrace();
-			return NONEXISTENCE;
+			se.printStackTrace();			
 		}finally {
-			try {				
+			try {		
+				rs.close();
 				pstmt.close();
 				con.close();
 			}catch(Exception e) {}
