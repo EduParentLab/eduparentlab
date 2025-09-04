@@ -162,7 +162,12 @@
 		
 	
 
-        <div id="commentArea"></div>
+        <div id="commentArea" style="display:flex; width:1210px; flex-direction:column;">
+          <div id="commentList" style="display:flex; width:1210px; flex-direction:column;"></div>
+          <div id="pagination" style="display:flex; width:1000px;"></div>
+        </div>
+          
+          
     </main>
 
     <footer>
