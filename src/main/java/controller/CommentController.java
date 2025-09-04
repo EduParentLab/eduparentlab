@@ -116,7 +116,6 @@ public class CommentController extends HttpServlet {
 		
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		
-		
 		Comment comment = new Comment(-1, content, now, 0, 0, loginUser.getEmail(), post_num, null);
 		System.out.println("@insert()호출, post_num = "+post_num+", content = "+content+", email = "+loginUser.getEmail());
 		int result = service.insert(comment, post_num);
