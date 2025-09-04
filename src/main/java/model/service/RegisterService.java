@@ -26,4 +26,8 @@ public class RegisterService {
 		return dao.emailCheck(email);
 	}
 	
+	public boolean nicknameCheckS(String nickname) {
+		return dao.nicknameCheck(nickname);
+	}
+	
 }

@@ -63,8 +63,8 @@ public class PostService {
 		return likesService.countLikesS();
 	}
 	//민영 추가 - 내가 쓴 글 목록
-	public List<Post> mypagePostListS(String email){
-		return dao.mypagePostList(email);
+	public List<Post> mypagePostListPagingS(String email, int pageNum, int pageSize) {
+	    return dao.mypagePostListPaging(email, pageNum, pageSize);
 	}
 	//민영 추가- 내가 쓴 글 총 개수
 	public int mypagePostCountS(String email) {
