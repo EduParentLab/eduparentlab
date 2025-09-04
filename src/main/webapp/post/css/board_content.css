@@ -5,8 +5,9 @@
   align-items: stretch;         /* 세로 가운데 정렬 */
   gap: 0px;                   /* 자식 간 간격 */
   background-color: rgb(255, 255, 255);
-  height:2000px;
+  height:100%;
   padding:0px 0px;
+  top-padding:0px;
 }
 
 .section-title {
