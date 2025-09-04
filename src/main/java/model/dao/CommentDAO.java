@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -69,16 +70,10 @@ public class CommentDAO {
 
 	public ArrayList<Comment> selectedByPostNum(int post_num, boolean latestFirst, int startRow, int pageSize) {
 		ArrayList<Comment> clist = new ArrayList<Comment>();
-
-		try {
-			Connection con = ds.getConnection();
-			PreparedStatement pstmt = null;
-			if(latestFirst) {
-				pstmt = con.prepareStatement(LIST_L);
-				
-			}else {
-				pstmt = con.prepareStatement(LIST);
-			}
+		String sql = latestFirst ? LIST_L : LIST;
+		try (Connection con = ds.getConnection();
+		         PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
 			pstmt.setInt(1, post_num);
 			pstmt.setInt(2,  startRow);
 			pstmt.setInt(3, pageSize);
@@ -89,27 +84,51 @@ public class CommentDAO {
 				String email = rs.getString("email");
 				String content = rs.getString("comment_content");
 				Timestamp date = rs.getTimestamp("comment_date");
-				clist.add(new Comment(comment_num, content, date, -1, -1, email, post_num));
+				String nickName = rs.getString("nickname");
+				clist.add(new Comment(comment_num, content, date, -1, -1, email, post_num, nickName));
 			}
+			System.out.println("@DAO list comment_nums: " + 
+				    clist.stream().map(Comment::getComment_num).collect(Collectors.toList()));
 			// 각 부모 댓글에 답댓글 리스트 추가
             for (Comment comment : clist) {
                 List<Comment> replies = getRecomments(comment.getComment_num());
                 comment.setRecomments(replies);
             }
+            
 		} catch (SQLException se) {
 			se.printStackTrace();
-			return null;
 		}
 		return clist;
 	}
-	// 특정 글의 전체 댓글 개수 조회
+	// 특정 글의 부모 댓글 개수 조회
     public int getTotalCount(int post_num) {
         int total = 0;
-        String sql = "SELECT COUNT(*) FROM post";
+        String sql = "SELECT COUNT(*) FROM comments where post_num = ? and group_num = comment_num";
         try (Connection con = ds.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
-            if (rs.next()) total = rs.getInt(1);
+             PreparedStatement pstmt = con.prepareStatement(sql)){
+        	pstmt.setInt(1, post_num);
+        	try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+    // 부모+답댓글 전체 개수 조회
+    public int getTotalCommentCountIncludingReplies(int post_num) {
+        int total = 0;
+        String sql = "SELECT COUNT(*) FROM comments WHERE post_num = ?";
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, post_num);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getInt(1); // 부모+답댓글 전체 수
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -128,7 +147,8 @@ public class CommentDAO {
 	                rs.getInt("group_num"),
 	                rs.getInt("group_order"),
 	                rs.getString("email"),
-	                rs.getInt("post_num")
+	                rs.getInt("post_num"),
+	                rs.getString("nickname")
 	            );
 	        }
 		}catch(SQLException se) {
@@ -198,9 +218,9 @@ public class CommentDAO {
 	}
 	public List<Comment> getRecomments(int groupNum){
 		List<Comment> list = new ArrayList<>();
-		try {
-			Connection con = ds.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(LIST_R);
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(LIST_R);){
+			
 			
 			pstmt.setInt(1, groupNum);
 			
@@ -213,13 +233,12 @@ public class CommentDAO {
                 c.setComment_content(rs.getString("comment_content"));
                 c.setEmail(rs.getString("email"));
                 c.setComment_date(rs.getTimestamp("comment_date"));
-                
+                c.setNickName(rs.getString("nickname"));
                 list.add(c);
 			}
 			
 		} catch (SQLException se) {
 			se.printStackTrace();
-			return null;
 		}
 		return list;
 	}

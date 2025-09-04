@@ -6,13 +6,20 @@ document.addEventListener("DOMContentLoaded", function () {
 	loadComments();
 });
 
-function loadComments() {
+function loadComments(latest=true) {
 	const postNum = new URLSearchParams(window.location.search).get("seq");
-	fetch(`${BASE_URL}/comment/comment.do?m=list&post_num=${postNum}`)
+	fetch(`${BASE_URL}/comment/comment.do?m=list&post_num=${postNum}&latest=${latest}`)
     .then(res => res.text())
     .then(html => {
-    document.getElementById("commentArea").innerHTML = html;
-	
+		const temp = document.createElement('div');
+        temp.innerHTML = html;
+
+        // JSP에서 #commentList와 #pagination div를 나눠서 만들었다고 가정
+        const commentListHtml = temp.querySelector('#commentList').innerHTML;
+        const paginationHtml = temp.querySelector('#pagination').innerHTML;
+
+        document.getElementById('commentList').innerHTML = commentListHtml;
+        document.getElementById('pagination').innerHTML = paginationHtml;
     })
 	
 }
@@ -99,7 +106,44 @@ function events(){
 		    e.preventDefault();   // 링크나 기본 클릭 동작 차단
 		    // 아무 동작도 하지 않음
 		});
+		//페이징
+		$(document).on("click", ".pagination a", function(e){
+		    e.preventDefault(); // 기본 동작 차단
+		    const page = $(this).data("page"); // data-page 가져오기
+		    const postNum = new URLSearchParams(window.location.search).get("seq"); // 현재 post_num 가져오기
 
+
+		    fetch(`${BASE_URL}/comment/comment.do?m=list&post_num=${postNum}&page=${page}`)
+		        .then(res => res.text())
+				.then(html => {
+				    const temp = document.createElement('div');
+				    temp.innerHTML = html;
+
+				    const commentListHtml = temp.querySelector('#commentList').innerHTML;
+				    const paginationHtml = temp.querySelector('#pagination').innerHTML;
+
+				    document.getElementById('commentList').innerHTML = commentListHtml;
+				    document.getElementById('pagination').innerHTML = paginationHtml;
+				});
+		});
+		//최신순, 인기순
+		$(document).on("click", ".align-button", function(e){
+		    e.preventDefault();
+		    const latest = $(this).data("latest"); // true/false
+		    const postNum = new URLSearchParams(window.location.search).get("seq");
+		    fetch(`${BASE_URL}/comment/comment.do?m=list&post_num=${postNum}&latest=${latest}`)
+		        .then(res => res.text())
+				.then(html => {
+				    const temp = document.createElement('div');
+				    temp.innerHTML = html;
+
+				    const commentListHtml = temp.querySelector('#commentList').innerHTML;
+				    const paginationHtml = temp.querySelector('#pagination').innerHTML;
+
+				    document.getElementById('commentList').innerHTML = commentListHtml;
+				    document.getElementById('pagination').innerHTML = paginationHtml;
+				});
+		});
 		// 댓글 수정 버튼 클릭
 		    $(document).on("click", ".editBtn", function() {
 		        const $btn = $(this);

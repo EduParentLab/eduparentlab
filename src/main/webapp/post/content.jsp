@@ -146,6 +146,12 @@
 		</c:if>
 
         <div id="commentArea"></div>
+
+        <div id="commentArea" style="display:flex; width:1210px; flex-direction:column;">
+          <div id="commentList" style="display:flex; width:1210px; flex-direction:column;"></div>
+          <div id="pagination" style="display:flex; width:1000px;"></div>
+        </div>
+          
     </main>
     <footer>
       <p>회사소개 | 이용약관 | 개인정보처리방침 등등</p>

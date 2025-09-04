@@ -66,7 +66,7 @@
 }
 
 .section-content-comment-input {
- width: 100%;
+ width: 1210px;
   height: auto; /* or auto */
   padding: 0px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
@@ -79,7 +79,7 @@
 }
 
 .comment-input {
-  width: 100%;
+  width: 1210px;
   height: 200px;
   padding: 10px;
   line-height: 1.4;
@@ -91,7 +91,7 @@
 
 
 .section-content-comment-list {
-  height: 120px; /* or auto */
+  height: auto; /* or auto */
   padding: 20px 20px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
   justify-content: flex-start;
@@ -112,6 +112,7 @@
 }
 
 .section-content-recomment-input {
+	
   padding-top:0px;
   padding-right:20px;
   padding-bottom:20px;
@@ -123,4 +124,10 @@
   border-bottom: 1px solid black;
   box-sizing: border-box;
   flex-direction: column;
+}
+
+.commentList{
+	
+	
+	
 }

@@ -13,12 +13,13 @@ public class Comment {
 	private String email;
 	private int post_num;
 	private List<Comment> recomments;
+	private String nickName;
 	public Comment() {
 		
 	}
 
 	public Comment(int comment_num, String comment_content, Timestamp comment_date, int group_num, int group_order,
-			String email, int post_num) {
+			String email, int post_num, String nickName) {
 		this.comment_num = comment_num;
 		this.comment_content = comment_content;
 		this.comment_date = comment_date;
@@ -26,6 +27,7 @@ public class Comment {
 		this.group_order = group_order;
 		this.email = email;
 		this.post_num = post_num;
+		this.nickName = nickName;
 	}
 
 	public int getComment_num() {
@@ -90,6 +92,14 @@ public class Comment {
 
 	public void setRecomments(List<Comment> recomments) {
 		this.recomments = recomments;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	
 	
