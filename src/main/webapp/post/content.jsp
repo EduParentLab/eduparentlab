@@ -64,19 +64,19 @@
             
              <!-- 파이이이일 -->
             <!-- 비이미지 파일 다운로드 -->
-	   <c:forEach var="file" items="${fileList}">
-	     <c:if test="${!file.image}">
-	       <div style="display:flex; align-items:center; margin-left:10px;">
-	         <img src="<%=request.getContextPath()%>/post/assets/file.svg"
-	              style="width:20px; height:20px; margin-right:5px;" alt="파일 아이콘"/>
-	         <a href="${pageContext.request.contextPath}/download.do?file=${file.file_name}"          
-	            style="color:blue; text-decoration: underline;">
-	           ${file.file_origin_name}
-	         </a>
-	       </div>
-	     </c:if>
-	   </c:forEach>
-	</div>
+		   <c:forEach var="file" items="${fileList}">
+		     <c:if test="${!file.image}">
+		       <div style="display:flex; align-items:center; margin-left:10px;">
+		         <img src="<%=request.getContextPath()%>/post/assets/file.svg"
+		              style="width:20px; height:20px; margin-right:5px;" alt="파일 아이콘"/>
+		         <a href="${pageContext.request.contextPath}/download.do?file=${file.file_name}"          
+		            style="color:blue; text-decoration: underline;">
+		           ${file.file_origin_name}
+		         </a>
+		       </div>
+		     </c:if>
+		   </c:forEach>
+		</div>
 	            
    	 <div class="section-content-body">
 		   <!-- 이미지 파일 미리보기 -->
