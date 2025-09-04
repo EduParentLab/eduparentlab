@@ -14,7 +14,6 @@ import java.sql.Timestamp;
 public class PostDAO {
 
     private DataSource ds;
-
     public PostDAO() {
         try {
             Context initContext = new InitialContext();
@@ -24,26 +23,21 @@ public class PostDAO {
             ne.printStackTrace();
         }
     }
-
-    
     public List<Post> listWithPaging(int startRow, int pageSize, String sort, int categoryNum) {
         List<Post> list = new ArrayList<>();
         String sql = ("views".equals(sort)) ? PostSQL.LIST_PAGING_VIEWS : PostSQL.LIST_PAGING_LATEST;
 
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
-
             pstmt.setInt(1, categoryNum);
             pstmt.setInt(2, startRow);
             pstmt.setInt(3, pageSize);
-
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     String nickname = rs.getString("nickname");
                     if (nickname == null || nickname.isBlank()) {
                         nickname = rs.getString("email");
                     }
-
                     list.add(new Post(
                         rs.getInt("post_num"),
                         rs.getString("post_subject"),
@@ -62,12 +56,10 @@ public class PostDAO {
         }
         return list;
     }
-
     public List<Post> searchWithPaging(int startRow,
     		int pageSize, String sort, String type, String keyword, int categoryNum) {
     	
         List<Post> list = new ArrayList<>();
-
         String column;
         switch (type) {
             case "title": column = "p.post_subject"; break;
@@ -76,18 +68,14 @@ public class PostDAO {
             case "title_content": column = "CONCAT(p.post_subject,' ',p.post_content)"; break;
             default: column = "p.post_subject"; break;
         }
-
         String baseSql = ("views".equals(sort)) ? PostSQL.LIST_SEARCH_VIEWS : PostSQL.LIST_SEARCH_LATEST;
         String sql = String.format(baseSql, column);
-
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
-
             pstmt.setInt(1, categoryNum);
             pstmt.setString(2, "%" + keyword + "%");
             pstmt.setInt(3, startRow);
             pstmt.setInt(4, pageSize);
-
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     String nickname = rs.getString("nickname");
@@ -111,7 +99,6 @@ public class PostDAO {
         }
         return list;
     }
-
     public int getTotalCount() {
         int total = 0;
         String sql = "SELECT COUNT(*) FROM post";
@@ -124,12 +111,10 @@ public class PostDAO {
         }
         return total;
     }
-    
     public boolean insert(Post dto) {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-
         try {
             con = ds.getConnection();
             int newPostNum = 1;
@@ -145,15 +130,12 @@ public class PostDAO {
             pstmt.setString(3, dto.getPost_content());     
             pstmt.setInt(4, dto.getCategory_num());         
             pstmt.setString(5, dto.getEmail());             
-
             int i = pstmt.executeUpdate();
             if (i > 0) return true;
             else return false;
-
         } catch (SQLException se) {
             se.printStackTrace();
             return false;
-
         } finally {
             try { 
 	            rs.close(); 
@@ -161,17 +143,14 @@ public class PostDAO {
 	            con.close(); 
             }catch (Exception e) {}
         }
-    }
-    
+    }   
     public int insertInt(Post dto) {
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(PostSQL.INSERT, Statement.RETURN_GENERATED_KEYS)) {
-
             pstmt.setString(1, dto.getPost_subject());
             pstmt.setString(2, dto.getPost_content());
             pstmt.setInt(3, dto.getCategory_num());
             pstmt.setString(4, dto.getEmail());
-
             int result = pstmt.executeUpdate();
             if (result > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
@@ -185,8 +164,6 @@ public class PostDAO {
         }
         return -1;
     }
-
-
     public boolean delete(int post_num){
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -205,8 +182,7 @@ public class PostDAO {
             	con.close(); 
         	}catch(Exception e){}
         }
-    }
-    
+    }  
     public boolean update(Post dto){
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -230,7 +206,6 @@ public class PostDAO {
             }catch(Exception e){}
         }
     }
- 
     public Post get(int post_num){
         java.sql.Connection con = null;
         java.sql.PreparedStatement pstmt = null;
@@ -266,8 +241,6 @@ public class PostDAO {
             }catch(Exception e){}
         }
     }
-    
-  
 	public LinkedHashMap<String, Integer> countPost(){
 		LinkedHashMap<String, Integer> map= new LinkedHashMap<>();
 		Connection con = null;
@@ -311,8 +284,6 @@ public class PostDAO {
 	        }catch(Exception e){}
 	    }
 	}
-	
-
 	//민영 추가- 내가 쓴 글 목록(페이징 적용)
 	public List<Post> mypagePostListPaging(String email, int pageNum, int pageSize) {
 	    List<Post> list = new ArrayList<>();
@@ -344,8 +315,7 @@ public class PostDAO {
 	    }
 	    return list;
 	}
-	
-    
+	   
     //민영 추가- 내가 쓴 글 총 개수
     public int mypagePostCount(String email) {
         int total = 0;
@@ -400,7 +370,6 @@ public class PostDAO {
         return total;
     }
     
-
 	public int getTotalCountByCategory(int categoryNum) {
 	    int total = 0;
 	    try (Connection con = ds.getConnection();
@@ -440,8 +409,7 @@ public class PostDAO {
 
                 list.add(new Post(post_num, post_subject, post_content,
                                   post_date, post_view, category_num, email, nickname, likes));
-            }
-            
+            }          
             return list;
 
         } catch (SQLException se) {
@@ -456,5 +424,4 @@ public class PostDAO {
             } catch (Exception e) {}
         }
     }
-
 }
