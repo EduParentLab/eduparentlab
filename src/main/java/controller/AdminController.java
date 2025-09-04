@@ -117,6 +117,11 @@ public class AdminController extends HttpServlet {
     	
         //response.sendRedirect(request.getRequestURI());
     }
+    
+    
+
+    
+    //여기 수정 많음!!-민영
     private void getMypageWithdrawnUser(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {    	
     	String email = request.getParameter("email");
@@ -124,7 +129,29 @@ public class AdminController extends HttpServlet {
     	User user = userService.getUserByEmailS(email);    	
     	//System.out.println("user: "+user);
     	PostService postService = PostService.getInstance();
- 	    List<Post> list = postService.mypagePostListS(email);
+ 	    
+    	//민영 변경 (내가 쓴 글 목록에 페이징을 추가했거든요..)
+        // 페이지 번호와 페이지 크기 처리
+        int pageNum = 1;
+        int pageSize = 10; 
+        String strPage = request.getParameter("page");
+        if (strPage != null) {
+            try {
+                pageNum = Integer.parseInt(strPage);
+            } catch (NumberFormatException e) {
+                pageNum = 1;
+            }
+        }
+        
+        int totalPosts = postService.mypagePostCountS(email);
+        int totalPages = (int)Math.ceil((double)totalPosts / pageSize);
+
+        // 페이지 범위 보정
+        if (pageNum > totalPages) pageNum = totalPages;
+        if (pageNum < 1) pageNum = 1;
+        
+        
+    	List<Post> list = postService.mypagePostListPagingS(email, pageNum, pageSize);
  	    int mypagePostCount = postService.mypagePostCountS(email);
  	   // System.out.println("AdminController: email=" + email + ", 글 개수=" + list.size());
  	    int mypostLike = postService.mypageLikeCountS(email);
@@ -135,8 +162,16 @@ public class AdminController extends HttpServlet {
  	    request.setAttribute("mypostlike", mypostLike);
  	    request.setAttribute("mycommentcount", mypageCommentCount);
  	    request.setAttribute("loginOkUser", user);
+ 	
+ 	    request.setAttribute("pageNum", pageNum); // JSP에서 쓰려고 추가 민영
+ 	    request.setAttribute("pageSize", pageSize); //민영
+ 	    request.setAttribute("totalPages", totalPages); //민영
+ 	    request.setAttribute("fromAdmin", true); //민영
+ 	    
  	    String view = "/mypage/mypage.jsp";        
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);        
     }    
+    
+    
 }

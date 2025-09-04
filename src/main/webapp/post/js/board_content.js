@@ -2,7 +2,8 @@ const CONTEXT_PATH = window.location.pathname.split('/')[1];
 const BASE_URL = `${window.location.origin}/${CONTEXT_PATH}`;
 
 document.addEventListener("DOMContentLoaded", function () {
-loadComments();
+	events();
+	loadComments();
 });
 
 function loadComments() {
@@ -13,15 +14,37 @@ function loadComments() {
     document.getElementById("commentArea").innerHTML = html;
 	
     })
-	.then(()=>{
-		events();
-	})
+	
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch(`${contextPath}/main/headerBox.jsp`)
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("headerArea").innerHTML = html;
+
+        // ✅ fetch가 끝난 이후에 실행해야 안전함
+        const isLoggedIn = false;
+
+        const loginBefore = document.getElementById("login-before");
+        const loginAfter = document.getElementById("login-after");
+
+        if (loginBefore && loginAfter) {
+          loginBefore.style.display = isLoggedIn ? "none" : "flex";
+          loginAfter.style.display = isLoggedIn ? "flex" : "none";
+        }
+      });
+  });
+  
+
+
 
 function events(){
 		// 댓글 작성 submit
 	    $(document).on("submit", "#commentForm", function(e){
-	        e.preventDefault();
+			e.stopPropagation();
+			e.preventDefault();
 	        const $form = $(this);
 	        const postNum = $form.find('input[name="post_num"]').val();
 	        const content = $form.find('textarea[name="content"]').val();
@@ -42,7 +65,7 @@ function events(){
 	    	const commentNum = $commentDiv.data("comment-num");
 	    	$.get(`${BASE_URL}/comment/comment.do`, { m: "checkReplyAuth", comment_num: commentNum })
 	        .done(function() {
-	            $commentDiv.find(".section-content-recomment-list").toggle();
+	            $commentDiv.find(".section-content-recomment-input").toggle();
 	        })
 	        .fail(function() {
 	            alert("답글 권한이 없습니다.");
@@ -54,9 +77,9 @@ function events(){
 		});
 		//답댓글 입력
 		$(document).on("submit", ".recommentForm", function(e) {
-		    e.preventDefault();
+			e.stopPropagation();
+			e.preventDefault();
 		    const $form = $(this);
-		    const $commentDiv = $form.closest(".section-content-comment");
 		    const postNum = $form.find('input[name="post_num"]').val();
 		    const parentNum = $form.find('input[name="parent_num"]').val();
 		    const content = $form.find('textarea[name="content"]').val();
@@ -70,7 +93,13 @@ function events(){
 			    alert("답댓글 등록 중 오류 발생");
 			});
 		});
-		
+		//답댓글쓴이 눌렀을때 반응 없게 
+		$(document).on("click", ".recomment-writer", function(e) {
+		    e.stopPropagation();  // 상위 토글 등 이벤트 전달 차단
+		    e.preventDefault();   // 링크나 기본 클릭 동작 차단
+		    // 아무 동작도 하지 않음
+		});
+
 		// 댓글 수정 버튼 클릭
 		    $(document).on("click", ".editBtn", function() {
 		        const $btn = $(this);

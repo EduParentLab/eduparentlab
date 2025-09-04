@@ -70,6 +70,14 @@ public class CommentController extends HttpServlet {
 		System.out.println("@댓글정렬: "+strLatest);
 		boolean latestFirst = "true".equals(strLatest);
 		ArrayList<Comment> list = service.selectedByPostNum(post_num, latestFirst, paging.getStartRow(), pageSize);
+		for(Comment c : list) {
+		    System.out.println("부모: " + c.getComment_num());
+		    if(c.getRecomments() != null) {
+		        for(Comment r : c.getRecomments()) {
+		            System.out.println("   답댓글: " + r.getComment_num() + ", group_num: " + r.getGroup_num());
+		        }
+		    }
+		}
 		System.out.println("@list()호출, post_num="+post_num);
 		System.out.println("list size: "+list.size());
 		
@@ -222,13 +230,7 @@ public class CommentController extends HttpServlet {
 		int result = service.recomment(recomment, post_num);
 		System.out.println("recommnet의 result: "+result);
 		if (result == 1) {
-	        // JSP로 전체 댓글 영역 다시 렌더링
-	        request.setAttribute("post_num", post_num);
-	        ArrayList<Comment> list = service.selectedByPostNum(post_num, true, 0, 10); // 최신순 예시
-	        request.setAttribute("recomments", list);
-
-	        RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
-	        rd.forward(request, response);
+			response.getWriter().write("success");
 	    } else {
 	        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "답댓글 등록 실패");
 	    }

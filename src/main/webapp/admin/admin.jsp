@@ -9,7 +9,7 @@
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
   <link rel="stylesheet" href="../main/layout.css" />
-  <link rel="stylesheet" href="../designer/admin_notice.css" />
+  <link rel="stylesheet" href="admin_notice.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
   

@@ -104,17 +104,26 @@
                 </tbody>
                 </table>
 
-               	<div class="pagination">
-					  <c:forEach var="i" begin="1" end="${totalPages}">
-					    <c:choose>
-					      <c:when test="${i == pageNum}">
-					        <span class="active">${i}</span>
-					      </c:when>
-					      <c:otherwise>
-					        <a href="${pageContext.request.contextPath}/mypage/mypage.do?page=${i}">${i}</a>
-					      </c:otherwise>
-					    </c:choose>
-					  </c:forEach>
+				<div class="pagination">
+				  <c:forEach var="i" begin="1" end="${totalPages}">
+				    <c:choose>
+				      <c:when test="${i == pageNum}">
+				        <span class="active">${i}</span>
+				      </c:when>
+				      <c:otherwise>
+				        <c:choose>
+
+				          <c:when test="${fromAdmin}">
+				            <a href="${pageContext.request.contextPath}/admin/admin.do?m=mypage&email=${loginOkUser.email}&page=${i}">${i}</a>
+				          </c:when>
+
+				          <c:otherwise>
+				            <a href="${pageContext.request.contextPath}/mypage/mypage.do?page=${i}">${i}</a>
+				          </c:otherwise>
+				        </c:choose>
+				      </c:otherwise>
+				    </c:choose>
+				  </c:forEach>
 				</div>
 
                 <div class="delete-icon">
@@ -141,7 +150,5 @@
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
 
 
-
->>>>>>> abb7ee87c4baf5ef202437695f434a4b29d6fa14
 </body>
 </html>

@@ -114,11 +114,11 @@
   display:flex;
   height: auto;
   width: 100%;
-  display: flex;
-  justify-content: felx-end;
+  justify-content: flex-end;
   align-items: center;
   box-sizing: border-box;
   padding :10px 10px;
+  background-color:white;
 }
 
 .pagination {

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!DOCTYPE html>
@@ -9,50 +10,13 @@
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
   
-   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/layout.css" />
+   <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_content.css" />
 </head>
 
 <body>
   <div class="wrapper">
   <div id="headerArea"></div>
-  	
-    <header>
-      <div class="logo">
-       <a href="<%=request.getContextPath()%>/main/main.do">
-         <img src="<%=request.getContextPath()%>/post/assets/logoremoveback.png" alt="학부모정보통 로고" />
-	    </a>
-      </div>
-      <div class="search-container">
-        <div class="search-bar">
-          <div class="search-logo">N</div>
-          <input type="text" id="searchInput" placeholder="검색어를 입력해 주세요." />
-          <button class="search-btn">🔍</button>
-        </div>
-        
-        
-        
-        <!--  아래 추천 검색어 목록 -->
-        <div class="search-dropdown">
-          <div class="search-section-title">검색 추천</div>
-          <ul class="search-list">
-            <li>교육</li>
-            <li>탐구</li>
-            <li>연구소</li>
-          </ul>
-        </div>
-      </div>
-      <div class="login"><button>로그인</button><button>마이페이지</button></div>
-    </header>
-    
-     <!-- 네비게이션 -->
-    <div class="navigation-button-container">
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=3" class="navigation-button">고등학교</a>
-      <a href="<%=request.getContextPath()%>/post.do?m=list&category_num=4" class="navigation-button">공지사항</a>
-    </div>
-  
     <main> 
     
 	<div class="center-wrapper">
@@ -81,8 +45,10 @@
         </div>
      
         
-        <div class="section-content-info">
-            <label>${dto.post_date}</label>
+        <div class="section-content-info">    
+        		<td>
+					<fmt:formatDate value="${dto.post_date}" pattern="yyyy-MM-dd"/>
+				</td>
             <div style="display: flex; align-items: center; gap: 5px;">
 	            <img src="<%=request.getContextPath()%>/post/assets/eye.png" alt="조회수" class="eye-icon" style="width: 20px; height: 20px;"/>
 	            <label>${dto.post_view}</label>
@@ -130,63 +96,72 @@
 			    <p>${dto.post_content}</p>
 			  </div>	  
 		</div>
-	<c:if test="${loginOkUser.email=='admin@edu_parent.com' or category_num != '4'}">	
-		<div style="display:flex;
-		justify-content:flex-end;
-		align-item:center;
-		border-bottom:1px solid black;
-		gap:5px;
-		padding:15px;">
 		
 		
-		<button style="
-		    width: 50px;
-		    height: 25px;
-		    background-color: #8dc4a4;
-		    color: #333;
-		    font-size: 12px;
-		    font-weight: bold;
-		    border: none;
-		    border-radius: 10px;
-		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		    transition: all 0.2s ease;
-		    cursor: pointer;
-		  "
-		  onmouseover="this.style.backgroundColor='#ffc2dc'"
-		  onmouseout="this.style.backgroundColor='#ffd6e8'">
-		  	<c:if test="${path == null}"><c:set var="path" value="post"/></c:if>
-		      <a href="<%=request.getContextPath()%>/post.do?m=edit&seq=${dto.post_num}&path=${path}">				
-				  수정
-		      </a>
-			
-		  </button>
+		<c:if test="${canEdit or canDelete}">
+  <div style="display:flex;
+              justify-content:flex-end;
+              align-items:center;
+              border-bottom:1px solid black;
+              gap:5px;
+              padding:15px;">
+
+		    <!-- 수정 버튼 -->
+		    <c:if test="${canEdit}">
+		      <form action="<%=request.getContextPath()%>/post.do" method="get" style="display:inline;">
+		        <input type="hidden" name="m" value="edit" />
+		        <input type="hidden" name="seq" value="${dto.post_num}" />
+		        <input type="hidden" name="path" value="${path}" />
+		        <button type="submit" style="
+		            width: 50px;
+		            height: 25px;
+		            background-color: #8dc4a4;
+		            color: #333;
+		            font-size: 12px;
+		            font-weight: bold;
+		            border: none;
+		            border-radius: 10px;
+		            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		            transition: all 0.2s ease;
+		            cursor: pointer;"
+		          onmouseover="this.style.backgroundColor='#ffc2dc'"
+		          onmouseout="this.style.backgroundColor='#ffd6e8'">
+		          수정
+		        </button>
+		      </form>
+		    </c:if>
 		
+		    <!-- 삭제 버튼 -->
+		    <c:if test="${canDelete}">
+		      <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
+		        <input type="hidden" name="seq" value="${dto.post_num}" />
+		        <input type="hidden" name="category_num" value="${dto.category_num}" />
+		        <input type="hidden" name="path" value="${path}" /> <!-- 관리자 페이지용 -->
+		        <button type="submit" style="
+		            width: 50px;
+		            height: 25px;
+		            background-color: #bc665c;
+		            color: #333;
+		            font-size: 12px;
+		            font-weight: bold;
+		            border: none;
+		            border-radius: 10px;
+		            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		            transition: all 0.2s ease;
+		            cursor: pointer;"
+		          onclick="return confirm('정말 삭제하시겠습니까?');"
+		          onmouseover="this.style.backgroundColor='#b5dcfb'"
+		          onmouseout="this.style.backgroundColor='#d0e8ff'">
+		          삭제
+		        </button>
+		      </form>
+		    </c:if>
 		
-		  <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
-			  <input type="hidden" name="seq" value="${dto.post_num}" />
-			  <input type="hidden" name="category_num" value="${dto.category_num}" /> 
-			  <input type="hidden" name="path" value="${path}"><!-- 관리자페이지용 -->
-			  <button type="submit" style="
-			    width: 50px;
-			    height: 25px;
-			    background-color: #bc665c;
-			    color: #333;
-			    font-size: 12px;
-			    font-weight: bold;
-			    border: none;
-			    border-radius: 10px;
-			    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-			    transition: all 0.2s ease;
-			    cursor: pointer;
-			  "
-			  onclick="return confirm('정말 삭제하시겠습니까?');"
-			  onmouseover="this.style.backgroundColor='#b5dcfb'"
-			  onmouseout="this.style.backgroundColor='#d0e8ff'">
-			    삭제
-			  </button>
-			</form>
-		</div>
-	</c:if>
+		  </div>
+		</c:if>
+
+		
+	
 
         <div id="commentArea"></div>
     </main>
@@ -199,6 +174,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/post/js/board_content.js"></script>
+<script> const contextPath = "<%=request.getContextPath()%>";</script>
 
 
 </body>
