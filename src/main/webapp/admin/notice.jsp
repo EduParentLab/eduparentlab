@@ -66,7 +66,7 @@
           <button class="write-btn" 
                   onclick="location.href='<%=request.getContextPath()%>/post.do?m=input&category_num=${param.category_num}'"
                   style="background-color: rgb(164, 183, 247); padding:10px; border-radius: 10px;">
-            글쓰기
+            글쓰f기
           </button>
         </div>
   </form>

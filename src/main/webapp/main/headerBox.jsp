@@ -10,8 +10,10 @@
 <body>
 <header style="padding-left:40px;padding-right:40px;">
   <div class="logo">
+
     <a href="/educationlab/main/main.do">
       <img src="<%=request.getContextPath()%>/designer/assets/logoremoveback.png" />
+
     </a>
   </div>
   <div class="search-container" style="justify-content:center;">

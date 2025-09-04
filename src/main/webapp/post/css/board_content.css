@@ -5,7 +5,7 @@
   align-items: stretch;         /* 세로 가운데 정렬 */
   gap: 0px;                   /* 자식 간 간격 */
   background-color: rgb(255, 255, 255);
-  height:auto;
+  height:2000px;
   padding:0px 0px;
 }
 
@@ -89,7 +89,7 @@
 }
 
 
-.section-content-comment {
+.section-content-comment-list {
   height: 120px; /* or auto */
   padding: 20px 20px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
@@ -101,7 +101,7 @@
 }
 
 
-.section-content-recomment {
+.section-content-recomment{
   height: 150px; /* or auto */
   padding: 20px 20px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;

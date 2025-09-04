@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -43,14 +45,16 @@ public class CommentDAO {
 				ResultSet rs = pstmt.getGeneratedKeys();
                 if(rs.next()) {
                     int comment_num = rs.getInt(1);
+                    dto.setComment_num(comment_num);
                     
-                    // 방금 생성된 comment_num으로 group_num 업데이트
+                    // 부모 댓글은 자기 자신을 group_num으로 업데이트
                     String updateSql = "UPDATE comments SET group_num = ? WHERE comment_num = ?";
                     try (PreparedStatement upstmt = con.prepareStatement(updateSql)) {
                         upstmt.setInt(1, comment_num);
                         upstmt.setInt(2, comment_num);
                         upstmt.executeUpdate();
                     }
+           
                 }
                 return 1;
             }
@@ -84,14 +88,19 @@ public class CommentDAO {
 				int comment_num = rs.getInt("comment_num");
 				String email = rs.getString("email");
 				String content = rs.getString("comment_content");
-				java.sql.Date date = rs.getDate("comment_date");
+				Timestamp date = rs.getTimestamp("comment_date");
 				clist.add(new Comment(comment_num, content, date, -1, -1, email, post_num));
 			}
-			return clist;
+			// 각 부모 댓글에 답댓글 리스트 추가
+            for (Comment comment : clist) {
+                List<Comment> replies = getRecomments(comment.getComment_num());
+                comment.setRecomments(replies);
+            }
 		} catch (SQLException se) {
 			se.printStackTrace();
 			return null;
 		}
+		return clist;
 	}
 	// 특정 글의 전체 댓글 개수 조회
     public int getTotalCount(int post_num) {
@@ -115,7 +124,7 @@ public class CommentDAO {
 	            return new Comment(
 	                rs.getInt("comment_num"),
 	                rs.getString("comment_content"),
-	                rs.getDate("comment_date"),
+	                rs.getTimestamp("comment_date"),
 	                rs.getInt("group_num"),
 	                rs.getInt("group_order"),
 	                rs.getString("email"),
@@ -161,12 +170,14 @@ public class CommentDAO {
 		try(Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(RECOMMENT);
 				PreparedStatement pstmt2 = con.prepareStatement(INSERT);){
+			
 			pstmt.setInt(1, dto.getGroup_num());
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				maxOrder = rs.getInt(1);
 			}
 			int newGroupOrder = maxOrder +1;
+			
 			pstmt2.setString(1,dto.getComment_content());
 			pstmt2.setInt(2, dto.getGroup_num());
 			pstmt2.setInt(3, newGroupOrder);
@@ -184,6 +195,33 @@ public class CommentDAO {
 			se.printStackTrace();
 			return 0;
 		}
+	}
+	public List<Comment> getRecomments(int groupNum){
+		List<Comment> list = new ArrayList<>();
+		try {
+			Connection con = ds.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(LIST_R);
+			
+			pstmt.setInt(1, groupNum);
+			
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Comment c = new Comment();
+                c.setComment_num(rs.getInt("comment_num"));
+                c.setPost_num(rs.getInt("post_num"));
+                c.setGroup_num(rs.getInt("group_num"));
+                c.setComment_content(rs.getString("comment_content"));
+                c.setEmail(rs.getString("email"));
+                c.setComment_date(rs.getTimestamp("comment_date"));
+                
+                list.add(c);
+			}
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+			return null;
+		}
+		return list;
 	}
 	
 }
