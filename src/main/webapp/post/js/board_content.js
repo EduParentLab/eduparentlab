@@ -4,6 +4,7 @@ const BASE_URL = `${window.location.origin}/${CONTEXT_PATH}`;
 document.addEventListener("DOMContentLoaded", function () {
 	events();
 	loadComments();
+	//initLikes();
 });
 
 function loadComments() {
@@ -16,7 +17,6 @@ function loadComments() {
     })
 	
 }
-
 
 document.addEventListener("DOMContentLoaded", function () {
     fetch(`${contextPath}/main/headerBox.jsp`)
@@ -36,9 +36,44 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
   });
-  
 
+  //likes
+  document.addEventListener("DOMContentLoaded", function() {
+      const form = document.querySelector("form[id='likesForm']");
+      if (!form) return; // form이 없으면 종료
 
+      form.addEventListener("submit", function(e) {
+          e.preventDefault();
+
+          const postNum = form.querySelector('input[name="post_num"]').value;
+          const params = new URLSearchParams();
+          params.append("post_num", postNum);
+
+          fetch(contextPath + "/likes.do?m=add", {
+              method: "POST",
+              body: params,
+              headers: {
+                  "Content-Type": "application/x-www-form-urlencoded"
+              }
+          })
+          .then(function(res) {
+              if (!res.ok) {
+                  return res.text().then(function(text) {
+                      console.error("서버 오류:", res.status, text);
+                      throw new Error("서버 오류");
+                  });
+              }
+              return res.json();
+          })
+          .then(function(data) {
+              document.getElementById("likes-count-" + postNum).textContent = data.likes;
+          })
+          .catch(function(err) {
+              console.error(err);
+              alert("좋아요 처리 중 오류 발생!");
+          });
+      });
+  });
 
 function events(){
 		// 댓글 작성 submit
@@ -71,31 +106,6 @@ function events(){
 	            alert("답글 권한이 없습니다.");
 	        });
 	    });
-
-//likes
-document.addEventListener("DOMContentLoaded", () => {
-    // 모든 좋아요 버튼 선택
-    document.querySelector('.likes-button').forEach(button => {
-        button.addEventListener('click', () => {
-            const postNum = button.dataset.postNum;
-            fetch(`/educationlab/likes.do?m=add`, { 
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `post_num=${postNum}`
-            })
-            .then(response => response.json())
-            //.then(data => {
-                // 서버에서 반환한 최신 좋아요 수
-                //button.querySelector('.like-count').textContent = data.likes;
-            //})
-            .catch(error => {
-                console.error('좋아요 요청 실패', error);
-            });
-        });
-    });
-});
 
 		// 입력창 클릭 시 토글 닫히지 않도록
 		$(document).on("click", ".section-content-recomment-input", function(e) {
@@ -198,4 +208,5 @@ document.addEventListener("DOMContentLoaded", () => {
 		         .fail(function() { alert("삭제 중 오류 발생"); });
 		    });
 }
+
 

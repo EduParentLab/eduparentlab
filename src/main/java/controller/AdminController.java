@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.service.PostService;
 import model.service.UserService;
+import util.PagingUtil;
 import domain.Post;
 import domain.User;
 import java.io.IOException;
@@ -49,12 +50,27 @@ public class AdminController extends HttpServlet {
 	}
     private void getNotice(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
+    	int page = 1;
+    	int pageSize = 2;//18
+    	int pageBlock = 5;    
+    	String sort = "latest";
+    	
 	    PostService service = PostService.getInstance();
-	    ArrayList<Post> list = service.listNoticeS();	   
+	    //ArrayList<Post> list = service.listNoticeS();	  	  
+        int totalCount = service.getTotalPostsByCategory(4);
+        String strPage = request.getParameter("page");
+        if (strPage != null) page = Integer.parseInt(strPage);
+        
+	    PagingUtil paging = new PagingUtil(totalCount, page, pageSize, pageBlock);
+	    List<Post> list = service.listPagingS(paging.getStartRow(), pageSize, sort, 4);  
+	    
+	 
 	    request.setAttribute("notice", list);	  	
+	    request.setAttribute("paging", paging); 
+	    
 	    String view = "notice.jsp";
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
-	    rd.forward(request, response);
+	    rd.forward(request, response);	  
 	}
     private void getUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {

@@ -17,8 +17,7 @@ public class LikesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     	
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String m = request.getParameter("m");	
-		System.out.println("likes컨트롤러 들어옴");
+		String m = request.getParameter("m");			
 		if(m != null) {
 			m = m.trim();
 			switch(m) {
@@ -29,15 +28,13 @@ public class LikesController extends HttpServlet {
 	private void add(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {	   
 		LikesService service = LikesService.getInstance();	  
-		String strPost_num = request.getParameter("post_num");
-		int post_num = Integer.parseInt(strPost_num);
-		System.out.println("글번호: "+strPost_num);
+		String strPost_num = request.getParameter("post_num");		
+		int post_num = Integer.parseInt(strPost_num);		
 		
 		HttpSession session = request.getSession();
         User loginUser = (User) session.getAttribute("loginOkUser");
         String email = loginUser.getEmail();       
-        
-		//String email = "admin@edu_parent.com";//일단 테스트용, 나중에 세션에서 id값 받아와야함
+        		
 	    int result = service.checkLikesS(email, post_num);
 	    if(result == EXISTENCE) {			
 			service.deleteLikesS(email, post_num);
@@ -47,6 +44,10 @@ public class LikesController extends HttpServlet {
 			service.addLikesS(email, post_num);
 			System.out.println("좋아요 안되어있어서 좋아요 추가함");	
 		}  	
-	    response.sendRedirect("post.do?m=content&seq=" + post_num);
+	    
+	    int updatedLikes = service.countLikesS(post_num);
+	    response.setContentType("application/json;charset=UTF-8");
+	    response.getWriter().write("{\"likes\":" + updatedLikes + "}");
+	    //response.sendRedirect("post.do?m=content&seq=" + post_num);
 	}	
 }

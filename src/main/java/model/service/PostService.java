@@ -15,7 +15,6 @@ public class PostService {
     public static PostService getInstance() {
         return instance;
     }
-
    
     public List<Post> listPagingS(int startRow, int pageSize, String sort, int categoryNum) {
         return dao.listWithPaging(startRow, pageSize, sort, categoryNum);
@@ -57,11 +56,7 @@ public class PostService {
 	public LinkedHashMap<String, Integer> countPostS(){
 		return dao.countPost();
 	} 
-	//likes 수
-	public HashMap<Integer, Integer> countLikesS(){
-		LikesService likesService = LikesService.getInstance();
-		return likesService.countLikesS();
-	}
+	
 	//민영 추가 - 내가 쓴 글 목록
 	public List<Post> mypagePostListS(String email){
 		return dao.mypagePostList(email);
