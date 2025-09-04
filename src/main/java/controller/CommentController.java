@@ -42,12 +42,6 @@ public class CommentController extends HttpServlet {
 		}	
 		
 	}
-	private void form(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int postNum = Integer.parseInt(request.getParameter("post_num"));
-		request.setAttribute("post_num", postNum);
-		RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
-		rd.forward(request, response);
-	}
 	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CommentService service = CommentService.getInstance();
 		
@@ -94,7 +88,7 @@ public class CommentController extends HttpServlet {
 		request.setAttribute("paging", paging);
 		
 	
-		RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/post/comment.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -125,7 +119,7 @@ public class CommentController extends HttpServlet {
 	        ArrayList<Comment> list = service.selectedByPostNum(post_num, true, 0, 10); // 예: 최신순 10개
 	        request.setAttribute("comment", list);
 
-	        RequestDispatcher rd = request.getRequestDispatcher("/post/js/comment.jsp");
+	        RequestDispatcher rd = request.getRequestDispatcher("/post/comment.jsp");
 	        rd.forward(request, response);
 	    } else {
 	        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "댓글 등록 실패");
