@@ -57,7 +57,7 @@
 		                
 		                <button class="editBtn" type="submit">수정</button>
 		                <button class="deleteBtn" type="submit">삭제</button>
-		                <button class="reconmentBtn" type="submit">답글</button>
+		                <button class="recommentBtn" type="submit">답글</button>
 		            </div>
 		            <div style="padding: 10px; white-space: pre-line;" border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 		                <span class="content">${c.comment_content}</span>
