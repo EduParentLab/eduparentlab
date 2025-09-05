@@ -45,6 +45,7 @@
 }
 
 .section-content-body {
+	min-height:500px;
   height: auto; /* or auto */
   padding: 0px 10px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
