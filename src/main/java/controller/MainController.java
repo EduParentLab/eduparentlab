@@ -36,7 +36,7 @@ public class MainController extends HttpServlet {
 	private void main(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MainService mainService = MainService.getInstance();
 		
-        ArrayList<Post> popularList = mainService.listS("views");
+        ArrayList<Post> popularList = mainService.listS("likes");
         ArrayList<Post> latestList = mainService.listS("latest");
         ArrayList<Post> noticeList = mainService.listNotice();
         
@@ -51,6 +51,7 @@ public class MainController extends HttpServlet {
 	private void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String keyword = request.getParameter("keyword");
+		if(keyword != null)keyword = keyword.trim();
 		request.setAttribute("keyword", keyword);
         
         Map<Integer, ArrayList<Post>> searchMap = new HashMap<>();

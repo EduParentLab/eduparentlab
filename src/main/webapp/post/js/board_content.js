@@ -179,10 +179,10 @@ function events(){
 					    .attr('rows', 3)           // 높이: 4줄
 					    .attr('cols', 50)          // 너비: 50글자 기준
 					    .css({
-					        width: '100%',         // div에 맞춰 꽉 채우기
-					        minHeight: '60px',     // 최소 높이
+							width: '1000px;',         // div에 맞춰 꽉 채우기
+					        height: '10px',     // 최소 높이
 					        fontSize: '14px',
-					        padding: '5px'
+					        padding: '5px',
 					    });
 					$content.empty().append($textarea);
 
@@ -199,9 +199,13 @@ function events(){
 			    const $btn = $(this);
 			    const $commentDiv = $btn.closest(".section-content-comment, .section-content-recomment"); // li 대신 div 선택
 			    const $textarea = $commentDiv.find("textarea");
-			    const newText = $textarea.val();
+			    const newText = $textarea.val().trim();
 			    const commentNum = $commentDiv.data("comment-num");
-			    
+				if(newText === "") {
+						       alert("댓글 내용을 입력해주세요.");
+						       $form.find('textarea[name="newText"]').focus();
+						       return; // submit 중단
+						   }
 			    console.log("commentNum:", commentNum, "newText:", newText);
 			    
 			    $.post(`${BASE_URL}/comment/comment.do?m=update`, 

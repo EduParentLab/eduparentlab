@@ -84,6 +84,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="edit_info.js"></script>
+<script src="../register/register.js"></script>
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
 </body>
 </html>
