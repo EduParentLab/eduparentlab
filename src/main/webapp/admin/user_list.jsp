@@ -12,7 +12,6 @@
         <option value="name">이름</option>        
     </select>
     <input type="text" id="userListSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
-    <button id="userListSearchBtn" class="search-btn">🔍</button>
 </div>
 
 

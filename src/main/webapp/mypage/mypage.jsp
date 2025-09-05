@@ -23,7 +23,7 @@
       <div class="center-wrapper">
 
         <div class="section-title">
-           <p style="font-size:35px; font-weight:bold" >마이페이지</p> 
+           <p style="font-size:35px; font-weight:bold;color:#98c7e6;">마이페이지</p> 
         </div>
         <div class="section-discription">
             <div class="profile-box">
@@ -32,11 +32,11 @@
   </div>
         </div>
         <div class="section-personal-info-title">
-           <label style="font-size:20px; font-weight:bold" >개인정보</label> 
+           <label style="font-size:20px; font-weight:bold ;color:#98c7e6;" >개인정보</label> 
         </div>
         <c:if test="${loginOkUser.email == sessionScope.loginOkUser.email}">
 			<div style="display:flex;justify-content:flex-end;padding:15px" >
-				<button style="width:width:150px; height:30px;" onclick="location.href='../mypage/edit_info.jsp'">
+				<button class="revise-button" onclick="location.href='../mypage/edit_info.jsp'">
 				  내 정보 수정
 				</button>
 			</div>
@@ -66,7 +66,7 @@
            
         </div>
         <div class="section-self-write-title">
-           <label style="font-size:20px; font-weight:bold" >내가 쓴 글</label> 
+           <label style="font-size:20px; font-weight:bold ;color:#98c7e6;" >내가 쓴 글</label> 
         </div>
         
 <c:choose>
@@ -114,6 +114,7 @@
 
                 </tbody>
                 </table>
+                
 
 				<div class="pagination">
 				  <c:forEach var="i" begin="1" end="${totalPages}">
@@ -136,13 +137,12 @@
 				    </c:choose>
 				  </c:forEach>
 				</div>
-
-                <div class="delete-icon">
-                <button type="submit" title="삭제">
-                <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="삭제" />
-                </button>
-                </div>
             </div>
+            <div class="delete-icon">
+		        <button type="submit" title="삭제">
+		        	<img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="삭제" />
+		        </button>
+	       </div>
         </div>
       </div>
       </form>

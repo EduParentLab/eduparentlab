@@ -142,6 +142,23 @@
 	          </button>
 	        </div>
 		</c:if>
+		<div class="section-paging">
+          <div class="pagination">
+            <c:if test="${paging.hasPrev()}">
+              <a href="post.do?m=list&page=${paging.startPage - 1}&rows=${param.rows}&sort=${param.sort}&type=${param.type}&keyword=${param.keyword}&category_num=${category_num}">◀</a>
+            </c:if>
+
+            <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
+              <a href="post.do?m=list&page=${i}&rows=${param.rows}&sort=${param.sort}&type=${param.type}&keyword=${param.keyword}&category_num=${category_num}"
+                 class="${i == paging.currentPage ? 'current' : ''}">${i}</a>
+            </c:forEach>
+
+            <c:if test="${paging.hasNext()}">
+              <a href="post.do?m=list&page=${paging.endPage + 1}&rows=${param.rows}&sort=${param.sort}&type=${param.type}&keyword=${param.keyword}&category_num=${category_num}">▶</a>
+            </c:if>
+          </div>
+        </div>
+        
         <div class="section-searchbar">
           <form action="<%=request.getContextPath()%>/post.do" method="get" class="search-bar-container">
             <input type="hidden" name="m" value="list"/>
@@ -160,23 +177,6 @@
               <img src="<%=request.getContextPath()%>/post/assets/search-icon.png" alt="검색" class="search-icon" />
             </button>
           </form>
-        </div>
-
-        <div class="section-paging">
-          <div class="pagination">
-            <c:if test="${paging.hasPrev()}">
-              <a href="post.do?m=list&page=${paging.startPage - 1}&rows=${param.rows}&sort=${param.sort}&type=${param.type}&keyword=${param.keyword}&category_num=${category_num}">◀</a>
-            </c:if>
-
-            <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
-              <a href="post.do?m=list&page=${i}&rows=${param.rows}&sort=${param.sort}&type=${param.type}&keyword=${param.keyword}&category_num=${category_num}"
-                 class="${i == paging.currentPage ? 'current' : ''}">${i}</a>
-            </c:forEach>
-
-            <c:if test="${paging.hasNext()}">
-              <a href="post.do?m=list&page=${paging.endPage + 1}&rows=${param.rows}&sort=${param.sort}&type=${param.type}&keyword=${param.keyword}&category_num=${category_num}">▶</a>
-            </c:if>
-          </div>
         </div>
       </div>
     </main>
