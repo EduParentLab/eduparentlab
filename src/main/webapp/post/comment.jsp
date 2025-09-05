@@ -48,7 +48,7 @@
 		                <button class="editBtn" type="submit">수정</button>
 		                <button class="deleteBtn" type="submit">삭제</button>
 		            </div>
-		            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
+		            <div style="padding: 10px; white-space: pre-line;" border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 		                <span class="content">${c.comment_content}</span>
 		            </div>
 	        	</div>
@@ -69,7 +69,7 @@
 			            </div>
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 			                <label>
-			                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px;">
+			                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px; white-space: pre-line;">
 			                    <span class="content">${recomment.comment_content}</span>
 			                </label>
 			            </div>
