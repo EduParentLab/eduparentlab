@@ -15,7 +15,7 @@
 		    var emailval = f.email.value;   // email
 		    emailval = trim(emailval);
 		    if(emailval.length == 0){
-		        alert("아이디를 넣어주세요");
+		        alert("아이디를 입력해주세요");
 		        f.email.value = "";
 		        f.email.focus();
 		        return false;
@@ -31,7 +31,7 @@
 		    var pwdval = f.password.value;   // password
 		    pwdval = trim(pwdval);
 		    if(pwdval.length == 0){
-		        alert("비번을 넣어주세요");
+		        alert("비밀번호를 입력해주세요");
 		        f.password.value = "";
 		        f.password.focus();
 		        return false;
@@ -45,6 +45,8 @@
 		    }
 		
 		    f.submit();
+		    return true;
+		    
 			}
 		
 		    function checkByteLen(str, size){
@@ -89,7 +91,7 @@
             <div class="password-input">
             <input type="password" name="password" placeholder="비밀번호" onkeydown="enterCheck(this)" />
             </div>
-            <button type="submit" class="login-btn" onclick="check()">로그인</button>
+            <button type="button" class="login-btn" onclick="check()">로그인</button>
             </form>
         </div>
       </div>

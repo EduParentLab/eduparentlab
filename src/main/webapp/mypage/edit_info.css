@@ -11,6 +11,7 @@
     
 }
 
+
 /* 다른 페이지에 영향 안 주고 이 div만 정렬 */
 .center-wrapper {
   display: flex;
@@ -38,7 +39,14 @@
   height: 60px;
 
   display: flex;
-  align-items: flex-end; /* ← 세로 정렬을 위로 설정 */
+  align-items: flex-end; /* ← 세로 정렬을 아래로 설정 */
+  gap: 10px; 
+}
+
+.form-input label {
+  white-space: nowrap;   /* 줄바꿈 방지 */
+  display: flex;          /* inline → flex로 */
+  height:35px;
 }
 
 .form-input input{
@@ -47,12 +55,57 @@
     border:none;
     outline:none;
     font-size:20px;
+    text-align: right; /* ← 입력값 오른쪽 정렬 */
 }   
 
 .form-input input::placeholder {
   font-size: 14px;     /* ← 원하는 크기로 조절 */
   color: #999;         /* 색상도 필요하면 변경 */
 }
+
+
+
+
+/* 생년월일 전용 */
+.birth-inputs {
+  position: relative;   /* label 위치 기준 */
+  border: none;
+  display: flex;
+  flex-direction:row;
+  gap: 10px;
+  margin-bottom: 0px;
+  padding-top: 15px;
+  margin-top:10px;
+}
+
+.birth-label {
+  position: absolute;
+  top: 0;              
+  left: 0;
+}
+
+/* 전화번호 전용 */
+.phone-inputs {
+  position: relative;  
+  border: none;
+  display: flex;
+  flex-direction:row;
+  gap: 10px;
+  margin-bottom: 15px;
+  margin-top: 5px;
+  padding-top: 15px;    
+}
+
+.phone-label {
+  position: absolute;
+  top: 0;             
+  left: 0;
+}
+
+
+
+
+
 
 
 
@@ -99,3 +152,18 @@
   margin-top: 5px;
   transition: background-color 0.2s ease;
 }
+
+input[type="password"] {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: black;
+  }
+
+  /* 자동완성 상태에서도 동일하게 적용 */
+  input:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: black !important;
+  }
+

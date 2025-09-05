@@ -16,7 +16,7 @@
             }else{
                 alert("정보수정에 실패했습니다. 다시 시도해주세요.");
             }
-            location.href="${pageContext.request.contextPath}/mypage/mypage.do";
+            location.href="${pageContext.request.contextPath}/mypage/edit_info.jsp";
         }
     }else if(mode === "delete"){
         if(result){

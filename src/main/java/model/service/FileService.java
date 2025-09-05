@@ -25,18 +25,12 @@ public class FileService {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) uploadDir.mkdirs();
 
-            Set<String> processedOriginalNames = new HashSet<>();
             for (Part part : request.getParts()) {
                 if (!"files".equals(part.getName())) continue;
 
                 if (part.getSubmittedFileName() == null || part.getSize() == 0) continue;
 
-                String originalFileName = Paths.get(part.getSubmittedFileName())
-                                               .getFileName().toString();
-                if (!processedOriginalNames.add(originalFileName)) {
-                    System.out.println("[SKIP] 중복 Part 감지: " + originalFileName);
-                    continue;
-                }
+                String originalFileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                 String storedFileName = UUID.randomUUID().toString() + "_" + originalFileName;
                 String savePath = uploadPath + File.separator + storedFileName;
                 part.write(savePath);
@@ -45,7 +39,7 @@ public class FileService {
                 dao.insert(file, postNum);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+        	throw new RuntimeException("파일 저장 중 오류 발생", e);
         }
     }
     public java.util.List<PostFile> findFilesByPost(long postNum) {

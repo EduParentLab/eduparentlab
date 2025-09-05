@@ -56,6 +56,7 @@
             <img src="<%=request.getContextPath()%>/post/assets/file.svg" style="width:20px;height:20px;">
             <label for="files" style="color:blue;text-decoration: underline;cursor:pointer;">파일첨부</label>
             <input type="file" id="files" name="files" multiple style="display:none;">
+            <span id="file-name" style="font-size:14px; color:#333;"></span>
           </div>
 
           <div style="width:100%;height: 400px;padding:10px; display:flex;">
@@ -108,5 +109,6 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="<%=request.getContextPath()%>/post/js/postUpdate.js"></script>
   <script src="<%=request.getContextPath()%>/main_page.js"></script>
+  <script src="<%=request.getContextPath()%>/post/js/file.js"></script>
 </body>
 </html>

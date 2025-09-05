@@ -62,22 +62,28 @@
 			    <option value="female">여</option>
 			  </select>
 			</div>
+			
+			<script>
+			function onlyNumberInput(event) {
+			  event.target.value = event.target.value.replace(/[^0-9]/g, ""); 
+			}
+			</script>
 			<div>
 				<label>생년월일</label>
 			</div>
 			<div class="form-input" style="border:none; flex:display; gap:10px;">
-    			<input type="text" name="birth" placeholder="1997" style="text-align:center; border:1px solid black" />
-    			<input type="text" name="birth2" placeholder="05" style="text-align:center; border:1px solid black"/>
-    			<input type="text" name="birth3" placeholder="09" style="text-align:center; border:1px solid black"/>
+    			<input type="text" name="birth" placeholder="1997" maxlength="4" oninput="onlyNumberInput(event)" style="text-align:center; border:1px solid black" />
+    			<input type="text" name="birth2" placeholder="05" maxlength="2" oninput="onlyNumberInput(event)" style="text-align:center; border:1px solid black"/>
+    			<input type="text" name="birth3" placeholder="09" maxlength="2" oninput="onlyNumberInput(event)" style="text-align:center; border:1px solid black"/>
 			</div>	
 			<div>
 				<label>전화번호</label>
 			</div>
 			
 			<div class="form-input" style="border:none; flex:display; gap:10px;">
-    			<input type="text" name="phone1" placeholder="010" style="text-align:center; border:1px solid black" />
-    			<input type="text" name="phone2" placeholder="1234" style="text-align:center; border:1px solid black"/>
-    			<input type="text" name="phone3" placeholder="5678" style="text-align:center; border:1px solid black"/>
+    			<input type="text" name="phone1" placeholder="010" maxlength="3" oninput="onlyNumberInput(event)"style="text-align:center; border:1px solid black" />
+    			<input type="text" name="phone2" placeholder="1234" maxlength="4" oninput="onlyNumberInput(event)" style="text-align:center; border:1px solid black"/>
+    			<input type="text" name="phone3" placeholder="5678" maxlength="4" oninput="onlyNumberInput(event)" style="text-align:center; border:1px solid black"/>
 			</div>
                 <button type="submit" class="resist-btn">회원가입</button>
             </form>
