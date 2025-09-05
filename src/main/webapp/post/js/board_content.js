@@ -107,7 +107,7 @@ function events(){
 			});
 	    });
 	    //댓글쓴 클릭 -> 입력폼 토글
-	    $(document).on("click", ".comment-writer", function(e){
+	    $(document).on("click", ".recommentBtn", function(e){
 			e.stopPropagation();
 	    	const $commentDiv = $(this).closest(".section-content-comment");
 	    	const commentNum = $commentDiv.data("comment-num");
@@ -146,12 +146,6 @@ function events(){
 			}).fail(function() {
 			    alert("답댓글 등록 중 오류 발생");
 			});
-		});
-		//답댓글쓴이 눌렀을때 반응 없게 
-		$(document).on("click", ".recomment-writer", function(e) {
-		    e.stopPropagation();  // 상위 토글 등 이벤트 전달 차단
-		    e.preventDefault();   // 링크나 기본 클릭 동작 차단
-		    // 아무 동작도 하지 않음
 		});
 		//페이징
 		$(document).on("click", ".pagination a", function(e){

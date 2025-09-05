@@ -54,12 +54,13 @@
 		                	<label>${c.nickName}</label>
 		                </div>
 		                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
-		                
-		                <button class="editBtn" type="submit">수정</button>
-		                <button class="deleteBtn" type="submit">삭제</button>
-		                <button class="reconmentBtn" type="submit">답글</button>
+		                <c:if test="${loginUser != null && (loginUser.email == c.email)}">
+			                <button class="editBtn" type="submit">수정</button>
+			                <button class="deleteBtn" type="submit">삭제</button>
+		                </c:if>
+		                <button class="recommentBtn" type="submit">답글</button>
 		            </div>
-		            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
+		            <div style="padding: 10px; white-space: pre-line;" border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 		                <span class="content">${c.comment_content}</span>
 		            </div>
 	        	</div>
@@ -71,16 +72,17 @@
 				<c:forEach var="recomment" items="${c.recomments}">
 				<div class="section-content-recomment" data-comment-num="${recomment.comment_num}">
 			        <div class="recomment-original" style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 95%;">
-			            <div class="34" style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:20px; border:solid rgb(255, 255, 255);">
+			            <div class="34" style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:10px; border:solid rgb(255, 255, 255);">
 			                <div class="recomment-writer">${recomment.nickName}</div>
 			                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
-			                
-			                <button class="editBtn" type="submit">수정</button>
-		                	<button class="deleteBtn" type="submit">삭제</button>
+			                <c:if test="${loginUser != null && (loginUser.email == recomment.email)}">
+				                <button class="editBtn" type="submit">수정</button>
+				                <button class="deleteBtn" type="submit">삭제</button>
+			                </c:if>
 			            </div>
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 			                <label>
-			                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px;">
+			                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px; white-space: pre-line;">
 			                    <span class="content">${recomment.comment_content}</span>
 			                </label>
 			            </div>

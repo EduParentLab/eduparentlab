@@ -218,3 +218,20 @@
   text-align: center;  /* 텍스트 가운데 정렬 */
   width: 100%;         /* 가운데 정렬이 적용되려면 가로 너비 필요 */
 }
+.write-btn {
+  background: linear-gradient(to right, #a4b7f7, #789df1);
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.write-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}

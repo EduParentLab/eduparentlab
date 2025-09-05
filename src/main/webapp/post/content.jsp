@@ -36,7 +36,7 @@
 		  </c:choose>
 		</div>   
         <div class="section-content-title">
-            <div style="width: 50%;">
+            <div style="width: 100%;">
              <label style="color:#9b59b6;font-size:24px">${dto.post_subject}</label>
             </div>               
         </div>     
@@ -150,14 +150,11 @@
         </div>
           
     </main>
-
     <div id="footerArea"></div>
-
   </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/post/js/board_content.js"></script>
-<script src="<%=request.getContextPath()%>/main_page.js"></script>
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
 </body>
 </html>
