@@ -104,12 +104,14 @@
 
 
 .section-content-recomment{
-  height: 150px; /* or auto */
-  padding: 20px 0px;  /* ⬅️ 위아래 10px, 좌우 20px */
+  height: 125px; /* or auto */
+  padding: 0px 0px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
   justify-content: flex-end;
   align-items: center;
   box-sizing: border-box;
+  margin-top:5px;
+  margin-bottom:-5px;
 }
 
 .section-content-recomment-input {
