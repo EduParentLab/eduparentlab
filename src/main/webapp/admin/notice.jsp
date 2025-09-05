@@ -13,13 +13,12 @@
           <option value="subject+content">제목+내용</option>
       </select>
       <input type="text" id="noticeSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
-      <button id="noticeSearchBtn" class="search-btn">🔍</button>
   </div>
 	<form action="admin.do?m=delete" method="post">
   <div style="text-align: right;">
       <button type="submit" class="delete-btn" style="padding-right:50px; padding-top:20px;">🗑️</button>
   </div>
-  <div style="padding:50px; padding-top:20px;">
+  <div class="table-container">
   <table id="noticeTable" class="notice-table">
 	 <thead>
 	     <tr>

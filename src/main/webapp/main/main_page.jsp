@@ -19,8 +19,9 @@
       <div class="center-wrapper">
         <div class="section-banner">
           <a href="#">
-           <img src="../designer/assets/banner2.png" style="width:100%; height:auto;display: block;" />
-          </a>
+		  <img id="banner" src="../designer/assets/banner2.png" 
+		       style="width:100%; height:auto; display:block; transition: opacity 1s ease;" />
+		</a>
         </div>
         <c:forEach var="notice" items="${notice}">
         <div class="section-notice">

@@ -103,3 +103,21 @@
 .login-btn:hover {
   background-color: #222;
 }
+
+.login-input input,
+.password-input input {
+  background-color: transparent !important; /* ✅ 배경 투명 */
+  border: none;                             /* 테두리 제거 */
+  border-bottom: 1px solid #000;            /* 밑줄만 남기고 싶을 때 */
+  outline: none;                            /* 포커스 테두리 제거 */
+  font-size: 14px;
+  color: #000;
+}
+
+/* 자동완성 시 기본 파란 배경 없애기 */
+.login-input input:-webkit-autofill,
+.password-input input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important; /* 흰색 덮기 */
+  -webkit-text-fill-color: #000 !important;                  /* 글자색 */
+  transition: background-color 5000s ease-in-out 0s;         /* 크롬 버그 방지 */
+}
