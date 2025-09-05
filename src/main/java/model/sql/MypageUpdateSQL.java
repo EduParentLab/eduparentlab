@@ -7,5 +7,5 @@ public class MypageUpdateSQL {
 	public static String UPDATE_NO_PW =
 	        "UPDATE user SET nickname=?, birth=?, gender=?, phone=? WHERE email=?";
 	
-	public static String DELETE = "update user set role_num = 3 where email = ?";
+	public static String DELETE = "update user set nickname = '탈퇴회원', role_num = 3 where email = ?";
 }
