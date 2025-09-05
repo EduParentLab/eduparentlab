@@ -125,3 +125,73 @@
   box-sizing: border-box;
   flex-direction: column;
 }
+
+
+
+.likes-button {
+  transition: all 0.2s ease;
+  background-color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.likes-button:active {
+  transform: scale(1.2);
+  background-color: #ffe4f0;  /* 분홍빛 터짐 */
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.6); /* 진한 핑크 */
+}
+
+.like-icon {
+  width: 20px;
+  height: 20px;
+  transition: all 0.2s ease;
+  filter: grayscale(100%) brightness(1); /* 기본 회색 느낌 */
+}
+
+.likes-button:active .like-icon {
+  transform: scale(1.4) rotate(-20deg);
+  filter: none; /* 눌렀을 때 컬러 */
+}
+
+/* ✨ 반짝이는 터짐 효과 (가상 요소 이용) */
+.likes-button::after {
+  content: "";
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: radial-gradient(circle, rgba(255,192,203,0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+.likes-button:active::after {
+  transform: translate(-50%, -50%) scale(1.8);
+  opacity: 1;
+}
+
+.saveBtn {
+  padding: 5px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+  background-color: #ff9800; /* 주황색 */
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.saveBtn:hover {
+  background-color: #fb8c00;
+  transform: scale(1.05);
+}
