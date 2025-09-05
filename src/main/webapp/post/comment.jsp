@@ -81,7 +81,7 @@
 			                </c:if>
 			            </div>
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
-			                <label>
+			                <label class="content">
 			                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px; white-space: pre-line;">
 			                    <span class="content">${recomment.comment_content}</span>
 			                </label>
