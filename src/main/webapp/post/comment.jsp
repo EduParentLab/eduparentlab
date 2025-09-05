@@ -41,7 +41,7 @@
 		  
 		  <!-- 부모댓글 -->
 			<div class="section-content-comment" data-comment-num="${c.comment_num}">
-	        	<div class="comment-original" style="margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 1200px; border:2px solid black;margin-top:10px;">
+	        	<div class="comment-original" style="margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 1200px; border:2px solid black;margin-top:15px;">
 		            <div class="33"style="width: 500px;
 		            display: flex;
 		            justify-content:flex-start;
@@ -70,8 +70,8 @@
 		   <c:if test="${not empty c.recomments}">
 			 <div class="section-content-recomment-list">
 				<c:forEach var="recomment" items="${c.recomments}">
-				<div style="height:auto;margin-top:10px;"class="section-content-recomment" data-comment-num="${recomment.comment_num}">
-			        <div class="recomment-original" style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 95%;height:auto">
+				<div style="height:auto;margin-top:10px;display:flex;flex-direction:column"class="section-content-recomment" data-comment-num="${recomment.comment_num}">
+			        <div class="recomment-original" style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 99%;height:auto">
 			            <div class="34" style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:10px; border:solid rgb(255, 255, 255);">
 			                <div class="recomment-writer">${recomment.nickName}</div>
 			                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
@@ -80,13 +80,10 @@
 				                <button class="deleteBtn" type="submit">삭제</button>
 			                </c:if>
 			            </div>
-<<<<<<< HEAD
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);display:flex;">
 			                <div style="display:flex;flex-direction:row;width:100%;">
-=======
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 			                <label class="content">
->>>>>>> 5b6824b6e438f732e309f47451bc39e09f4bc69f
 			                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px; white-space: pre-line;">
 			                    <span style="width:1000px; display:inline-block; word-wrap:break-word; white-space:normal;"class="content">${recomment.comment_content}</span>
 			                </div>
