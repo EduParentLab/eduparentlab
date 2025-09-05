@@ -83,10 +83,10 @@
 		       </div>
 		     </c:if>
 		   </c:forEach>
-		
-		   <div style="margin-bottom:20px;">
-		     <p>${dto.post_content}</p>
-  		 </div>
+			
+  		 <div style="margin-bottom:20px; white-space: pre-line;">
+		   <p>${dto.post_content}</p>
+		</div>
   	  </div>
    	 
 		<c:if test="${canEdit or canDelete}">
