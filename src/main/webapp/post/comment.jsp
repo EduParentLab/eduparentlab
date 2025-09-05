@@ -111,7 +111,7 @@
          
                     
 	<!-- ◀▶ 페이지네이션 -->
-	<div id="pagination" style="width:1210px;text-align:center;justify-content:center">
+	<div id="pagination" style="width:1210px;text-align:center;justify-content:center;margin-top:20px;">
 		<div class="pagination">
 		    <c:if test="${paging.hasPrev()}">
 		        <a href="#" data-page="${paging.startPage - 1}">◀</a>

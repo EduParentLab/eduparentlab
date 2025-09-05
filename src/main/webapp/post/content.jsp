@@ -144,7 +144,7 @@
  
         <div id="commentArea" style="display:flex; width:1210px; flex-direction:column;">
           <div id="commentList" style="display:flex; width:1210px; flex-direction:column;"></div>
-          <div id="pagination" style="display:flex; width:1210px; text-align:center;justify-content:center"></div>
+          <div id="pagination" style="display:flex; width:1210px; text-align:center;justify-content:center;margin-top:20px;"></div>
         </div>
           
     </main>
