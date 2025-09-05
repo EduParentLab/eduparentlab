@@ -12,10 +12,8 @@ public class FileDownloadController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String fileName = request.getParameter("file");
         String mode = request.getParameter("mode"); 
-
         if (fileName == null || fileName.trim().isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "잘못된 요청입니다.");
             return;
