@@ -37,7 +37,7 @@
         	location.href="post.do?m=list&category_num=<%=categoryNum%>";  
        	}  
     } else {
-        alert("입력실패");
+        alert("30자 이내로 입력하세요");
         history.back();
     }
 <% } else if("update".equals(kind)) { %>
@@ -48,7 +48,7 @@
         	location.href="post.do?m=list&category_num=<%=categoryNum%>";  
        	} 
     } else {
-        alert("수정실패");
+        alert("30자 이내로 입력하세요");
         history.back();
     }
 <% } else if("delete".equals(kind)) { %>
