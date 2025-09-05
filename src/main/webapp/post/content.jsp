@@ -36,7 +36,7 @@
 		  </c:choose>
 		</div>   
         <div class="section-content-title">
-            <div style="width: 50%;">
+            <div style="width: 100%;">
              <label style="color:#9b59b6;font-size:24px">${dto.post_subject}</label>
             </div>               
         </div>     
