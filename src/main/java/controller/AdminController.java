@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.service.PostService;
 import model.service.UserService;
-import util.PagingUtil;
 import domain.Post;
 import domain.User;
 import java.io.IOException;
@@ -24,20 +23,19 @@ public class AdminController extends HttpServlet {
     	HttpSession session = request.getSession(false);
         User loginUser = (session != null) ? (User) session.getAttribute("loginOkUser") : null;
         String role = (session != null) ? (String) session.getAttribute("role") : null;
-        System.out.println("@admin role: " +role);
+        
         if (loginUser == null || !"admin".equals(role)) {
             response.sendRedirect(request.getContextPath() + "/post.do?m=list&error=unauthorized");
             return;
-        }       
-	    String m = request.getParameter("m");
-	    
+        }  
+        
+	    String m = request.getParameter("m");	  
 	    if(m == null) {
 	    	m = "notice";
 	    	RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
 	    	rd.forward(request, response);
 	    	return;
-        }
-	    
+        }	    
 	    switch(m) {
 	    case "notice": getNotice(request, response); break;	    
 	    case "user_list": getUser(request, response); break;	
@@ -48,30 +46,21 @@ public class AdminController extends HttpServlet {
 	    default: getNotice(request, response); break;
 	    }   	
 	}
+    
+    //공지사항
     private void getNotice(HttpServletRequest request, HttpServletResponse response) 
-	        throws ServletException, IOException {
-    	//int page = 1;
-    	//int pageSize = 2;//18
-    	//int pageBlock = 5;    
-    	//String sort = "latest";
-    	
+	        throws ServletException, IOException {    	
 	    PostService service = PostService.getInstance();
 	    ArrayList<Post> list = service.listNoticeS();	  	  
-        //int totalCount = service.getTotalPostsByCategory(4);
-       // String strPage = request.getParameter("page");
-        //if (strPage != null) page = Integer.parseInt(strPage);
-        
-	   // PagingUtil paging = new PagingUtil(totalCount, page, pageSize, pageBlock);
-	    //List<Post> list = service.listPagingS(paging.getStartRow(), pageSize, sort, 4);  
-	    
-	 
-	    request.setAttribute("notice", list);	  	
-	    //request.setAttribute("paging", paging); 
+       
+	    request.setAttribute("notice", list);	  		   
 	    
 	    String view = "notice.jsp";
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);	  
 	}
+    
+    //사용자목록
     private void getUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    UserService service = UserService.getInstance();
@@ -81,6 +70,8 @@ public class AdminController extends HttpServlet {
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);
 	}
+    
+    //탈퇴회원 
     private void getGhost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    UserService service = UserService.getInstance();
@@ -90,6 +81,8 @@ public class AdminController extends HttpServlet {
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);
 	}
+    
+    //통계
     private void getStatistics(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
     	countPost(request, response); 
@@ -109,6 +102,8 @@ public class AdminController extends HttpServlet {
     	LinkedHashMap<Date, Integer> userCount = service.countUserS();
     	request.setAttribute("userCount", userCount);          	
     }
+    
+    //글 삭제
     private void delete(HttpServletRequest request, HttpServletResponse response) 
             throws IOException {
     	String[] chk = request.getParameterValues("chk");
@@ -120,33 +115,22 @@ public class AdminController extends HttpServlet {
                 postService.deleteS(post_num);
             }
         }
-    	String useremail = request.getParameter("email");
-    	//System.out.println("0. email:"+useremail);
+    	String useremail = request.getParameter("email");    	
     	if(useremail != null) {
-    		response.sendRedirect(request.getContextPath() + "/admin/admin.do?m=mypage&email="+useremail);
+    		response.sendRedirect(request.getContextPath() + "/admin/admin.do?m=mypage&email="+useremail);//해당 이메일주소를 가진 사람의 마이페이지로 이동
     	}else {
-    		response.sendRedirect(request.getContextPath() + "/admin/admin.do");
-    	}
-    
-    	// 현재 URL로 리다이렉트
-    	//response.sendRedirect(currentUrl);
-    	
-        //response.sendRedirect(request.getRequestURI());
+    		response.sendRedirect(request.getContextPath() + "/admin/admin.do");//관리자페이지 메인으로 이동
+    	}    
     }
     
-    
-
-    
-    //여기 수정 많음!!-민영
+    //탈퇴회원 마이페이지
     private void getMypageWithdrawnUser(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {    	
     	String email = request.getParameter("email");
     	UserService userService = UserService.getInstance();
-    	User user = userService.getUserByEmailS(email);    	
-    	//System.out.println("user: "+user);
+    	User user = userService.getUserByEmailS(email);       
     	PostService postService = PostService.getInstance();
- 	    
-    	//민영 변경 (내가 쓴 글 목록에 페이징을 추가했거든요..)
+ 	        
         // 페이지 번호와 페이지 크기 처리
         int pageNum = 1;
         int pageSize = 10; 
@@ -164,12 +148,10 @@ public class AdminController extends HttpServlet {
 
         // 페이지 범위 보정
         if (pageNum > totalPages) pageNum = totalPages;
-        if (pageNum < 1) pageNum = 1;
-        
+        if (pageNum < 1) pageNum = 1;        
         
     	List<Post> list = postService.mypagePostListPagingS(email, pageNum, pageSize);
- 	    int mypagePostCount = postService.mypagePostCountS(email);
- 	   // System.out.println("AdminController: email=" + email + ", 글 개수=" + list.size());
+ 	    int mypagePostCount = postService.mypagePostCountS(email); 	   
  	    int mypostLike = postService.mypageLikeCountS(email);
  	    int mypageCommentCount = postService.mypageCommentCountS(email);
 	    
@@ -177,12 +159,11 @@ public class AdminController extends HttpServlet {
  	    request.setAttribute("mypostcount", mypagePostCount);
  	    request.setAttribute("mypostlike", mypostLike);
  	    request.setAttribute("mycommentcount", mypageCommentCount);
- 	    request.setAttribute("loginOkUser", user);
- 	
- 	    request.setAttribute("pageNum", pageNum); // JSP에서 쓰려고 추가 민영
- 	    request.setAttribute("pageSize", pageSize); //민영
- 	    request.setAttribute("totalPages", totalPages); //민영
- 	    request.setAttribute("fromAdmin", true); //민영
+ 	    request.setAttribute("loginOkUser", user); 	
+ 	    request.setAttribute("pageNum", pageNum); 
+ 	    request.setAttribute("pageSize", pageSize); 
+ 	    request.setAttribute("totalPages", totalPages); 
+ 	    request.setAttribute("fromAdmin", true); 
  	    
  	    String view = "/mypage/mypage.jsp";        
 	    RequestDispatcher rd = request.getRequestDispatcher(view);

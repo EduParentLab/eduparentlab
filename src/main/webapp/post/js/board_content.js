@@ -5,8 +5,7 @@ let currentLatest = false;
 
 document.addEventListener("DOMContentLoaded", function () {
 	events();
-	loadComments();
-	//initLikes();
+	loadComments();	
 });
 
 function loadComments(page = 1) {
@@ -46,10 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
-  //likes
+  //likes 
   document.addEventListener("DOMContentLoaded", function() {
       const form = document.querySelector("form[id='likesForm']");
-      if (!form) return; // form이 없으면 종료
+      if (!form) return; 
 
       form.addEventListener("submit", function(e) {
           e.preventDefault();
