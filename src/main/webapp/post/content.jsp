@@ -57,7 +57,6 @@
                 <label id="likes-count-${dto.post_num}">${dto.likes}</label>
             </button>        
           </form> 
-            <label>${dto.post_num}</label>
            <c:forEach var="file" items="${fileList}">
 			  <div style="display:flex; align-items:center; margin-left:10px;">
 			    <img src="<%=request.getContextPath()%>/post/assets/file.svg"
