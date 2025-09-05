@@ -51,7 +51,7 @@
   border:1px solid #ccc;
   border-radius:5px;
   gap:10px;
-  background-color: #b1d4ec
+  background-color: #b1d4ec;
 }
 
 
@@ -115,13 +115,12 @@
   justify-content: center;
   gap: 20px;
   padding: 10px;
-  border: 2px solid black;
+  border: 1px solid rgb(208, 208, 208);
   border-radius: 5px;
   background-color:white;
   box-sizing: border-box;
   margin-left:10px;
   margin-right:10px;
-  background-color:#d5f1eb;
   /* 🔥 더 이상 height 고정 안 함 */
 }
 
@@ -140,4 +139,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.board-item-link {
+  display: block;
+  width: 100%;             /* ✅ 더 이상 안 커짐 */
+  text-decoration: none;
+  color: inherit;
 }

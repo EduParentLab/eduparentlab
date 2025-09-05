@@ -22,7 +22,7 @@
   <table id="noticeTable" class="notice-table">
 	 <thead>
 	     <tr>
-	     <th><input type="checkbox" /></th>
+	     <th>선택</th>
 	     <th>글번호</th>
 	     <th>글제목</th>      
 	     <th>작성일</th>
@@ -34,7 +34,7 @@
 	     <c:choose>
 			<c:when test="${empty notice}">
 				<tr>
-				<td align='center' colspan="6">작성한 글 없음</td>
+				<td align='center' colspan="6">작성된 글이 없습니다.</td>
 				</tr>
 			</c:when>
 			<c:otherwise>				  	
@@ -48,7 +48,7 @@
 					<td align='center'>${dto.post_date}</td>		
 					<td align='center'>${dto.post_view}</td>
 					<td align='center'>${dto.likes}</td>
-					<td id="post_content" style="position:absolute; left:-9999px;">${dto.post_content}</td>	   
+					<td id="post_content" style="display:none;">${dto.post_content}</td>	   
 				  </tr>				
 			</c:forEach>		  
 		   </c:otherwise>	    

@@ -28,7 +28,9 @@
         <div class="section-discription">
             <div class="profile-box">
     <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="사용자 아이콘" />
-    <div class="profile-name">${loginOkUser.name}님 안녕하세요</div>
+    <div class="profile-name">
+    	<label class="hello-message">${loginOkUser.name}님 안녕하세요</label>
+    </div>
   </div>
         </div>
         <div class="section-personal-info-title">

@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/comment.css" />
 </head>
 <body>
   <div id="commentList">
@@ -41,12 +42,22 @@
 		  <!-- 부모댓글 -->
 			<div class="section-content-comment" data-comment-num="${c.comment_num}">
 	        	<div class="comment-original" style="margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 1200px; border:2px solid black;margin-top:10px;">
-		            <div class="33"style="width: 500px;display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ffffff; gap:20px; border:solid rgb(255, 255, 255);">
-		                <div class="comment-writer">${c.nickName}</div>
+		            <div class="33"style="width: 500px;
+		            display: flex;
+		            justify-content:flex-start;
+		            align-items: center;
+		            padding: 10px;
+		            border-bottom: 1px solid #ffffff;
+		            gap:10px;
+		            border:solid rgb(255, 255, 255);">
+		                <div class="comment-writer">
+		                	<label>${c.nickName}</label>
+		                </div>
 		                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
 		                
 		                <button class="editBtn" type="submit">수정</button>
 		                <button class="deleteBtn" type="submit">삭제</button>
+		                <button class="reconmentBtn" type="submit">답글</button>
 		            </div>
 		            <div style="padding: 10px; white-space: pre-line;" border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 		                <span class="content">${c.comment_content}</span>
@@ -85,7 +96,7 @@
 	                <input type="hidden" name="post_num" value="${c.post_num}">
 	                <input type="hidden" name="parent_num" value="${c.comment_num}">
 	                <textarea style="width:1200px; height:105px;" name="content" placeholder="답글 입력"></textarea>
-	                <button type="submit">등록</button>
+	                <button class="editBtn" type="submit">등록</button>
 	            </form>
 	        </div>
 	       </div>

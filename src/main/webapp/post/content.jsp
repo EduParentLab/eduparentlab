@@ -13,6 +13,7 @@
   
    <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_content.css" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/comment.css" />
 </head>
 <body>
   <div class="wrapper">
@@ -37,7 +38,7 @@
 		</div>   
         <div class="section-content-title">
             <div style="width: 50%;">
-             <label>${dto.post_subject}</label>
+             <label style="color:#9b59b6;font-size:24px">${dto.post_subject}</label>
             </div>               
         </div>     
         <div class="section-content-info">    
@@ -114,7 +115,7 @@
 		            transition: all 0.2s ease;
 		            cursor: pointer;"
 		          onmouseover="this.style.backgroundColor='#ffc2dc'"
-		          onmouseout="this.style.backgroundColor='#ffd6e8'">
+		          onmouseout="this.style.backgroundColor='#8dc4a4'">
 		          수정
 		        </button>
 		      </form>
@@ -139,7 +140,7 @@
 		            cursor: pointer;"
 		          onclick="return confirm('정말 삭제하시겠습니까?');"
 		          onmouseover="this.style.backgroundColor='#b5dcfb'"
-		          onmouseout="this.style.backgroundColor='#d0e8ff'">
+		          onmouseout="this.style.backgroundColor='#bc665c'">
 		          삭제
 		        </button>
 		      </form>
