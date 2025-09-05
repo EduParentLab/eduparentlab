@@ -173,6 +173,11 @@ document.addEventListener("DOMContentLoaded", function () {
     loginAfter.style.display = isLoggedIn ? "flex" : "none";
   }
 });
+fetch("../main/footerBox.jsp")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footerArea").innerHTML = html;
+    });
 });
 /*
 function loadNotice(page) {
