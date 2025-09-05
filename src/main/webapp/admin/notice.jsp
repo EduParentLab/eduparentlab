@@ -61,8 +61,7 @@
         <div class="section-write-btn" style="gap:10px">
           <img src="<%=request.getContextPath()%>/post/assets/plus-circle.svg" class="icon" alt="글쓰기 아이콘" style="width: 40px; height: 40px;"/>
           <button class="write-btn" 
-                  onclick="location.href='<%=request.getContextPath()%>/post.do?m=input&category_num=${param.category_num}'"
-                  style="background-color: rgb(164, 183, 247); padding:10px; border-radius: 10px;">
+                  onclick="location.href='<%=request.getContextPath()%>/post.do?m=input&category_num=${param.category_num}'">
             글쓰기
           </button>
         </div>
