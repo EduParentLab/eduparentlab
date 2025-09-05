@@ -41,8 +41,7 @@ function loadContent(page) {
 		            }
 		            row.style.display = matched ? "" : "none";
 		        });
-            }
-			btn.addEventListener("click", filterRows);
+            }			
 			input.addEventListener("keyup", filterRows);					
 	  }
 	  //user_list 탭 검색 기능 
@@ -61,8 +60,7 @@ function loadContent(page) {
 	  		            const cell = row.querySelector("td#" + searchOption); 
 						row.style.display = cell.innerText.toLowerCase().includes(query)? "" : "none";					
 	  		        });
-	              }
-	  			btn.addEventListener("click", filterRows);
+	              }	  			
 	  			input.addEventListener("keyup", filterRows);
 	   }	  
 	  //statistics 탭 그래프 그리기 script 실행
