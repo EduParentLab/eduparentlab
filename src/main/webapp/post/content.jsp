@@ -50,10 +50,13 @@
             </div>
             
             <label>${dto.nickname}</label>
-            <button style="display: flex; align-items: center; gap: 5px; background-color:white; border:0px solid white; ">
+          <form id="likesForm">
+           <input type= "hidden" name="post_num" value="${dto.post_num}">                    	
+            <button type="submit" class="likes-button" style="display: flex; align-items: center; gap: 5px; background-color:white; border:0px solid white; ">
                 <img src="<%=request.getContextPath()%>/post/assets/like.png" alt="좋아요" class="like-icon" style="width: 20px; height: 20px;"/>
-                <label>${dto.likes}</label>
-            </button>
+                <label id="likes-count-${dto.post_num}">${dto.likes}</label>
+            </button>        
+          </form> 
             <label>${dto.post_num}</label>
             
 		   <c:forEach var="file" items="${fileList}">
@@ -164,3 +167,4 @@
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
 </body>
 </html>
+

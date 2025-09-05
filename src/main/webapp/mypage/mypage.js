@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("headerBox.jsp")
+  fetch("../main/headerBox.jsp")
     .then(res => res.text())
     .then(html => {
       document.getElementById("headerArea").innerHTML = html;
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-  fetch("footerBox.jsp")
+  fetch("../main/footerBox.jsp")
     .then(res => res.text())
     .then(html => {
       document.getElementById("footerArea").innerHTML = html;

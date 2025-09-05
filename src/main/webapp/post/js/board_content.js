@@ -6,6 +6,7 @@ let currentLatest = false;
 document.addEventListener("DOMContentLoaded", function () {
 	events();
 	loadComments();
+	//initLikes();
 });
 
 function loadComments(page = 1) {
@@ -26,7 +27,6 @@ function loadComments(page = 1) {
 	
 }
 
-
 document.addEventListener("DOMContentLoaded", function () {
     fetch(`${contextPath}/main/headerBox.jsp`)
       .then(res => res.text())
@@ -45,9 +45,44 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
   });
-  
 
+  //likes
+  document.addEventListener("DOMContentLoaded", function() {
+      const form = document.querySelector("form[id='likesForm']");
+      if (!form) return; // form이 없으면 종료
 
+      form.addEventListener("submit", function(e) {
+          e.preventDefault();
+
+          const postNum = form.querySelector('input[name="post_num"]').value;
+          const params = new URLSearchParams();
+          params.append("post_num", postNum);
+
+          fetch(contextPath + "/likes.do?m=add", {
+              method: "POST",
+              body: params,
+              headers: {
+                  "Content-Type": "application/x-www-form-urlencoded"
+              }
+          })
+          .then(function(res) {
+              if (!res.ok) {
+                  return res.text().then(function(text) {
+                      console.error("서버 오류:", res.status, text);
+                      throw new Error("서버 오류");
+                  });
+              }
+              return res.json();
+          })
+          .then(function(data) {
+              document.getElementById("likes-count-" + postNum).textContent = data.likes;
+          })
+          .catch(function(err) {
+              console.error(err);
+              alert("좋아요 처리 중 오류 발생!");
+          });
+      });
+  });
 
 function events(){
 		// 댓글 작성 submit
@@ -85,6 +120,7 @@ function events(){
 	            alert("답글 권한이 없습니다.");
 	        });
 	    });
+
 		// 입력창 클릭 시 토글 닫히지 않도록
 		$(document).on("click", ".section-content-recomment-input", function(e) {
 		    e.stopPropagation();
@@ -223,3 +259,5 @@ function events(){
 				     });
 		    });
 }
+
+

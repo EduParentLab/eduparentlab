@@ -1,7 +1,6 @@
 package model.service;
 
 import model.dao.LikesDAO;
-import java.util.*;
 
 public class LikesService {
 	private LikesDAO dao;
@@ -21,8 +20,8 @@ public class LikesService {
 	}
 	public void deleteLikesS(String email, int post_num) {
 		dao.deleteLikes(email, post_num);
-	}
-	public HashMap<Integer, Integer> countLikesS(){
-		return dao.countLikes();
+	}	
+	public int countLikesS(int post_num) {
+		return dao.countLikes(post_num);
 	}
 }
