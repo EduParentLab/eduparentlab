@@ -82,6 +82,9 @@ public class CommentController extends HttpServlet {
 		
 		int totalCount = service.getTotalCommentsIncludingReplies(post_num);
 		
+		HttpSession session = request.getSession(false);
+		User loginUser = (session != null) ? (User) session.getAttribute("loginOkUser") : null;
+		request.setAttribute("loginUser", loginUser);
 		request.setAttribute("totalCount", totalCount);
 		request.setAttribute("post_num", post_num);
 		request.setAttribute("comment", list);
