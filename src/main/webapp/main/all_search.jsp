@@ -40,16 +40,24 @@
 		    <div class="section-board">
 		        <div style="display:flex;flex-direction: column;">
 		            <label style="font-size:28px;font-weight: bold;">${categories[cateNum]}</label>
-			
 		            <c:choose>
 		                <c:when test="${not empty searchMap[cateNum]}">
 		                    <c:forEach var="result" items="${searchMap[cateNum]}">
 		                        <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${result.post_num}" style="font-size:20px;color:blue;">
 		                          ${result.post_subject}
 		                        </a>
-		                        <a href="#" style="font-size:16px;color:black;text-decoration: none;">
-		                          ${result.post_content}
-		                        </a>
+			                        <c:choose>
+				                        <c:when test="${fn:length(result.post_content)>100}">
+					                        <a href="#" style="font-size:16px;color:black;text-decoration: none;">
+					                          ${fn:substring(result.post_content, 0, 100)}
+					                        </a>
+					                    </c:when>
+				                        <c:otherwise>
+					                        <a href="#" style="font-size:16px;color:black;text-decoration: none;">
+					                          ${result.post_content}
+					                        </a>
+				                        </c:otherwise>
+			                      </c:choose>
 		                    </c:forEach>
 		                </c:when>
 		                <c:otherwise>

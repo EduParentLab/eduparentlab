@@ -84,11 +84,11 @@ public class MainDAO {
                 "p.post_view, p.category_num, p.email, u.nickname, p.likes " +
                 "FROM Post p LEFT JOIN User u ON p.email = u.email " +
                 "WHERE (p.post_subject LIKE ? OR p.post_content LIKE ?) AND p.category_num = ? " +
-                "ORDER BY p.post_date DESC";
+                "ORDER BY p.post_date DESC LIMIT 5";
         
         try (Connection con = ds.getConnection();
         		PreparedStatement pstmt = con.prepareStatement(sql)) {
-
+        	   
                pstmt.setString(1, "%" + keyword + "%");
                pstmt.setString(2, "%" + keyword + "%");
                pstmt.setInt(3, category_num);
