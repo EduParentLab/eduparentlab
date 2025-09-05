@@ -38,37 +38,57 @@
         </c:forEach>
         <div class="section-popular-recent-posts">
              <div class="popular-board">
-                <h3>인기 게시물</h3>
-				<c:forEach var="popular" items="${popularList}">
-	                <div class="board-item">
-		                <div class="board-title">
-		                  <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${popular.post_num}" style="text-decoration: none;">${popular.post_subject}</a>
-		                </div>
-		                <div class="meta-info">
-		                    <span>${popular.nickname}</span>
-		                    <span><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="clock" /><fmt:formatDate value="${popular.post_date}" pattern="yyyy-MM-dd"/></span>
-		                    <span><img src="https://cdn-icons-png.flaticon.com/512/889/889140.png" alt="like" />${popular.post_view}</span>
-		                </div>
-	                </div>
-			    </c:forEach>
-            </div>
+			  <h3>인기 게시물</h3>
+			  <c:forEach var="popular" items="${popularList}">
+			    <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${popular.post_num}" 
+			       class="board-item-link">
+			      <div class="board-item">
+			        <div class="board-title">
+			          ${popular.post_subject}
+			        </div>
+			        <div class="meta-info">
+			          <span>${popular.nickname}</span>
+			          <span>
+			            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="clock" />
+			            <fmt:formatDate value="${popular.post_date}" pattern="yyyy-MM-dd"/>
+			          </span>
+			          <span>
+			            <img src="https://cdn-icons-png.flaticon.com/512/889/889140.png" alt="like" />
+			            ${popular.post_view}
+			          </span>
+			        </div>
+			      </div>
+			    </a>
+			  </c:forEach>
+			</div>
+
 
 
             <div class="popular-board">
-                <h3>최신 게시물</h3>
-                <c:forEach var="latest" items="${latestList}">
-	                <div class="board-item">
-		                <div class="board-title">
-		                  <a style="text-decoration: none;" href="${pageContext.request.contextPath}/post.do?m=content&seq=${latest.post_num}">${latest.post_subject}</a>
-		                </div>
-		                <div class="meta-info">
-		                    <span>${latest.nickname}</span>
-		                    <span><img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="clock" /><fmt:formatDate value="${latest.post_date}" pattern="yyyy-MM-dd"/></span>
-		                    <span><img src="https://cdn-icons-png.flaticon.com/512/889/889140.png" alt="like" />${latest.post_view}</span>
-		                </div>
-	                </div>
-			    </c:forEach>
-            </div>
+  <h3>최신 게시물</h3>
+  <c:forEach var="latest" items="${latestList}">
+    <a href="${pageContext.request.contextPath}/post.do?m=content&seq=${latest.post_num}" 
+       class="board-item-link">
+      <div class="board-item">
+        <div class="board-title">
+          ${latest.post_subject}
+        </div>
+        <div class="meta-info">
+          <span>${latest.nickname}</span>
+          <span>
+            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="clock" />
+            <fmt:formatDate value="${latest.post_date}" pattern="yyyy-MM-dd"/>
+          </span>
+          <span>
+            <img src="https://cdn-icons-png.flaticon.com/512/889/889140.png" alt="like" />
+            ${latest.post_view}
+          </span>
+        </div>
+      </div>
+    </a>
+  </c:forEach>
+</div>
+
         </div>
         <h3 style="margin:10px";>학플리</h3>
         

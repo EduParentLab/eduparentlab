@@ -40,7 +40,7 @@
 		    <div class="section-board">
 		        <div style="display:flex;flex-direction: column;">
 		            <label style="font-size:28px;font-weight: bold;">${categories[cateNum]}</label>
-		
+			
 		            <c:choose>
 		                <c:when test="${not empty searchMap[cateNum]}">
 		                    <c:forEach var="result" items="${searchMap[cateNum]}">
