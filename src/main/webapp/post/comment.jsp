@@ -80,15 +80,15 @@
 				                <button class="deleteBtn" type="submit">삭제</button>
 			                </c:if>
 			            </div>
-<<<<<<< HEAD
+
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);display:flex;">
 			                <div style="display:flex;flex-direction:row;width:100%;">
-=======
+
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 			                <label class="content">
->>>>>>> 5b6824b6e438f732e309f47451bc39e09f4bc69f
 			                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px; white-space: pre-line;">
 			                    <span style="width:1000px; display:inline-block; word-wrap:break-word; white-space:normal;"class="content">${recomment.comment_content}</span>
+			                </label>
 			                </div>
 			            </div>
 			        </div>

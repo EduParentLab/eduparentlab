@@ -57,7 +57,6 @@
                 <label id="likes-count-${dto.post_num}">${dto.likes}</label>
             </button>        
           </form> 
-            <label>${dto.post_num}</label>
            <c:forEach var="file" items="${fileList}">
 			  <div style="display:flex; align-items:center; margin-left:10px;">
 			    <img src="<%=request.getContextPath()%>/post/assets/file.svg"
@@ -142,8 +141,7 @@
 		  </div>
 		</c:if>
 
-        <div id="commentArea"></div>
-
+ 
         <div id="commentArea" style="display:flex; width:1210px; flex-direction:column;">
           <div id="commentList" style="display:flex; width:1210px; flex-direction:column;"></div>
           <div id="pagination" style="display:flex; width:1210px; text-align:center;justify-content:center"></div>
