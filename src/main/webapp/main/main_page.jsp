@@ -54,7 +54,7 @@
 			          </span>
 			          <span>
 			            <img src="https://cdn-icons-png.flaticon.com/512/889/889140.png" alt="like" />
-			            ${popular.post_view}
+			            ${popular.likes}
 			          </span>
 			        </div>
 			      </div>
@@ -81,7 +81,7 @@
           </span>
           <span>
             <img src="https://cdn-icons-png.flaticon.com/512/889/889140.png" alt="like" />
-            ${latest.post_view}
+            ${latest.likes}
           </span>
         </div>
       </div>
