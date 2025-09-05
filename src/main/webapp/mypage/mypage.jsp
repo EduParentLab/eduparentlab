@@ -158,6 +158,23 @@
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
 <script src="<%=request.getContextPath()%>/main_page.js"></script>
 <script src="mypage.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const form = document.querySelector("form"); // 현재 글 삭제 form
+  const deleteBtn = form.querySelector("button[type='submit']");
+
+  form.addEventListener("submit", function(e) {
+    // 체크박스 선택 확인
+    const checked = form.querySelectorAll("input[name='chk']:checked");
+    if (checked.length === 0) {
+      e.preventDefault(); // form 전송 막기
+      alert("삭제 할 글을 체크해주세요.");
+    }
+  });
+});
+</script>
+
+
 
 
 </body>
