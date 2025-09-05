@@ -92,7 +92,7 @@
 
 .section-content-comment-list {
   height: auto; /* or auto */
-  padding: 20px 20px;  /* ⬅️ 위아래 10px, 좌우 20px */
+  padding: 20px 0px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -104,7 +104,7 @@
 
 .section-content-recomment{
   height: 150px; /* or auto */
-  padding: 20px 20px;  /* ⬅️ 위아래 10px, 좌우 20px */
+  padding: 20px 0px;  /* ⬅️ 위아래 10px, 좌우 20px */
   display: flex;
   justify-content: flex-end;
   align-items: center;

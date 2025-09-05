@@ -70,7 +70,7 @@
 			 <div class="section-content-recomment-list">
 				<c:forEach var="recomment" items="${c.recomments}">
 				<div class="section-content-recomment" data-comment-num="${recomment.comment_num}">
-			        <div class="recomment-original" style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 90%;">
+			        <div class="recomment-original" style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 95%;">
 			            <div class="34" style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:20px; border:solid rgb(255, 255, 255);">
 			                <div class="recomment-writer">${recomment.nickName}</div>
 			                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
@@ -106,7 +106,7 @@
          
                     
 	<!-- ◀▶ 페이지네이션 -->
-	<div id="pagination">
+	<div id="pagination" style="width:1210px;text-align:center;justify-content:center">
 		<div class="pagination">
 		    <c:if test="${paging.hasPrev()}">
 		        <a href="#" data-page="${paging.startPage - 1}">◀</a>

@@ -12,7 +12,6 @@ import model.dao.PostFileDAO;
 import util.FileUtil;
 import domain.PostFile;
 
-
 public class FileService {
     private static final FileService instance = new FileService();
     private PostFileDAO dao = new PostFileDAO();
