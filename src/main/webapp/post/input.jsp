@@ -49,10 +49,18 @@
             
             <span id="file-name" style="font-size:14px; color:#333;"></span>    
           </div>
-          <div style="width:100%;height: 400px;padding:10px; display:flex;">
-            <textarea name="post_content" style="width:100%;" placeholder="내용을 입력해주세요" required></textarea>
+          <div class="post-container" style="width:100%;height: 400px;padding:10px; display:flex;">
+            <textarea name="post_content" style="width:98%;" placeholder="내용을 입력해주세요" required></textarea>
           </div>
-          <div style="width:100%;height: 100px;padding:10px; display:flex;justify-content: flex-end;gap:20px;">
+          <div class="button-contatiner" 
+          		style="
+          		width:99%;
+          		height: 100px;
+          		padding:10px;
+          		display:flex;
+          		justify-content:flex-end;
+          		gap:20px;
+          		">
             <button type="button" 
                     style="
 			            background-color:rgb(82, 82, 95);

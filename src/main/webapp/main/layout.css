@@ -40,7 +40,7 @@ header {
   cursor: pointer;
 }
 .login button:hover {
-  background: #ffdddd;
+  background: #e67e22;
   color: #333;
   border-color: #888; /* 기존 border 두께 유지 */
   transition: all 0.2s ease;
@@ -66,6 +66,13 @@ footer {
 .logo img {
   max-height: 60px; /* 로고 이미지 최대 높이 제한 */
   height: auto;     /* 비율 유지 */
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+
+.logo img:hover {
+  transform: scale(1.1) rotate(-2deg); /* 살짝 확대 + 기울임 */
+  filter: brightness(1.1) drop-shadow(0 4px 6px rgba(0,0,0,0.2)); /* 밝기 + 그림자 */
 }
 
 
@@ -90,6 +97,11 @@ footer {
   background-color: #fff;
   padding: 0 15px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.search-bar:focus-within {
+  border: 1px solid #007bff;  /* 파란색 테두리 */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* 강조 효과 */
+  transition: all 0.2s ease; /* 부드럽게 */
 }
 
 .search-bar input {
@@ -179,4 +191,16 @@ footer {
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.25s ease; /* 부드러운 애니메이션 */
+}
+
+.navigation-button:hover {
+  background-color: #4352b8;      /* 더 밝은 블루 */
+  transform: translateY(-2px);    /* 살짝 위로 떠오름 */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* 그림자 */
+}
+
+.navigation-button:active {
+  transform: translateY(0); /* 눌렀을 때 제자리 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }

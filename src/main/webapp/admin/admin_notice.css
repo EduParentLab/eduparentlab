@@ -118,8 +118,10 @@
   justify-content: right;
   align-items: center;
   box-sizing: border-box;
-  padding :10px 10px;
+  padding :10px 55px;
   background-color:white;
+  margin-right:30px;
+  
 }
 
 .pagination {
@@ -248,11 +250,17 @@
   flex: 1;
   text-align: left;
 }
-
-
-
 .section-menu.active {
   background-color: #d0e6ff;
   color: #003366;
   font-weight: bold;
+}
+
+.table-container{
+	padding-bottom:0px;
+	padding-left:50px;
+	padding-right:50px;
+	padding-top:20px;
+	
+	
 }

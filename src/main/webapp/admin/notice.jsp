@@ -18,7 +18,7 @@
   <div style="text-align: right;">
       <button type="submit" class="delete-btn" style="padding-right:50px; padding-top:20px;">🗑️</button>
   </div>
-  <div style="padding:50px; padding-top:20px;">
+  <div class="table-container">
   <table id="noticeTable" class="notice-table">
 	 <thead>
 	     <tr>
