@@ -39,11 +39,12 @@
                         <!-- ✅ 사진이 있으면 아래 태그만 보이게 (JS로 대체) -->
                         <!-- <img class="profile-img" src="user-profile.jpg" alt="프로필 사진"> -->
                     </div>
-                </div>
-                <!-- 4. 메뉴 항목 4개 -->
-                <div class="left-box-section section-menu menu-1" style="font-size:20px; display: flex; justify-content: center; align-items: center;">
+                </div>      
+                <!-- 3. 이름 -->          
+                <div class="left-box-section section-profile-name" style="font-size:20px; display: flex; justify-content: center; align-items: center;">
                 ${loginOkUser.name}님
                 </div>
+                <!-- 4. 메뉴 항목 4개 -->
                 <!-- 공지사항 -->
                 <div class="left-box-section section-menu menu-1" data-page="notice">
                 <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

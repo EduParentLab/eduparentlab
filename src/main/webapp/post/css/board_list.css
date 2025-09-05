@@ -103,6 +103,7 @@
 
 .board-table th, .board-table td {
   padding: 10px;
+  
 }
 
 .board-table th {
@@ -132,7 +133,7 @@
   align-items: center;
   box-sizing: border-box;
   padding : 10px 0px;
-  margin-top:10px;
+  margin-top:0px;
 }
 
 .search-bar-container {
@@ -199,7 +200,7 @@
 }
 
 .section-paging {
-  height: 0px;
+  height: 60px;
   width: 100%;
   display: flex;
   justify-content: center;
