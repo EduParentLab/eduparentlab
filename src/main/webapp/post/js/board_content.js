@@ -179,10 +179,10 @@ function events(){
 					    .attr('rows', 3)           // 높이: 4줄
 					    .attr('cols', 50)          // 너비: 50글자 기준
 					    .css({
-					        width: '100%',         // div에 맞춰 꽉 채우기
-					        minHeight: '60px',     // 최소 높이
+							width: '1000px;',         // div에 맞춰 꽉 채우기
+					        height: '10px',     // 최소 높이
 					        fontSize: '14px',
-					        padding: '5px'
+					        padding: '5px',
 					    });
 					$content.empty().append($textarea);
 
