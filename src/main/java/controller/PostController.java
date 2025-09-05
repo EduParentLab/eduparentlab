@@ -164,14 +164,11 @@ public class PostController extends HttpServlet {
         //권한 체크
         if(!checkAuth(request,response, "delete", post.getEmail())) {
         return;
-        }
-        
+        }      
         boolean flag = service.deleteS(seq);
-
         request.setAttribute("flag", flag);  
         request.setAttribute("kind", "delete");
-        request.setAttribute("category_num", post.getCategory_num());
-        
+        request.setAttribute("category_num", post.getCategory_num());   
         //관리자페이지용 
         String path = request.getParameter("path");       
         request.setAttribute("path", path);
@@ -208,6 +205,10 @@ public class PostController extends HttpServlet {
          
         if (flag) {
             FileService.getInstance().updateFilesByPost(request, dto.getPost_num());
+            response.sendRedirect(request.getContextPath()
+                    + "/post.do?m=content&seq=" + post_num
+                    + "&category_num=" + category_num);
+                return;           
         }
         //관리자페이지용 
         String path = request.getParameter("path");       
