@@ -1,7 +1,7 @@
 package model.sql;
 
 public class AdminSQL {
-	final public static String USERLIST = "select * from USER order by CDATE, email";
+	final public static String USERLIST = "select * from USER where role_num=2 order by CDATE, email";
 	final public static String NOTICELIST = "select * from POST where category_num=4 order by post_num desc";
 	final public static String GHOSTUSERLIST = "select * from USER where role_num=3 order by CDATE, email";
 	final public static String COUNTUSER = "select date(cdate) as 'cdate', count(*) 'user_count' from user where cdate >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) group by date(cdate) order by date(cdate)";

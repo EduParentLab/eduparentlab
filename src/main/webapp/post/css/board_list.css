@@ -121,6 +121,7 @@
   align-items: center;
   box-sizing: border-box;
   padding :10px 10px;
+  margin-bottom:10px;
 }
 
 .section-searchbar {
@@ -131,6 +132,7 @@
   align-items: center;
   box-sizing: border-box;
   padding : 10px 0px;
+  margin-top:10px;
 }
 
 .search-bar-container {
@@ -204,4 +206,32 @@
   align-items: center;
   box-sizing: border-box;
   padding: 0px 0px;
+}
+
+.board-discription-box{
+	display:flex;
+	justify-content:center;
+	flex-direction:column;
+	
+}
+.board-discription-box label {
+  text-align: center;  /* 텍스트 가운데 정렬 */
+  width: 100%;         /* 가운데 정렬이 적용되려면 가로 너비 필요 */
+}
+.write-btn {
+  background: linear-gradient(to right, #a4b7f7, #789df1);
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.write-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }

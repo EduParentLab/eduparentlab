@@ -10,6 +10,7 @@ import model.service.MainService;
 import model.service.PostService;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 import domain.Post;

@@ -16,7 +16,12 @@
   <div class="wrapper">
     <div id="headerArea"></div>
     <main>
-    
+     <c:if test="${empty keyword}">
+	    <script>
+	        alert('검색어를 입력해주세요');
+	        history.back(); // 이전 페이지로 돌아가기
+	    </script>
+	 </c:if>
       <div class="center-wrapper">
         <h3 style="font-size:46px; margin:10px; margin-bottom:0px "> 전체검색 </h3>
         
@@ -35,7 +40,7 @@
 		    <div class="section-board">
 		        <div style="display:flex;flex-direction: column;">
 		            <label style="font-size:28px;font-weight: bold;">${categories[cateNum]}</label>
-		
+			
 		            <c:choose>
 		                <c:when test="${not empty searchMap[cateNum]}">
 		                    <c:forEach var="result" items="${searchMap[cateNum]}">

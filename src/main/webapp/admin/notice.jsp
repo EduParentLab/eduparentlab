@@ -13,17 +13,16 @@
           <option value="subject+content">제목+내용</option>
       </select>
       <input type="text" id="noticeSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
-      <button id="noticeSearchBtn" class="search-btn">🔍</button>
   </div>
 	<form action="admin.do?m=delete" method="post">
   <div style="text-align: right;">
       <button type="submit" class="delete-btn" style="padding-right:50px; padding-top:20px;">🗑️</button>
   </div>
-  <div style="padding:50px; padding-top:20px;">
+  <div class="table-container">
   <table id="noticeTable" class="notice-table">
 	 <thead>
 	     <tr>
-	     <th><input type="checkbox" /></th>
+	     <th>선택</th>
 	     <th>글번호</th>
 	     <th>글제목</th>      
 	     <th>작성일</th>
@@ -35,7 +34,7 @@
 	     <c:choose>
 			<c:when test="${empty notice}">
 				<tr>
-				<td align='center' colspan="6">작성한 글 없음</td>
+				<td align='center' colspan="6">작성된 글이 없습니다.</td>
 				</tr>
 			</c:when>
 			<c:otherwise>				  	
@@ -49,7 +48,7 @@
 					<td align='center'>${dto.post_date}</td>		
 					<td align='center'>${dto.post_view}</td>
 					<td align='center'>${dto.likes}</td>
-					<td id="post_content" style="position:absolute; left:-9999px;">${dto.post_content}</td>	   
+					<td id="post_content" style="display:none;">${dto.post_content}</td>	   
 				  </tr>				
 			</c:forEach>		  
 		   </c:otherwise>	    
@@ -71,18 +70,3 @@
         </div>
   </form>
   	
-		<!-- ◀▶ 페이지네이션 -->
-		<div class="pagination">
-		    <c:if test="${paging.hasPrev()}">
-		        <a href="#" data-page="${paging.startPage - 1}">◀</a>
-		    </c:if>
-		
-		    <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
-		        <a href="#" data-page="${i}" class="${i == paging.currentPage ? 'active' : ''}">${i}</a>
-		    </c:forEach>
-		
-		    <c:if test="${paging.hasNext()}">
-		        <a href="#" data-page="${paging.endPage + 1}">▶</a>
-		    </c:if>
-		</div>
-

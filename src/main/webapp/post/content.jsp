@@ -10,9 +10,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
-  
    <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_content.css" />
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/comment.css" />
 </head>
 <body>
   <div class="wrapper">
@@ -36,8 +36,8 @@
 		  </c:choose>
 		</div>   
         <div class="section-content-title">
-            <div style="width: 50%;">
-             <label>${dto.post_subject}</label>
+            <div style="width: 100%;">
+             <label style="color:#9b59b6;font-size:24px">${dto.post_subject}</label>
             </div>               
         </div>     
         <div class="section-content-info">    
@@ -58,37 +58,31 @@
             </button>        
           </form> 
             <label>${dto.post_num}</label>
-            
-		   <c:forEach var="file" items="${fileList}">
-		     <c:if test="${!file.image}">
-		       <div style="display:flex; align-items:center; margin-left:10px;">
-		         <img src="<%=request.getContextPath()%>/post/assets/file.svg"
-		              style="width:20px; height:20px; margin-right:5px;" alt="파일 아이콘"/>
-		         <a href="${pageContext.request.contextPath}/download.do?file=${file.file_name}"          
-		            style="color:blue; text-decoration: underline;">
-		           ${file.file_origin_name}
-		         </a>
-		       </div>
-		     </c:if>
-		   </c:forEach>
-		</div>
-	            
+           <c:forEach var="file" items="${fileList}">
+			  <div style="display:flex; align-items:center; margin-left:10px;">
+			    <img src="<%=request.getContextPath()%>/post/assets/file.svg"
+			         style="width:20px; height:20px; margin-right:5px;" alt="파일 아이콘"/>
+			    <a href="${pageContext.request.contextPath}/download.do?file=${file.file_name}"          
+			       style="color:blue; text-decoration: underline;">
+			      ${file.file_origin_name}
+			    </a>
+			  </div>
+			</c:forEach>
+		</div>      
    	 <div class="section-content-body"> 
-		   <c:forEach var="file" items="${fileList}">
-		     <c:if test="${file.image}">
-		       <div style="width:100%; text-align:center; margin:10px 0;">
-		         <img src="${pageContext.request.contextPath}/download.do?file=${file.file_name}&mode=view"
-		              alt="${file.file_origin_name}"
-		              style="width:400px; height:300px; height:auto;"/>
-		       </div>
-		     </c:if>
-		   </c:forEach>
-		
-		   <div style="margin-bottom:20px;">
-		     <p>${dto.post_content}</p>
-  		 </div>
+		  <c:forEach var="file" items="${fileList}">
+			  <c:if test="${file.image}">
+			    <div style="width:100%; text-align:center; margin:10px 0;">
+			      <img src="${pageContext.request.contextPath}/download.do?file=${file.file_name}&mode=view"
+			           alt="${file.file_origin_name}"
+			           style="width:400px; height:auto;"/>
+			    </div>
+			  </c:if>
+			</c:forEach>	
+  		 <div style="margin-bottom:20px; white-space: pre-line;">
+		   <p>${dto.post_content}</p>
+		</div>
   	  </div>
-   	 
 		<c:if test="${canEdit or canDelete}">
   <div style="display:flex;
               justify-content:flex-end;
@@ -114,7 +108,7 @@
 		            transition: all 0.2s ease;
 		            cursor: pointer;"
 		          onmouseover="this.style.backgroundColor='#ffc2dc'"
-		          onmouseout="this.style.backgroundColor='#ffd6e8'">
+		          onmouseout="this.style.backgroundColor='#8dc4a4'">
 		          수정
 		        </button>
 		      </form>
@@ -139,7 +133,7 @@
 		            cursor: pointer;"
 		          onclick="return confirm('정말 삭제하시겠습니까?');"
 		          onmouseover="this.style.backgroundColor='#b5dcfb'"
-		          onmouseout="this.style.backgroundColor='#d0e8ff'">
+		          onmouseout="this.style.backgroundColor='#bc665c'">
 		          삭제
 		        </button>
 		      </form>
@@ -152,7 +146,7 @@
 
         <div id="commentArea" style="display:flex; width:1210px; flex-direction:column;">
           <div id="commentList" style="display:flex; width:1210px; flex-direction:column;"></div>
-          <div id="pagination" style="display:flex; width:1000px;"></div>
+          <div id="pagination" style="display:flex; width:1210px; text-align:center;justify-content:center"></div>
         </div>
           
     </main>

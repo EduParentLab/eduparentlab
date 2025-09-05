@@ -12,7 +12,6 @@
         <option value="name">이름</option>   
     </select>
     <input type="text" id="userListSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
-    <button id="userListSearchBtn" class="search-btn">🔍</button>
 </div>
 
 
@@ -55,10 +54,3 @@
 </table>
 </div>
 
-
-<div class="pagination">
-    <a href="#" class="page current">1</a>
-    <a href="#" class="page">2</a>
-    <a href="#" class="page">3</a>
-    <span class="next-disabled">▶▶</span>
-</div>
