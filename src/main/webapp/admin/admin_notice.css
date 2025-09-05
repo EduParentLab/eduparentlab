@@ -123,6 +123,18 @@
   margin-right:30px;
   
 }
+.write-btn {
+  background: linear-gradient(to right, #a4b7f7, #789df1);
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
 .pagination {
   display: flex;
