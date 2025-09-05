@@ -13,7 +13,6 @@
           <option value="subject+content">제목+내용</option>
       </select>
       <input type="text" id="noticeSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
-      <button id="noticeSearchBtn" class="search-btn">🔍</button>
   </div>
 	<form action="admin.do?m=delete" method="post">
   <div style="text-align: right;">

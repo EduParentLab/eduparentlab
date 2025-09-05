@@ -114,6 +114,7 @@
 
                 </tbody>
                 </table>
+                
 
 				<div class="pagination">
 				  <c:forEach var="i" begin="1" end="${totalPages}">
@@ -136,13 +137,12 @@
 				    </c:choose>
 				  </c:forEach>
 				</div>
-
-                <div class="delete-icon">
-                <button type="submit" title="삭제">
-                <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="삭제" />
-                </button>
-                </div>
             </div>
+            <div class="delete-icon">
+        <button type="submit" title="삭제">
+        	<img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="삭제" />
+        </button>
+       </div>
         </div>
       </div>
       </form>
