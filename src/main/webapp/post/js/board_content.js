@@ -199,9 +199,13 @@ function events(){
 			    const $btn = $(this);
 			    const $commentDiv = $btn.closest(".section-content-comment, .section-content-recomment"); // li 대신 div 선택
 			    const $textarea = $commentDiv.find("textarea");
-			    const newText = $textarea.val();
+			    const newText = $textarea.val().trim();
 			    const commentNum = $commentDiv.data("comment-num");
-			    
+				if(newText === "") {
+						       alert("댓글 내용을 입력해주세요.");
+						       $form.find('textarea[name="newText"]').focus();
+						       return; // submit 중단
+						   }
 			    console.log("commentNum:", commentNum, "newText:", newText);
 			    
 			    $.post(`${BASE_URL}/comment/comment.do?m=update`, 

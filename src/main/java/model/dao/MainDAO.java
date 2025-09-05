@@ -38,8 +38,8 @@ public class MainDAO {
         ResultSet rs = null;
         StringBuilder sql = new StringBuilder(POST);
         
-        if("views".equals(sort)) {
-        	sql.append(" ORDER BY p.post_view DESC LIMIT 0, 5");
+        if("likes".equals(sort)) {
+        	sql.append(" ORDER BY p.likes DESC LIMIT 0, 5");
         }else if("latest".equals(sort)){
         	sql.append(" ORDER BY p.post_date DESC LIMIT 0, 5");
         }
