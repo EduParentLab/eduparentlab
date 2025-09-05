@@ -71,18 +71,3 @@
         </div>
   </form>
   	
-		<!-- ◀▶ 페이지네이션 -->
-		<div class="pagination">
-		    <c:if test="${paging.hasPrev()}">
-		        <a href="#" data-page="${paging.startPage - 1}">◀</a>
-		    </c:if>
-		
-		    <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
-		        <a href="#" data-page="${i}" class="${i == paging.currentPage ? 'active' : ''}">${i}</a>
-		    </c:forEach>
-		
-		    <c:if test="${paging.hasNext()}">
-		        <a href="#" data-page="${paging.endPage + 1}">▶</a>
-		    </c:if>
-		</div>
-

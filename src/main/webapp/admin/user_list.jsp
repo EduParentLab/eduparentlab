@@ -56,10 +56,3 @@
 </div>
 
 
-<div class="pagination">
-    <a href="#" class="page current">1</a>
-    <a href="#" class="page">2</a>
-    <a href="#" class="page">3</a>
-    <span class="next-disabled">▶▶</span>
-</div>
-

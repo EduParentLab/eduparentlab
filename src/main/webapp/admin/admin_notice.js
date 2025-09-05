@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 });
-
+/*
 function loadNotice(page) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "admin.do?m=notice&page=" + page, false); // false -> 동기 요청
@@ -199,3 +199,4 @@ $(document).on("click", ".pagination a", function(e){
             const page = $(this).data("page"); // data-page 가져오기
             loadNotice(page); // ✅ 정렬 상태(currentLatest)를 자동 반영
 });
+*/
