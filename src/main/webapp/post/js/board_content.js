@@ -249,7 +249,7 @@ function events(){
 				             // $commentDiv.remove();  // 단순 삭제
 				             loadComments();           // ✅ 전체 새로고침 추천
 				         } else {
-				             alert("삭제 실패");
+				             alert("삭제 권한이 없습니다.");
 				             $btn.prop("disabled", false);
 				         }
 				     })
