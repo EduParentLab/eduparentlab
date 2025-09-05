@@ -34,20 +34,20 @@ public class LikesController extends HttpServlet {
 		HttpSession session = request.getSession();
         User loginUser = (User) session.getAttribute("loginOkUser");
         String email = loginUser.getEmail();       
-        		
+        
+        //이미 likes가 되어있는지 아닌지 검증
 	    int result = service.checkLikesS(email, post_num);
+	    //이미 likes 되어있다면 likes 취소
 	    if(result == EXISTENCE) {			
-			service.deleteLikesS(email, post_num);
-			System.out.println("이미 좋아요 되어있어서 좋아요 취소함");
+			service.deleteLikesS(email, post_num);			
 		}
+	    //likes 안되어있다면 likes 추가
 		else if(result == NONEXISTENCE) {			
-			service.addLikesS(email, post_num);
-			System.out.println("좋아요 안되어있어서 좋아요 추가함");	
+			service.addLikesS(email, post_num);			
 		}  	
-	    
+	    //likes 결과 서버로 전달
 	    int updatedLikes = service.countLikesS(post_num);
 	    response.setContentType("application/json;charset=UTF-8");
-	    response.getWriter().write("{\"likes\":" + updatedLikes + "}");
-	    //response.sendRedirect("post.do?m=content&seq=" + post_num);
+	    response.getWriter().write("{\"likes\":" + updatedLikes + "}");	    
 	}	
 }

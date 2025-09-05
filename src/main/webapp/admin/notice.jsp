@@ -22,8 +22,7 @@
   <table id="noticeTable" class="notice-table">
 	 <thead>
 	     <tr>
-	     <th>선택</th>
-	     <th>글번호</th>
+	     <th>선택</th>	     
 	     <th>글제목</th>      
 	     <th>작성일</th>
 	     <th>조회수</th>
@@ -34,14 +33,13 @@
 	     <c:choose>
 			<c:when test="${empty notice}">
 				<tr>
-				<td align='center' colspan="6">작성된 글이 없습니다.</td>
+				<td align='center' colspan="5">작성된 글이 없습니다.</td>
 				</tr>
 			</c:when>
 			<c:otherwise>				  	
 			  <c:forEach items="${notice}" var="dto">
 			      <tr>			       
-			        <td><input type="checkbox" name="chk" value="${dto.post_num}"/></td>
-					<td align='center'>${dto.post_num}</td>
+			        <td><input type="checkbox" name="chk" value="${dto.post_num}"/></td>					
 					<td id="post_subject" align='center'>
 					<a href='../post.do?m=content&seq=${dto.post_num}&path=admin'>${dto.post_subject}</a>
 					</td>	
