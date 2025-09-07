@@ -28,7 +28,7 @@
 
         
         <div class="section-banner">
-          <a href="#">
+          <a href="main/main.do">
            <img src="./assets/banner.jpg" style="width:100%; height:auto;display: block;" />
           </a>
         </div>

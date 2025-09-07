@@ -1,7 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 페이지 로드 시 전체 카테고리 출력
-  loadCategory("all");
+    fetch(`${contextPath}/main/headerBox.jsp`)
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("headerArea").innerHTML = html;
+        const isLoggedIn = false;
+        const loginBefore = document.getElementById("login-before");
+        const loginAfter = document.getElementById("login-after");
+        if (loginBefore && loginAfter) {
+          loginBefore.style.display = isLoggedIn ? "none" : "flex";
+          loginAfter.style.display = isLoggedIn ? "flex" : "none";
+        }
+      });
+  fetch(`${contextPath}/main/footerBox.jsp`)
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footerArea").innerHTML = html;
+	});
+	loadCategory("all");
+
+
+	
 });
+
 
 function loadCategory(category) {
   const container = document.getElementById("playlist-container");
@@ -10,7 +30,8 @@ function loadCategory(category) {
   // 필터링
   const filtered = category === "all"
     ? allPlaylists
-    : allPlaylists.filter(item => item.category === category);
+    : allPlaylists.filter(item => item.category?.trim() === category.trim());
+
 
   if (!filtered || filtered.length === 0) {
     container.innerHTML = "<p style='text-align:center;'>해당 카테고리의 영상이 없습니다.</p>";
@@ -54,7 +75,7 @@ function loadCategory(category) {
 
 // YouTube 링크에서 Video ID 추출
 function extractVideoId(url) {
-  const regExp = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const regExp = /(?:v=|\/embed\/|youtu\.be\/)([a-zA-Z0-9_-]+)/;
   const match = url.match(regExp);
   return match ? match[1] : "";
 }

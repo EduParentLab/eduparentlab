@@ -47,3 +47,9 @@
 .section-playlist a:hover img {
   filter: brightness(85%);
 }
+
+.select-button.active {
+  background-color: #789df1;
+  color: white;
+  border: 1px solid #789df1;
+}

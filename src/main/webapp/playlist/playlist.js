@@ -26,20 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
 const categories = {
   ipsi: [
     "https://www.youtube.com/watch?v=w0UTfL-N9Wo",
-    "https://www.youtube.com/watch?v=V729VAEg-JQ",
-    "https://www.youtube.com/watch?v=3wLubqaz0UU",
-	"https://www.youtube.com/watch?v=w0UTfL-N9Wo",
-	    "https://www.youtube.com/watch?v=V729VAEg-JQ"
+    "https://www.youtube.com/watch?v=BnFuI_7QgDo",
+	"https://www.youtube.com/watch?v=Q7s4W1OwgQw",
+	"https://www.youtube.com/watch?v=RKvDwxLixgA",
+	"https://www.youtube.com/watch?v=ZjWUfRynLUI",
   ],
   jpop: [
     "https://www.youtube.com/watch?v=-rRFxzRCHKI",
-    "https://www.youtube.com/watch?v=rjwqxhg5-BY",
-    "https://www.youtube.com/watch?v=JfM94tIgVj8"
   ],
   classic: [
     "https://www.youtube.com/watch?v=a1Y73sPHKxw",
-    "https://www.youtube.com/watch?v=FYH8DsU2WCk",
-    "https://www.youtube.com/watch?v=GsqUZkmO-zk"
   ]
 };
 

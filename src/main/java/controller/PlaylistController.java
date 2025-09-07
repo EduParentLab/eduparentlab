@@ -17,18 +17,15 @@ public class PlaylistController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+    	request.setCharacterEncoding("UTF-8");
         String category = request.getParameter("category");
-
         PlaylistService service = PlaylistService.getInstance();
         List<Playlist> list;
-
         if (category != null && !category.isEmpty()) {
             list = service.getPlaylistsByCategory(category);
         } else {
             list = service.getAllPlaylists();
         }
-
         request.setAttribute("playlist", list);
         request.getRequestDispatcher("/playlist2/playlist.jsp").forward(request, response);
     }

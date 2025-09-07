@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -90,13 +92,12 @@
 </div>
 
         </div>
-        <h3 style="margin:10px";>학플리</h3>
-        
+        <a href="http://localhost:8080/educationlab/playlist.do?">
+   		     <h3 style="margin:10px";>학플리</h3>
+        </a>
 		<div class="section-playlist" id="playlist-container">
           <!-- JS로 삽입 -->
         </div>
-
-
         </div>
       </div>
     </main>
