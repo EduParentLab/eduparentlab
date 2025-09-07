@@ -62,4 +62,24 @@ public class PostFileDAO {
             return false;
         }
     }
+    public PostFile findBySaveName(String savedName) {
+        try (Connection con = ds.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(FIND_BY_SAVE_NAME)) {
+             
+            pstmt.setString(1, savedName);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new PostFile(
+                        rs.getLong("file_num"),
+                        rs.getString("file_name"),
+                        rs.getString("file_origin_name"),
+                        rs.getString("file_path")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -161,7 +161,6 @@ public class PostController extends HttpServlet {
             rd.forward(request, response);
             return;
         }
-        //권한 체크
         if(!checkAuth(request,response, "delete", post.getEmail())) {
         return;
         }      
@@ -193,7 +192,7 @@ public class PostController extends HttpServlet {
  	    int post_num = Integer.parseInt(request.getParameter("post_num"));
     	PostService service = PostService.getInstance();
 	    Post post = service.get(post_num);     
-	    //권한 체크
+
 	    if(!checkAuth(request,response, "update", post.getEmail())) return;
       
         String post_subject = request.getParameter("post_subject");
@@ -277,7 +276,7 @@ public class PostController extends HttpServlet {
  	    String role = (String) session.getAttribute("role");
         int post_num = Integer.parseInt(request.getParameter("seq"));
         Post dto = PostService.getInstance().get(post_num);  
-	    //권한 체크
+        
 	    if(!checkAuth(request,response, "update", dto.getEmail())) return;  
 	    //관리자페이지용 
         String path = request.getParameter("path");       
@@ -299,21 +298,17 @@ public class PostController extends HttpServlet {
 		    return false;
 		}
 		String email = (loginUser != null) ? loginUser.getEmail() : null;		
-		// 관리자는 모든 권한 허용
 		if ("admin".equals(role)) return true;	
-		// 비회원/탈퇴회원은 작성/수정/삭제 불가
 		if ("guest".equals(role)) {
 		response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
 		return false;
 		}
-		// 일반회원
 		if ("user".equals(role)) {
 			switch(action) {
 				case "write":
-				  return true; // 글 작성 가능
+				  return true; 
 				case "update":
 				case "delete":
-				  // 본인 글만 가능
 				  if (email != null && email.equals(writerEmail)) {
 				      return true;
 				  } else {
