@@ -11,7 +11,6 @@
 </head>
 <body>
   <div id="commentList">
-	<!-- 댓글상단 -->
 	<div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
             <div style="display: flex; align-items: center; gap: 5px; width: 50%; padding-left: 10px;">
                 <P>댓글 ${fn:length(comment)}</P>
@@ -21,8 +20,6 @@
                 <button class="align-button" data-latest="false">오래된 순</button>
             </div>
     </div>
-    
-    <!-- 새 댓글 입력폼 -->
 	<div class="section-content-comment-input">
         <form id="commentForm" action="comment/comment.do?m=insert" method="post">
           <input type="hidden" name="post_num" value="${post_num}">
@@ -34,12 +31,8 @@
             </div>
         </form>
     </div>
-    
-    	<!-- 댓글 리스트 -->
 		<div class="section-content-comment-list">
 		  <c:forEach var="c" items="${comment}">
-		  
-		  <!-- 부모댓글 -->
 			<div class="section-content-comment" data-comment-num="${c.comment_num}">
 	        	<div class="comment-original" style="margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 1200px; border:2px solid black;margin-top:15px;">
 		            <div class="33"style="width: 500px;
@@ -64,9 +57,6 @@
 		                <span class="content">${c.comment_content}</span>
 		            </div>
 	        	</div>
-		    
-		    
-		    <!-- 답댓글 리스트 -->
 		   <c:if test="${not empty c.recomments}">
 			 <div class="section-content-recomment-list">
 				<c:forEach var="recomment" items="${c.recomments}">
@@ -94,8 +84,6 @@
 		      </c:forEach>
 		    </div>
 		  </c:if>
-		    
-		    <!-- 답댓글 폼 -->
 	        <div class="section-content-recomment-input" style="display:none;">
 	            <form class="recommentForm" style="1200px;">
 	                <input type="hidden" name="post_num" value="${c.post_num}">
@@ -108,19 +96,14 @@
 		 </c:forEach>	  	
         </div>
       </div>		
-         
-                    
-	<!-- ◀▶ 페이지네이션 -->
 	<div id="pagination" style="width:1210px;text-align:center;justify-content:center;margin-top:20px;">
 		<div class="pagination">
 		    <c:if test="${paging.hasPrev()}">
 		        <a href="#" data-page="${paging.startPage - 1}">◀</a>
 		    </c:if>
-		
 		    <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
 		        <a href="#" data-page="${i}" class="${i == paging.currentPage ? 'active' : ''}">${i}</a>
 		    </c:forEach>
-		
 		    <c:if test="${paging.hasNext()}">
 		        <a href="#" data-page="${paging.endPage + 1}">▶</a>
 		    </c:if>
