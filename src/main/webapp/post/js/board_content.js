@@ -161,8 +161,6 @@ function events(){
 		});
 		// 댓글 수정 버튼 클릭
 		$(document).on("click", ".editBtn", function() {
-			e.preventDefault();
-			e.stopPropagation();
 		    const $btn = $(this);
 		    const $commentDiv = $btn.closest(".section-content-comment, .section-content-recomment"); // li 대신 div 선택
 		    const commentNum = $commentDiv.data("comment-num");
@@ -191,13 +189,12 @@ function events(){
 			        // 버튼 변경
 			        $btn.text("등록").removeClass("editBtn").addClass("saveBtn");
 		    	})
-		    	.fail(function(){
-		    		alert("수정 권한이 없습니다.");
-		    	});
+		    	
 			});
 	
 			//댓글 수정 후 등록 버튼 클릭
 			$(document).on("click", ".saveBtn", function() {
+				
 			    const $btn = $(this);
 			    const $commentDiv = $btn.closest(".section-content-comment, .section-content-recomment"); // li 대신 div 선택
 			    const $textarea = $commentDiv.find("textarea");

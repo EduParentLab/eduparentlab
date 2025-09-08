@@ -42,7 +42,8 @@ function loadContent(page) {
 		            row.style.display = matched ? "" : "none";
 		        });
             }			
-			input.addEventListener("keyup", filterRows);					
+			input.addEventListener("keyup", filterRows);
+			searchFilter.addEventListener("click", filterRows);					
 	  }
 	  //user_list 탭 검색 기능 
 	  if (page === "user_list" || page === "withdrawn_list"){
@@ -62,6 +63,7 @@ function loadContent(page) {
 	  		        });
 	              }	  			
 	  			input.addEventListener("keyup", filterRows);
+				searchFilter.addEventListener("click", filterRows);		
 	   }	  
 	  //statistics 탭 그래프 그리기 script 실행
 	  if (page === "statistics") {
