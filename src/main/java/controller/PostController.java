@@ -22,7 +22,6 @@ import domain.User;
 @MultipartConfig
 public class PostController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     public void service(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         String m = request.getParameter("m");
@@ -43,32 +42,24 @@ public class PostController extends HttpServlet {
         int page = 1;
         int pageSize = 10;
         int pageBlock = 5;
-
         String strPage = request.getParameter("page");
         if (strPage != null) page = Integer.parseInt(strPage);
-
         String rowsParam = request.getParameter("rows");
         if (rowsParam != null && !rowsParam.isBlank()) {
             pageSize = Integer.parseInt(rowsParam);
         }
-
         String sort = request.getParameter("sort");
         if (sort == null || sort.isBlank()) sort = "latest";
-
         String type = request.getParameter("type");
         String keyword = request.getParameter("keyword");
-
         int categoryNum = 1;
         String catParam = request.getParameter("category_num");
         if (catParam != null) {
             categoryNum = Integer.parseInt(catParam);
         }
-
         PostService service = PostService.getInstance();
         int totalCount = service.getTotalPostsByCategory(categoryNum);
-
         PagingUtil paging = new PagingUtil(totalCount, page, pageSize, pageBlock);
-
         List<Post> list;
         if (keyword != null && !keyword.isBlank()) {
             list = service.searchWithPagingS(paging.getStartRow(), pageSize, sort, type, keyword, categoryNum);
@@ -81,11 +72,9 @@ public class PostController extends HttpServlet {
         request.setAttribute("type", type);
         request.setAttribute("keyword", keyword);
         request.setAttribute("category_num", categoryNum);
-
         RequestDispatcher rd = request.getRequestDispatcher("/post/post.jsp");
         rd.forward(request, response);
     }
-    
     private void input(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	HttpSession session = request.getSession(false);
@@ -94,7 +83,6 @@ public class PostController extends HttpServlet {
 		    return;
 		}
     	User loginUser = (User) session.getAttribute("loginOkUser");
-    	
     	if (loginUser == null) {
     	    response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
     	    return;
@@ -106,7 +94,6 @@ public class PostController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/post/input.jsp");
         rd.forward(request, response);         
     }
-
     private void insert(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
     	HttpSession session = request.getSession(false);
@@ -121,14 +108,11 @@ public class PostController extends HttpServlet {
     	}
     	String email = loginUser.getEmail(); 
     	if(!checkAuth(request,response,"write", email)) return;
-        
     	String post_subject = request.getParameter("post_subject");
         String post_content = request.getParameter("post_content");
         int post_view = 0; 
-  
         int category_num = Integer.parseInt(request.getParameter("category_num"));
-        String nickname = request.getParameter("nickname");        
-
+        String nickname = request.getParameter("nickname");      
         Post dto = new Post(-1, post_subject, post_content, null, 0, category_num, email, nickname, 0);
         PostService service = PostService.getInstance();
         int postNum = service.insertInt(dto);
@@ -139,7 +123,6 @@ public class PostController extends HttpServlet {
         }
         request.setAttribute("flag", flag);
         request.setAttribute("kind", "insert");
-        
         //관리자페이지용 
         String path = request.getParameter("path");       
         request.setAttribute("path", path);
@@ -148,12 +131,10 @@ public class PostController extends HttpServlet {
     }
     private void delete(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-    	
     	String post_numStr = request.getParameter("seq");
         int seq = Integer.parseInt(post_numStr);
         PostService service = PostService.getInstance();
         Post post = service.get(seq);
-        
         if (post == null) {
             request.setAttribute("flag", false);
             request.setAttribute("kind", "delete");
@@ -171,7 +152,6 @@ public class PostController extends HttpServlet {
         //관리자페이지용 
         String path = request.getParameter("path");       
         request.setAttribute("path", path);
-        
         String view = "/post/msg.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(view);
         rd.forward(request, response);
@@ -192,16 +172,12 @@ public class PostController extends HttpServlet {
  	    int post_num = Integer.parseInt(request.getParameter("post_num"));
     	PostService service = PostService.getInstance();
 	    Post post = service.get(post_num);     
-
 	    if(!checkAuth(request,response, "update", post.getEmail())) return;
-      
         String post_subject = request.getParameter("post_subject");
         String post_content = request.getParameter("post_content");
         int category_num = Integer.parseInt(request.getParameter("category_num"));
-        
         Post dto = new Post(post_num, post_subject, post_content, null, 0, category_num, null, null, 0);
         boolean flag = PostService.getInstance().updateS(dto);
-         
         if (flag) {
             FileService.getInstance().updateFilesByPost(request, dto.getPost_num());
             response.sendRedirect(request.getContextPath()
@@ -235,7 +211,6 @@ public class PostController extends HttpServlet {
         CommentService commentService = CommentService.getInstance();
         service.hit(post_num);               
         Post dto = service.get(post_num);    
-        
         List<PostFile> fileList = FileService.getInstance().findFilesByPost(post_num);
         boolean canEdit = false;
         boolean canDelete = false;

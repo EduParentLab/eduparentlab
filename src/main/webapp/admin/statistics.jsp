@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<button id="toggleNav">☰ 메뉴</button>
 
+<button id="toggleNav">☰ 메뉴</button>
 <div style="display:flex; align-items:center; justify-content:center; flex-direction: column;">
     <label style="font-size:24px; font-family:sans-serif; font-weight: bold;">카테고리별 게시글 수</label>
     <canvas id="categoryChart" width="500" height="500"></canvas>
@@ -16,16 +16,15 @@
 
 <style>
 .long-divider {
-    width: 100%;           /* 또는 원하는 길이 예: 1200px */
+    width: 100%;
     border: none;
-    border-top: 1px solid #000000;  /* 선 스타일 */
-    margin: 20px 0;        /* 위아래 여백 */
+    border-top: 1px solid #000000;
+    margin: 20px 0;
 }
 </style>
 
 <script>
 (function() {
-    // ===== 1. 카테고리별 게시글 수 =====
     const categoryLabels = [
         <c:forEach var="entry" items="${postCount}" varStatus="loop">
             "${fn:escapeXml(entry.key)}"<c:if test="${!loop.last}">,</c:if>
@@ -60,20 +59,16 @@
         },
         plugins: [ChartDataLabels]
     });
-
-    // ===== 2. 날짜별 가입자 수 =====
     const signupLabels = [
         <c:forEach var="entry" items="${userCount}" varStatus="loop">
             "${fn:escapeXml(entry.key)}"<c:if test="${!loop.last}">,</c:if>
         </c:forEach>
     ];
-
     const signupData = [
         <c:forEach var="entry" items="${userCount}" varStatus="loop">
             ${entry.value}<c:if test="${!loop.last}">,</c:if>
         </c:forEach>
     ];
-
     const ctx2 = document.getElementById('signupChart').getContext('2d');
     new Chart(ctx2, {
         type: 'bar',

@@ -12,9 +12,7 @@ public class Post {
     private String email;
     private String nickname;
     private int likes;
-
     public Post(){}
-    
 	public Post(int post_num, String post_subject, String post_content, Timestamp post_date, int post_view,
 			int category_num, String email,  String nickname, int likes) {
 		super();
@@ -27,14 +25,11 @@ public class Post {
 		this.email = email;
 		this.nickname = nickname;
 		this.likes = likes;
-		
 	}
-
 	
 	public int getPost_num() {
 		return post_num;
 	}
-
 	public void setPost_num(int post_num) {
 		this.post_num = post_num;
 	}
@@ -42,7 +37,6 @@ public class Post {
 	public String getPost_subject() {
 		return post_subject;
 	}
-
 	public void setPost_subject(String post_subject) {
 		this.post_subject = post_subject;
 	}
@@ -50,7 +44,6 @@ public class Post {
 	public String getPost_content() {
 		return post_content;
 	}
-
 	public void setPost_content(String post_content) {
 		this.post_content = post_content;
 	}
@@ -58,7 +51,6 @@ public class Post {
 	public Timestamp getPost_date() {
 		return post_date;
 	}
-
 	public void setPost_date(Timestamp post_date) {
 	    this.post_date = post_date;
 	}
@@ -66,7 +58,6 @@ public class Post {
 	public int getPost_view() {
 		return post_view;
 	}
-
 	public void setPost_view(int post_view) {
 		this.post_view = post_view;
 	}
@@ -74,7 +65,6 @@ public class Post {
 	public int getCategory_num() {
 		return category_num;
 	}
-
 	public void setCategory_num(int category_num) {
 		this.category_num = category_num;
 	}
@@ -82,7 +72,6 @@ public class Post {
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -90,7 +79,6 @@ public class Post {
 	public int getLikes() {
 		return likes;
 	}
-
 	public void setLikes(int likes) {
 		this.likes = likes;
 	}
@@ -98,9 +86,7 @@ public class Post {
 	public String getNickname() {
 		return nickname;
 	}
-
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-
 }

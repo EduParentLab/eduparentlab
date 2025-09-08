@@ -9,22 +9,18 @@
   <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/main/all_search.css" />
   <script>
-		  const contextPath = "<%= request.getContextPath() %>";
+	  const contextPath = "<%= request.getContextPath() %>";
   </script>
 </head>
-
 <body>
   <div class="wrapper">
     <div id="headerArea"></div>
-    
     <main>
       <div class="center-wrapper">
         <form action="<%=request.getContextPath()%>/post.do?m=update" 
               method="post" 
               enctype="multipart/form-data">   
-              
-          <input type="hidden" name="path" value="${path}"><!-- 관리자페이지용 -->
-    
+          <input type="hidden" name="path" value="${path}">
           <div style="border-top:2px solid black;border-bottom:2px solid black;padding-top:20px;padding-bottom:20px;">
             <label style="font-size:46px; margin:10px; margin-bottom:0px">
               <c:choose>
@@ -36,33 +32,26 @@
               </c:choose>
             </label>
           </div>
-
           <input type="hidden" name="post_num" value="${dto.post_num}">
           <input type="hidden" name="category_num" value="${dto.category_num}">
           <input type="hidden" name="email" value="${dto.email}">
-
           <div class="divide-block" style="width:100%;height:30px;background-color: white;"></div>
-
-         <div style="height: 20px;padding:10px; display:flex;">
+       	  <div style="height: 20px;padding:10px; display:flex;">
             <input type="text" name="post_subject" value="${dto.post_subject}" 
                    style="width:100%;height:100%;" required>
           </div> 
-
           <div style="height: 20px;padding:10px; display:flex;">
             <label>음란물, 차별, 비하 혐오 및 초상권, 저작권 침해 게시물은 민·형사상의 책임을 질 수 있습니다.</label>
           </div>
-
           <div style="height: 20px;padding:10px; display:flex;">
             <img src="<%=request.getContextPath()%>/post/assets/file.svg" style="width:20px;height:20px;">
             <label for="files" style="color:blue;text-decoration: underline;cursor:pointer;">파일첨부</label>
             <input type="file" id="files" name="files" multiple style="display:none;">
             <span id="file-name" style="font-size:14px; color:#333;"></span>
           </div>
-
           <div style="width:100%;height: 400px;padding:10px; display:flex;">
             <textarea name="post_content" style="width:100%;" required>${dto.post_content}</textarea>
           </div>
-
           <div style="width:100%;height: 100px;padding:10px; display:flex;justify-content: flex-end;gap:20px;">
 			            <button type="button" 
 			        style="
@@ -80,7 +69,6 @@
 			        onclick="history.back()">
 			  취소하기
 			</button>
-			
 			<button type="submit" 
 			        style="
 			            background-color:blue;
@@ -101,11 +89,8 @@
         </form>
       </div>
     </main>
-
     <div id="footerArea"></div>
-
   </div>
-
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="<%=request.getContextPath()%>/post/js/postUpdate.js"></script>
   <script src="<%=request.getContextPath()%>/main_page.js"></script>

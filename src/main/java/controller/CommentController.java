@@ -9,21 +9,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.service.CommentService;
 import util.PagingUtil;
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import domain.Comment;
 import domain.User;
-
 
 @WebServlet("/comment/comment.do")
 public class CommentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String m = request.getParameter("m");
 		if(m != null) {
@@ -40,27 +37,24 @@ public class CommentController extends HttpServlet {
 		}else {
 			list(request,response);
 		}	
-		
 	}
 	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CommentService service = CommentService.getInstance();
 		
-		int page = 1; //현재 페이지
-    	int pageSize = 5; //한 페이지에 보여줄 글 수
-    	int pageBlock = 5; //한 번에 보여줄 페이지 번호 개수
+		int page = 1;
+    	int pageSize = 5;
+    	int pageBlock = 5;
 		
     	String strPage = request.getParameter("page");
     	System.out.println("@comment> strPage: "+strPage);
     	if(strPage != null) {
     		page = Integer.parseInt(strPage);
-    	}
+    		}
     	String strPost_num = request.getParameter("post_num");
     	System.out.println("@post_num: " + strPost_num);
-		int post_num = (strPost_num != null && !strPost_num.isEmpty()) ? Integer.parseInt(strPost_num) : 1; // 기본값 1
-		
+		int post_num = (strPost_num != null && !strPost_num.isEmpty()) ? Integer.parseInt(strPost_num) : 1;
     	int parentCount = service.getTotalComments(post_num);
     	PagingUtil paging = new PagingUtil(parentCount, page, pageSize, pageBlock);
-    	
     	System.out.println("startRow: " + paging.getStartRow());
     	System.out.println("pageSize: " + pageSize);
 		String strLatest = request.getParameter("latest");
@@ -79,9 +73,7 @@ public class CommentController extends HttpServlet {
 		}
 		System.out.println("@list()호출, post_num="+post_num);
 		System.out.println("list size: "+list.size());
-		
 		int totalCount = service.getTotalCommentsIncludingReplies(post_num);
-		
 		HttpSession session = request.getSession(false);
 		User loginUser = (session != null) ? (User) session.getAttribute("loginOkUser") : null;
 		request.setAttribute("loginUser", loginUser);
@@ -89,20 +81,14 @@ public class CommentController extends HttpServlet {
 		request.setAttribute("post_num", post_num);
 		request.setAttribute("comment", list);
 		request.setAttribute("paging", paging);
-		
-	
 		RequestDispatcher rd = request.getRequestDispatcher("/post/comment.jsp");
 		rd.forward(request, response);
-		
 	}
 	private void insert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User loginUser = checkAuth(request, response, "write", null);
 	    if (loginUser == null) return;
-	    
 	    System.out.println("loginUser.email: "+ loginUser.getEmail());
-	    
 		CommentService service = CommentService.getInstance();
-
 		String strPost_num = request.getParameter("post_num");
 		if(strPost_num == null || strPost_num.isEmpty()) {
 		    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "post_num is required");
@@ -110,34 +96,28 @@ public class CommentController extends HttpServlet {
 		}
 		int post_num = Integer.parseInt(strPost_num);
 		String content = request.getParameter("content");
-		
 		Timestamp now = new Timestamp(System.currentTimeMillis());
-		
 		Comment comment = new Comment(-1, content, now, 0, 0, loginUser.getEmail(), post_num, null);
 		System.out.println("@insert()호출, post_num = "+post_num+", content = "+content+", email = "+loginUser.getEmail());
 		int result = service.insert(comment, post_num);
 		if (result == 1) {
-	        // JSP로 포워딩해서 전체 댓글 영역 렌더링
 	        request.setAttribute("post_num", post_num);
 	        ArrayList<Comment> list = service.selectedByPostNum(post_num, true, 0, 10); // 예: 최신순 10개
 	        request.setAttribute("comment", list);
-
 	        RequestDispatcher rd = request.getRequestDispatcher("/post/comment.jsp");
 	        rd.forward(request, response);
 	    } else {
 	        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "댓글 등록 실패");
-	    }
+	    	}
 	}
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CommentService service = CommentService.getInstance();
 		String strComment_num = request.getParameter("comment_num");
 		int comment_num = Integer.parseInt(strComment_num);
 		String writerEmail = service.getCommentWriterEmail(comment_num);
-		
 		User loginUser = checkAuth(request, response, "delete", writerEmail);
 		if (loginUser == null) return;
 	    System.out.println("@delete loginUser.email: "+ loginUser.getEmail());
-	    
 		int result = service.delete(comment_num);
 		if(result == 1) {
 			System.out.println("댓글 삭제 성공");
@@ -155,38 +135,32 @@ public class CommentController extends HttpServlet {
 		String strComment_num = request.getParameter("comment_num");
 		int comment_num = Integer.parseInt(strComment_num);
 		String writerEmail = service.getCommentWriterEmail(comment_num);
-		
 		User loginUser = checkAuth(request, response, "update", writerEmail);
 	    if (loginUser == null) return;
 	    System.out.println("@update loginUser.email: "+ loginUser.getEmail());
-		
 		int result = service.update(comment_content, comment_num);
 		if(result == 1) {
 			System.out.println("댓글 수정 성공");
 			response.setStatus(HttpServletResponse.SC_OK);
-		}
+			}
 		else {
 			System.out.println("댓글 수정 실패");
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "댓글 수정 실패");
+			}
 		}
-	}
 	private void checkUpdateAuth(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 	    if(session == null) {
 	        response.sendError(HttpServletResponse.SC_UNAUTHORIZED); // 401
 	        return;
 	    }
-
 	    User loginUser = (User) session.getAttribute("loginOkUser");
 	    String role = (String) session.getAttribute("role");
-	    
 	    System.out.println("@checkUpdateAuth email: " +loginUser.getEmail());
-	    
 	    if(loginUser == null || role == null || "guest".equals(role)) {
 	        response.sendError(HttpServletResponse.SC_FORBIDDEN); // 403
 	        return;
 	    }
-
 	    String strComment_num = request.getParameter("comment_num");
 	    int comment_num;
 	    try {
@@ -195,13 +169,10 @@ public class CommentController extends HttpServlet {
 	        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 	        return;
 	    }
-
-	    // 관리자면 무조건 허용
 	    if("admin".equals(role)) {
 	        response.setStatus(HttpServletResponse.SC_OK);
 	        return;
 	    }
-
 	    boolean allowed = CommentService.getInstance().canUpdate(comment_num, loginUser.getEmail());
 	    if(allowed) {
 	        response.setStatus(HttpServletResponse.SC_OK);
@@ -212,9 +183,7 @@ public class CommentController extends HttpServlet {
 	private void recomment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		User loginUser = checkAuth(request, response, "write", null);
 	    if (loginUser == null) return;
-    	
 		CommentService service = CommentService.getInstance();
-		
 		String strPost_num = request.getParameter("post_num");
 		int post_num = Integer.parseInt(strPost_num);
 		String content = request.getParameter("content");
@@ -224,13 +193,11 @@ public class CommentController extends HttpServlet {
 			return;
 		}
 		int parent_num = Integer.parseInt(strParent_num);
-
 		Comment recomment = new Comment();
 		recomment.setComment_content(content);
 		recomment.setEmail(loginUser.getEmail());
 		recomment.setPost_num(post_num);
 		recomment.setGroup_num(parent_num);
-		
 		int result = service.recomment(recomment, post_num);
 		System.out.println("recommnet의 result: "+result);
 		if (result == 1) {
@@ -242,7 +209,6 @@ public class CommentController extends HttpServlet {
 	private void checkReplyAuth(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 	    User loginUser = (session != null) ? (User) session.getAttribute("loginOkUser") : null;
-
 	    if (loginUser == null) {
 	        response.sendError(HttpServletResponse.SC_FORBIDDEN); // 403
 	        return;
@@ -266,13 +232,9 @@ public class CommentController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/login/login.jsp?error=unauthorized");
 			return null;
 		}
-		
 		String email = loginUser.getEmail();
 		System.out.println("@checkAuth email: " +email);
-		// 관리자: 모든 권한 허용
 		if ("admin".equals(role)) return loginUser;
-		
-		// 일반회원: write는 모두 가능, update/delete는 본인 글만 가능
 		if ("user".equals(role)) {
 			switch (action) {
 			 case "write":
@@ -295,7 +257,6 @@ public class CommentController extends HttpServlet {
 			     return null;
 			}
 		}
-		
 		return null;
 	}
 }

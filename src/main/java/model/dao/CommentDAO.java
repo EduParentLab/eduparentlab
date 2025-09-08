@@ -9,12 +9,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
 import domain.Comment;
 import static model.sql.CommentSQL.*;
 public class CommentDAO {
@@ -29,9 +27,7 @@ public class CommentDAO {
 			System.out.println("db연결되지 않음");
 			ne.printStackTrace();
 		}
-		
 	}
-
 	public int insert(Comment dto,int post_num) {
 		try(Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);){
@@ -41,21 +37,17 @@ public class CommentDAO {
 			pstmt.setString(4, dto.getEmail());
 			pstmt.setInt(5, post_num);
 			int result = pstmt.executeUpdate();
-			
 			if(result > 0) {
 				ResultSet rs = pstmt.getGeneratedKeys();
                 if(rs.next()) {
                     int comment_num = rs.getInt(1);
                     dto.setComment_num(comment_num);
-                    
-                    // 부모 댓글은 자기 자신을 group_num으로 업데이트
                     String updateSql = "UPDATE comments SET group_num = ? WHERE comment_num = ?";
                     try (PreparedStatement upstmt = con.prepareStatement(updateSql)) {
                         upstmt.setInt(1, comment_num);
                         upstmt.setInt(2, comment_num);
                         upstmt.executeUpdate();
                     }
-           
                 }
                 return 1;
             }
@@ -73,11 +65,9 @@ public class CommentDAO {
 		String sql = latestFirst ? LIST_L : LIST;
 		try (Connection con = ds.getConnection();
 		         PreparedStatement pstmt = con.prepareStatement(sql)) {
-			
 			pstmt.setInt(1, post_num);
 			pstmt.setInt(2,  startRow);
 			pstmt.setInt(3, pageSize);
-			
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				int comment_num = rs.getInt("comment_num");
@@ -89,18 +79,15 @@ public class CommentDAO {
 			}
 			System.out.println("@DAO list comment_nums: " + 
 				    clist.stream().map(Comment::getComment_num).collect(Collectors.toList()));
-			// 각 부모 댓글에 답댓글 리스트 추가
             for (Comment comment : clist) {
                 List<Comment> replies = getRecomments(comment.getComment_num());
                 comment.setRecomments(replies);
             }
-            
 		} catch (SQLException se) {
 			se.printStackTrace();
 		}
 		return clist;
 	}
-	// 특정 글의 부모 댓글 개수 조회
     public int getTotalCount(int post_num) {
         int total = 0;
         String sql = "SELECT COUNT(*) FROM comments where post_num = ? and group_num = comment_num";
@@ -117,7 +104,6 @@ public class CommentDAO {
         }
         return total;
     }
-    // 부모+답댓글 전체 개수 조회
     public int getTotalCommentCountIncludingReplies(int post_num) {
         int total = 0;
         String sql = "SELECT COUNT(*) FROM comments WHERE post_num = ?";
@@ -126,7 +112,7 @@ public class CommentDAO {
             pstmt.setInt(1, post_num);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    total = rs.getInt(1); // 부모+답댓글 전체 수
+                    total = rs.getInt(1);
                 }
             }
         } catch (SQLException e) {
@@ -170,7 +156,6 @@ public class CommentDAO {
 			return 0;
 		}
 	}
-	
 	public int update(String comment_content,int comment_num) {
 		try(Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(UPDATE);){

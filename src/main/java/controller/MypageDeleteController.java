@@ -1,7 +1,5 @@
 package controller;
-
 import java.io.IOException;
-
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,18 +16,13 @@ public class MypageDeleteController extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		
-		 HttpSession session = request.getSession(); //로그인한 사용자 정보 꺼냄
+		 HttpSession session = request.getSession();
 		 User loginUser = (User) session.getAttribute("loginOkUser");
-		 
 		 String bb = loginUser.getEmail();
-		 
 		 MypageUpdateService service = MypageUpdateService.getInstance();
-		 boolean deleteResult = service.deleteS(bb); // role_num=3 으로 업데이트
-		 
+		 boolean deleteResult = service.deleteS(bb);
 		 if(deleteResult) {
-			 session.invalidate(); //로그아웃
-			
+			 session.invalidate();
 			 request.setAttribute("mode", "delete");
 			 request.setAttribute("result", deleteResult);
 		     RequestDispatcher rd = request.getRequestDispatcher("/mypage/msg.jsp");

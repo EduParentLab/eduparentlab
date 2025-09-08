@@ -12,15 +12,12 @@ public class PlaylistService {
     private PlaylistService() {
         dao = new PlaylistDAO();
     }
-
     public static PlaylistService getInstance() {
         return instance;
     }
-
     public List<Playlist> getAllPlaylists() {
         return dao.selectAll();
     }
-
     public List<Playlist> getPlaylistsByCategory(String category) {
         return dao.selectByCategory(category);
     }

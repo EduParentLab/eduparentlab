@@ -28,7 +28,6 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -36,7 +35,6 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -44,7 +42,6 @@ public class User {
 	public String getNickname() {
 		return nickname;
 	}
-
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
@@ -52,7 +49,6 @@ public class User {
 	public String getGender() {
 		return gender;
 	}
-
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
@@ -60,7 +56,6 @@ public class User {
 	public Date getBirth() {
 		return birth;
 	}
-
 	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
@@ -68,7 +63,6 @@ public class User {
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -76,7 +70,6 @@ public class User {
 	public String getPhone() {
 		return phone;
 	}
-
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
@@ -84,17 +77,14 @@ public class User {
 	public Date getCdate() {
 		return cdate;
 	}
-
 	public void setCdate(Date cdate) {
 		this.cdate = cdate;
 	}
 	public int getRole_num() {
 		return role_num;
 	}
-
 	public void setRole_num(int role_num) {
 		this.role_num = role_num;
 	}
-	
 }
 

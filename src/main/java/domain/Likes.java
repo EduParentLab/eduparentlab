@@ -8,10 +8,10 @@ public class Likes {
 		this.email = email;
 		this.post_num = post_num;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -19,7 +19,6 @@ public class Likes {
 	public int getPost_num() {
 		return post_num;
 	}
-
 	public void setPost_num(int post_num) {
 		this.post_num = post_num;
 	}	

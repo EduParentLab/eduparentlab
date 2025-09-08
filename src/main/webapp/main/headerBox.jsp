@@ -50,9 +50,7 @@
       </c:otherwise>
     </c:choose>
   </div>
-  
 </header>
-
 <div class="navigation-button-container">
   <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=1" class="navigation-button">자유게시판</a>
   <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=2" class="navigation-button">입시정보</a>

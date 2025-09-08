@@ -46,8 +46,6 @@ public class AdminController extends HttpServlet {
 	    default: getNotice(request, response); break;
 	    }   	
 	}
-    
-    //공지사항
     private void getNotice(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {    	
 	    PostService service = PostService.getInstance();
@@ -59,8 +57,6 @@ public class AdminController extends HttpServlet {
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);	  
 	}
-    
-    //사용자목록
     private void getUser(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    UserService service = UserService.getInstance();
@@ -70,8 +66,6 @@ public class AdminController extends HttpServlet {
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);
 	}
-    
-    //탈퇴회원 
     private void getGhost(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
 	    UserService service = UserService.getInstance();
@@ -81,8 +75,6 @@ public class AdminController extends HttpServlet {
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);
 	}
-    
-    //통계
     private void getStatistics(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
     	countPost(request, response); 
@@ -102,8 +94,6 @@ public class AdminController extends HttpServlet {
     	LinkedHashMap<Date, Integer> userCount = service.countUserS();
     	request.setAttribute("userCount", userCount);          	
     }
-    
-    //글 삭제
     private void delete(HttpServletRequest request, HttpServletResponse response) 
             throws IOException {
     	String[] chk = request.getParameterValues("chk");
@@ -122,16 +112,12 @@ public class AdminController extends HttpServlet {
     		response.sendRedirect(request.getContextPath() + "/admin/admin.do");//관리자페이지 메인으로 이동
     	}    
     }
-    
-    //탈퇴회원 마이페이지
     private void getMypageWithdrawnUser(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {    	
     	String email = request.getParameter("email");
     	UserService userService = UserService.getInstance();
     	User user = userService.getUserByEmailS(email);       
     	PostService postService = PostService.getInstance();
- 	        
-        // 페이지 번호와 페이지 크기 처리
         int pageNum = 1;
         int pageSize = 10; 
         String strPage = request.getParameter("page");
@@ -142,19 +128,14 @@ public class AdminController extends HttpServlet {
                 pageNum = 1;
             }
         }
-        
         int totalPosts = postService.mypagePostCountS(email);
         int totalPages = (int)Math.ceil((double)totalPosts / pageSize);
-
-        // 페이지 범위 보정
         if (pageNum > totalPages) pageNum = totalPages;
         if (pageNum < 1) pageNum = 1;        
-        
     	List<Post> list = postService.mypagePostListPagingS(email, pageNum, pageSize);
  	    int mypagePostCount = postService.mypagePostCountS(email); 	   
  	    int mypostLike = postService.mypageLikeCountS(email);
  	    int mypageCommentCount = postService.mypageCommentCountS(email);
-	    
  	    request.setAttribute("mypost", list);
  	    request.setAttribute("mypostcount", mypagePostCount);
  	    request.setAttribute("mypostlike", mypostLike);
@@ -164,11 +145,8 @@ public class AdminController extends HttpServlet {
  	    request.setAttribute("pageSize", pageSize); 
  	    request.setAttribute("totalPages", totalPages); 
  	    request.setAttribute("fromAdmin", true); 
- 	    
  	    String view = "/mypage/mypage.jsp";        
 	    RequestDispatcher rd = request.getRequestDispatcher(view);
 	    rd.forward(request, response);        
     }    
-    
-    
 }
