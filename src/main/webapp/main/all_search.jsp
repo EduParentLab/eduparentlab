@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="all_search.css" />
 </head>
 
-
 <body>
   <div class="wrapper">
     <div id="headerArea"></div>
@@ -19,13 +18,11 @@
      <c:if test="${empty keyword}">
 	    <script>
 	        alert('검색어를 입력해주세요');
-	        history.back(); // 이전 페이지로 돌아가기
+	        history.back();
 	    </script>
 	 </c:if>
       <div class="center-wrapper">
         <h3 style="font-size:46px; margin:10px; margin-bottom:0px "> 전체검색 </h3>
-        
-		
         <label style="font-size:30px; margin:10px; font-weight:bold;margin-top:0px"> ${keyword} 관련 총
 	                     <label style="font-size:30px; margin:10px; color:red;font-weight:bold;margin-top:0px;margin-left:0px">
 	                        <c:set var="totalCount" value="0"/>
@@ -35,7 +32,6 @@
 	                        ${totalCount}건 
 	                     </label> 
         </label>
-
 		<c:forEach var="cateNum" items="${categories.keySet()}">
 		    <div class="section-board">
 		        <div style="display:flex;flex-direction: column;">
@@ -77,11 +73,7 @@
 	  </main>
     <div id="footerArea"></div>
   </div>
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="all_search.js"></script>
-
-
-
 </body>
 </html>

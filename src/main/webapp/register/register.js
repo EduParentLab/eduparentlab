@@ -1,14 +1,11 @@
-// 중복확인 여부 플래그
 let emailChecked = false;
 let nicknameChecked = false;
-
 function checkEmail() {
     const email = document.getElementById("email").value.trim();
     if (email === "") {
         alert("이메일을 입력하세요!");
         return;
     }
-
     $.ajax({
         url: contextPath + "/register/emailCheck.do",
         type: "GET",
@@ -31,14 +28,12 @@ function checkEmail() {
         }
     });
 }
-
 function checkNickname() {
     const nickname = document.getElementById("nickname").value.trim();
     if (nickname === "") {
         alert("닉네임을 입력하세요!");
         return;
     }
-
     $.ajax({
         url: contextPath + "/register/nicknameCheck.do",
         type: "GET",
@@ -61,10 +56,8 @@ function checkNickname() {
         }
     });
 }
-
 function validateRegisterForm() {
     const form = document.f;
-
     if (form.email.value.trim() === "") {
         alert("이메일을 입력하세요!");
         form.email.focus();
@@ -110,16 +103,12 @@ function validateRegisterForm() {
         form.phone.focus();
         return false;
     }
-
-    // 전화번호 형식 검사
     const phonePattern = /^010-\d{4}-\d{4}$/;
     if (!phonePattern.test(form.phone.value.trim())) {
         alert("전화번호는 010-XXXX-XXXX 형식으로 입력해야 합니다.");
         form.phone.focus();
         return false;
     }
-
-    // 중복확인 여부 검사
     if (!emailChecked) {
         alert("이메일 중복확인을 먼저 해주세요!");
         return false;
@@ -128,6 +117,5 @@ function validateRegisterForm() {
         alert("닉네임 중복확인을 먼저 해주세요!");
         return false;
     }
-
-    return true; // 모든 검증 통과 시 제출 진행
+    return true;
 }

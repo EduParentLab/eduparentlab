@@ -18,8 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 	loadCategory("all");
 });
-
-
 function loadCategory(category) {
   const container = document.getElementById("playlist-container");
   container.innerHTML = "";
@@ -57,8 +55,6 @@ function loadCategory(category) {
     container.appendChild(row);
   }
 }
-
-// YouTube 링크에서 Video ID 추출
 function extractVideoId(url) {
   const regExp = /(?:v=|\/embed\/|youtu\.be\/)([a-zA-Z0-9_-]+)/;
   const match = url.match(regExp);

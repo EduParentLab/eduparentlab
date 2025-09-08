@@ -2,7 +2,6 @@ package model.dao;
 
 import static model.sql.AdminSQL.NOTICELIST;
 import static model.sql.PostSQL.POST;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,12 +9,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
 import domain.Post;
 
 public class MainDAO {
@@ -62,13 +59,10 @@ public class MainDAO {
                 list.add(new Post(post_num, post_subject, post_content,
                                   post_date, post_view, category_num, email, nickname, likes));
             }
-            
             return list;
-
         } catch (SQLException se) {
             se.printStackTrace();
             return null;
-
         } finally {
             try { 
             	rs.close(); 
@@ -79,22 +73,17 @@ public class MainDAO {
     }
     public ArrayList<Post> searchPost(String keyword, int category_num) {
     	ArrayList<Post> list = new ArrayList<>();
-        
         String sql = "SELECT p.post_num, p.post_subject, p.post_content, p.post_date, " +
                 "p.post_view, p.category_num, p.email, u.nickname, p.likes " +
                 "FROM Post p LEFT JOIN User u ON p.email = u.email " +
                 "WHERE (p.post_subject LIKE ? OR p.post_content LIKE ?) AND p.category_num = ? " +
                 "ORDER BY p.post_date DESC LIMIT 5";
-        
         try (Connection con = ds.getConnection();
         		PreparedStatement pstmt = con.prepareStatement(sql)) {
-        	   
                pstmt.setString(1, "%" + keyword + "%");
                pstmt.setString(2, "%" + keyword + "%");
                pstmt.setInt(3, category_num);
-               
                ResultSet rs = pstmt.executeQuery();
-
                while (rs.next()) {
                    Post dto = new Post();
                    dto.setPost_num(rs.getInt("post_num"));
@@ -113,9 +102,7 @@ public class MainDAO {
         	se.printStackTrace();
         	return null;
         }
-        
     }
-  //관리자페이지 공지사항 가져오기
   	public ArrayList<Post> listNotice() {
           ArrayList<Post> list = new ArrayList<>();
           Connection con = null;
@@ -126,7 +113,6 @@ public class MainDAO {
               con = ds.getConnection();
               stmt = con.createStatement();
               rs = stmt.executeQuery(sql);
-
               while (rs.next()) {
                   int post_num = rs.getInt(1);
                   String post_subject = rs.getString(2);
@@ -137,16 +123,13 @@ public class MainDAO {
                   String email = rs.getString(7);               
                   int likes = rs.getInt(8);
                   String nickname = "관리자";
-
                   list.add(new Post(post_num, post_subject, post_content,
                                     post_date, post_view, category_num, email, nickname, likes));
               }          
               return list;
-
           } catch (SQLException se) {
               se.printStackTrace();
               return null;
-
           } finally {
               try { 
               	rs.close(); 
@@ -155,5 +138,4 @@ public class MainDAO {
               } catch (Exception e) {}
           }
       } 
-
 }

@@ -5,7 +5,6 @@
   	.top-bar { width: 100%; margin-bottom: 15px; text-align: right; }
   </style>
   <button id="toggleNav">☰ 메뉴</button>
-
   <div class="search-box" style="margin-left: 50px; margin-top: 20px; margin-right: 50px;">
       <select id="search-filter" class="search-filter">
           <option value="post_subject">제목</option>
@@ -57,7 +56,6 @@
  </form>
  <form action="../post.do?m=input&category_num=4" method="post">
   	<input type="hidden" name="path" value="admin">	
-  	<!-- 글쓰기 버튼 -->
         <div class="section-write-btn" style="gap:10px">
           <img src="<%=request.getContextPath()%>/post/assets/plus-circle.svg" class="icon" alt="글쓰기 아이콘" style="width: 40px; height: 40px;"/>
           <button class="write-btn" 
@@ -66,4 +64,3 @@
           </button>
         </div>
   </form>
-  	

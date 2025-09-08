@@ -1,8 +1,6 @@
 package controller;
-
 import java.io.IOException;
 import java.sql.Date;
-
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,21 +14,15 @@ import domain.User;
 @WebServlet("/mypage/mypage_update.do")
 public class MypageUpdateController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
         User loginUser = (User) session.getAttribute("loginOkUser");
-
-        // 파라미터 읽기
-        String email = request.getParameter("email"); // readonly라서 변하지 않음
+        String email = request.getParameter("email");
         String nickname = request.getParameter("nickname");
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("passwordConfirm");
-        String name = request.getParameter("name"); // readonly
-        
-        // 생년월일 (YYYY-MM-DD 로 합치기)
+        String name = request.getParameter("name");
         String birthYear = request.getParameter("birth");
         String birthMonth = request.getParameter("birth2");
         String birthDay = request.getParameter("birth3");
@@ -43,8 +35,6 @@ public class MypageUpdateController extends HttpServlet {
                     Integer.parseInt(birthMonth),
                     Integer.parseInt(birthDay));
         }
-        
-        // 전화번호 (010-XXXX-XXXX 형태로 합치기)
         String phone1 = request.getParameter("phone1");
         String phone2 = request.getParameter("phone2");
         String phone3 = request.getParameter("phone3");
@@ -53,8 +43,6 @@ public class MypageUpdateController extends HttpServlet {
                 !phone1.isBlank() && !phone2.isBlank() && !phone3.isBlank()) {
             phone = phone1 + "-" + phone2 + "-" + phone3;
         }
-
-        // 비밀번호 일치 확인 (비워뒀으면 기존 비밀번호 유지)
         if (password != null && !password.isBlank()) {
             if (!password.equals(passwordConfirm)) {
                 request.setAttribute("mode", "update");
@@ -65,15 +53,11 @@ public class MypageUpdateController extends HttpServlet {
                 return;
             }
         } else {
-            password = loginUser.getPassword(); // 기존 비밀번호 유지
+            password = loginUser.getPassword();
         }
-
-        // 닉네임 빈칸이면 기존값 유지
         if (nickname == null || nickname.isBlank()) {
             nickname = loginUser.getNickname();
         }
-
-        // 생년월일 빈칸이면 기존값 유지
         Date birth = null;
         if (strBirth == null || strBirth.isBlank()) {
             birth = loginUser.getBirth();
@@ -89,8 +73,6 @@ public class MypageUpdateController extends HttpServlet {
                 return;
             }
         }
-
-        // 전화번호 빈칸이면 기존값 유지
         if (phone == null || phone.isBlank()) {
             phone = loginUser.getPhone();
         } else {
@@ -103,8 +85,6 @@ public class MypageUpdateController extends HttpServlet {
                 return;
             }
         }
-
-        // DTO 만들기
         User updatedUser = new User();
         updatedUser.setEmail(email);
         updatedUser.setNickname(nickname);
@@ -112,20 +92,13 @@ public class MypageUpdateController extends HttpServlet {
         updatedUser.setName(name);
         updatedUser.setBirth(birth);
         updatedUser.setPhone(phone);
-
         updatedUser.setGender(loginUser.getGender());
         updatedUser.setCdate(loginUser.getCdate());
-
-        // Service 호출
         MypageUpdateService service = MypageUpdateService.getInstance();
         boolean result = service.updateS(updatedUser);
-
         if (result) {
-            // 세션 갱신
             session.setAttribute("loginOkUser", updatedUser);
         }
-
-        // 결과 전달
         request.setAttribute("mode", "update");
         request.setAttribute("result", result);
         RequestDispatcher rd = request.getRequestDispatcher("/mypage/msg.jsp");

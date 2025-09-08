@@ -10,13 +10,11 @@
   <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/post/css/board_list.css" />
 </head>
-
 <body>
   <div class="wrapper">
 	<div id="headerArea"></div>
     <main style="background-color:white;">
       <div class="center-wrapper" style="background-color:white;" data-category="${category_num}">
-
 	<div class="section-title">
 	  <c:choose>
 	    <c:when test="${category_num == 1}">
@@ -36,7 +34,6 @@
 	    </c:otherwise>
 	  </c:choose>
 	</div>
-    
     <div class="section-discription">
       <c:choose>
       	<c:when test="${category_num eq '1'}">
@@ -73,7 +70,6 @@
         </c:otherwise>
       </c:choose>
     </div>
-
 		<div class="section-pagingfilter">
 		  <form action="<%=request.getContextPath()%>/post.do" method="get">
 		    <input type="hidden" name="m" value="list"/>
@@ -84,7 +80,6 @@
 		    </select>
 		  </form>
 		</div>
-       
         <div class="section-board-list">
           <table class="board-table">
             <thead>
@@ -101,7 +96,6 @@
                 <c:when test="${empty list}">
                   <tr><td colspan="5">등록된 게시글이 없습니다.</td></tr>
                 </c:when>
-                
                 <c:otherwise>
                   <c:forEach var="dto" items="${list}">
                     <tr>
@@ -145,23 +139,19 @@
             <c:if test="${paging.hasPrev()}">
               <a href="post.do?m=list&page=${paging.startPage - 1}&rows=${param.rows}&sort=${param.sort}&type=${param.type}&keyword=${param.keyword}&category_num=${category_num}">◀</a>
             </c:if>
-
             <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
               <a href="post.do?m=list&page=${i}&rows=${param.rows}&sort=${param.sort}&type=${param.type}&keyword=${param.keyword}&category_num=${category_num}"
                  class="${i == paging.currentPage ? 'current' : ''}">${i}</a>
             </c:forEach>
-
             <c:if test="${paging.hasNext()}">
               <a href="post.do?m=list&page=${paging.endPage + 1}&rows=${param.rows}&sort=${param.sort}&type=${param.type}&keyword=${param.keyword}&category_num=${category_num}">▶</a>
             </c:if>
           </div>
         </div>
-        
         <div class="section-searchbar">
           <form action="<%=request.getContextPath()%>/post.do" method="get" class="search-bar-container">
             <input type="hidden" name="m" value="list"/>
             <input type="hidden" name="category_num" value="${category_num}"/>
-
             <div class="dropdown-wrap">
               <select name="type" class="dropdown-btn">
                 <option value="title" ${param.type == 'title' ? 'selected' : ''}>제목</option>
@@ -178,10 +168,8 @@
         </div>
       </div>
     </main>
-
       <div id="footerArea"></div>	
   </div>
-
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script> const contextPath = "<%=request.getContextPath()%>";</script>
   <script src="<%=request.getContextPath()%>/post/js/board_list.js"></script>

@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="main_page.css" />
 </head>
 
-
 <body>
   <div class="wrapper">
     <div id="headerArea"></div>
@@ -23,7 +22,7 @@
           <a href="#">
 		  <img id="banner" src="../designer/assets/banner2.png" 
 		       style="width:100%; height:auto; display:block; transition: opacity 1s ease;" />
-		</a>
+		  </a>
         </div>
         <c:forEach var="notice" items="${notice}">
         <div class="section-notice">
@@ -36,7 +35,7 @@
 	           <div style="display:flex; justify-content:flex-end; width: 40%;">
 	            <label><fmt:formatDate value="${notice.post_date}" pattern="yyyy-MM-dd"/></label>
 	           </div>
-        </div>
+       		</div>
         </c:forEach>
         <div class="section-popular-recent-posts">
              <div class="popular-board">
@@ -63,9 +62,6 @@
 			    </a>
 			  </c:forEach>
 			</div>
-
-
-
             <div class="popular-board">
   <h3>최신 게시물</h3>
   <c:forEach var="latest" items="${latestList}">
@@ -90,25 +86,19 @@
     </a>
   </c:forEach>
 </div>
-
-        </div>
-        <a href="http://localhost:8080/educationlab/playlist.do?">
-   		     <h3 style="margin:10px";>학플리</h3>
-        </a>
-		<div class="section-playlist" id="playlist-container">
-          <!-- JS로 삽입 -->
-        </div>
-        </div>
-      </div>
-    </main>
-    <div id="footerArea"></div>
-  </div>
-
+       </div>
+       <a href="http://localhost:8080/educationlab/playlist.do?">
+  		     <h3 style="margin:10px";>학플리</h3>
+       </a>
+	<div class="section-playlist" id="playlist-container">
+       </div>
+       </div>
+     </div>
+   </main>
+   <div id="footerArea"></div>
+ </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="main_page.js"></script>
 <script src="${pageContext.request.contextPath}/playlist/playlist.js"></script>
-
-
-
 </body>
 </html>

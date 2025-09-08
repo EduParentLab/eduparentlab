@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,7 +6,6 @@
   <link rel="stylesheet" href="layout.css" />
   <link rel="stylesheet" href="playlist.css" />
 </head>
-
 
 <body>
   <div class="wrapper">
@@ -25,8 +23,6 @@
             <label>2025.08.15</label>
            </div>
         </div>
-
-        
         <div class="section-banner">
           <a href="main/main.do">
            <img src="./assets/banner.jpg" style="width:100%; height:auto;display: block;" />
@@ -69,13 +65,8 @@
             <a href="#">
                 <button class="select-button">입시입시입시입시입시</button>
             </a>
-
-
         </div>
-
-
         <h3 style="margin:10px";>학플리</h3>
-
         <div class="section-playlist">
           <div style="display:flex; width: 100%;height: 200px;justify-content: center;gap:20px;">  
             <a href="#" style=" width: 33%;height: 200px; display:flex">
@@ -105,11 +96,7 @@
   </main>
   <div id="footerArea"></div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="main_page.js"></script>
-
-
-
 </body>
 </html>

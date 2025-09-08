@@ -2,7 +2,6 @@ package model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -21,15 +20,11 @@ public class MypageUpdateDAO {
 			ds = (DataSource)envContext.lookup("jdbc/TestDB");
 		}catch(NamingException ne){}
 	}
-	
 	public boolean update(User dto) {
 	    Connection con = null;
 	    PreparedStatement pstmt = null;
-	    
 	    try {
 	        con = ds.getConnection();
-	        
-	        // 비밀번호를 바꾸면 UPDATE_WITH_PW, 안 바꾸고 그대로 두면 UPDATE_NO_PW 사용
 	        if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
 	            pstmt = con.prepareStatement(MypageUpdateSQL.UPDATE_WITH_PW);
 	            pstmt.setString(1, dto.getNickname());
@@ -46,7 +41,6 @@ public class MypageUpdateDAO {
 	            pstmt.setString(4, dto.getPhone());
 	            pstmt.setString(5, dto.getEmail());
 	        }
-
 	        int i = pstmt.executeUpdate();
 	        return i > 0;
 	    } catch (SQLException se) {
@@ -59,13 +53,10 @@ public class MypageUpdateDAO {
 	        } catch (SQLException se) {}
 	    }
 	}
-
-	
 	public boolean delete(String email) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = MypageUpdateSQL.DELETE;
-		
 		try{	
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);

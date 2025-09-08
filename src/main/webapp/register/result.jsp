@@ -4,7 +4,6 @@
 <script>
     const result = ${registerResult}; // true or false
     const errorMsg = "${registerErrorMsg}";
-
     if(result){
         alert("회원가입이 성공적으로 완료되었습니다.");
         location.href="${pageContext.request.contextPath}/login/login.do?m=form";

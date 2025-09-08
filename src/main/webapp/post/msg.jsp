@@ -11,24 +11,17 @@
     boolean flag = (Boolean)request.getAttribute("flag");
     String kind = (String)request.getAttribute("kind");
     String path = request.getParameter("path");
-	//System.out.println("msg.jsp.path: "+path);
-	
     Object categoryAttr = request.getAttribute("category_num");
     String categoryNum = null;
-    
     if (categoryAttr != null) {
         categoryNum = String.valueOf(categoryAttr);
-        
     } else {
         categoryNum = request.getParameter("category_num");
-        
     }
-
     if (categoryNum == null || categoryNum.equals("null") || categoryNum.isEmpty()) {
         categoryNum = "1";
     }   
 %>
-
 <% if("insert".equals(kind)) { %>
     if (<%=flag%>) {
     	if("<%=path%>" == "admin"){

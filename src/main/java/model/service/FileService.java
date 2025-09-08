@@ -17,18 +17,14 @@ public class FileService {
     private PostFileDAO dao = new PostFileDAO();
     private FileService() {}
     public static FileService getInstance() { return instance; }
-
     public void saveFiles(HttpServletRequest request, long postNum) {
         try {       	
             String uploadPath = request.getServletContext().getRealPath("/upload");           
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) uploadDir.mkdirs();
-
             for (Part part : request.getParts()) {
                 if (!"files".equals(part.getName())) continue;
-
                 if (part.getSubmittedFileName() == null || part.getSize() == 0) continue;
-
                 String originalFileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                 String storedFileName = UUID.randomUUID().toString() + "_" + originalFileName;
                 String savePath = uploadPath + File.separator + storedFileName;
@@ -65,7 +61,6 @@ public class FileService {
             	 dao.deleteByPost(postNum);
                 saveFiles(request, postNum);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

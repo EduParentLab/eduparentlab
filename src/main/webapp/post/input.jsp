@@ -30,11 +30,9 @@
               </c:choose>
             </label>
           </div>
-          <!-- 관리자페이지용 -->
           <input type="hidden" name="category_num" value="${param.category_num}">
           <input type="hidden" name="email" value="${sessionScope.loginOkUser.email}">
           <input type="hidden" name="path" value="${path}">
-		  <!-- 관리자페이지용 -->
           <div class="divide-block" style="width:100%;height:30px;background-color: white;"></div>
           <div style="height: 20px;padding:10px; display:flex;">
             <input type="text" name="post_subject" style="width:100%;height:100%;" placeholder="제목을 입력해주세요" required>
@@ -96,10 +94,8 @@
         </form>
       </div>
     </main>
-
     <div id="footerArea"></div>
   </div>
-
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="<%=request.getContextPath()%>/post/js/input.js"></script>
   <script src="<%=request.getContextPath()%>/main_page.js"></script>
