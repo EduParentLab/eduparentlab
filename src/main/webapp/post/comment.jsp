@@ -54,7 +54,7 @@
 		                	<label>${c.nickName}</label>
 		                </div>
 		                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
-		                <c:if test="${loginUser != null && (loginUser.email == c.email)}">
+		                <c:if test="${loginUser != null && (loginUser.email == c.email || sessionScope.role == 'admin')}">
 			                <button class="editBtn" type="submit">수정</button>
 			                <button class="deleteBtn" type="submit">삭제</button>
 		                </c:if>
@@ -74,10 +74,10 @@
 			        <div class="recomment-original" style="border:solid rgb(243, 233, 233); margin-bottom:0px;padding:0px 0px; display: flex; flex-direction: column; gap:0px; width: 95%;height:auto;">
 			            <div class="34" style="display: flex; justify-content:flex-start; align-items: center; padding: 10px; border-bottom: 1px solid #ddd; gap:10px; border:solid rgb(255, 255, 255);">
 			                <div class="recomment-writer">${recomment.nickName}</div>
-			                <div><fmt:formatDate value="${c.comment_date}" pattern="yyyy-MM-dd"/></div>
-			                <c:if test="${loginUser != null && (loginUser.email == recomment.email)}">
-				                <button class="editBtn" type="submit">수정</button>
-				                <button class="deleteBtn" type="submit">삭제</button>
+			                <div><fmt:formatDate value="${recomment.comment_date}" pattern="yyyy-MM-dd"/></div>
+			                <c:if test="${loginUser != null && (loginUser.email == recomment.email || sessionScope.role == 'admin')}">
+				                <button class="editBtn" type="button">수정</button>
+				                <button class="deleteBtn" type="button">삭제</button>
 			                </c:if>
 			            </div>
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);display:flex;">
@@ -85,11 +85,12 @@
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);">
 			                <label>
 			                    <img src="post/assets/reply.png" alt="대댓글" class="reply-icon" style="width: 20px; height: 20px; white-space: pre-line;">
-			                    <span class="content" style="width:1000px; display:inline-block; word-wrap:break-word; white-space:normal;"class="content">${recomment.comment_content}</span>
+			                    <span class="content" style="width:1000px; display:inline-block; word-wrap:break-word; white-space:normal;">${recomment.comment_content}</span>
 			                </label>
 			                </div>
 			            </div>
 			        </div>
+			    </div>
 			    </div>
 		      </c:forEach>
 		    </div>

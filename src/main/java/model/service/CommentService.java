@@ -62,7 +62,7 @@ public class CommentService {
 	public boolean canUpdate(int comment_num, String userEmail) {
 		Comment comment = dao.selectedByCommentNum(comment_num);
 		if(comment == null) return false;
-		
+		System.out.println("@canUpdate comment_num=" + comment_num + ", comment=" + comment);
 		return userEmail != null && userEmail.equals(comment.getEmail());
 	}
 	public String getCommentWriterEmail(int comment_num) {
