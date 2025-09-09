@@ -76,8 +76,8 @@
 			                <div class="recomment-writer">${recomment.nickName}</div>
 			                <div><fmt:formatDate value="${recomment.comment_date}" pattern="yyyy-MM-dd"/></div>
 			                <c:if test="${loginUser != null && (loginUser.email == recomment.email || sessionScope.role == 'admin')}">
-				                <button class="editBtn" type="button">수정</button>
-				                <button class="deleteBtn" type="button">삭제</button>
+				                <button class="editBtn" type="submit">수정</button>
+				                <button class="deleteBtn" type="submit">삭제</button>
 			                </c:if>
 			            </div>
 			            <div style="padding: 10px; border-bottom: 1px solid #ddd; margin-top:0px; border:solid rgb(255, 255, 255);display:flex;">

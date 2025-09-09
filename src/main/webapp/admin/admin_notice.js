@@ -14,8 +14,7 @@ function loadContent(page) {
 	  //notice 탭 검색 기능
 	  if (page === "notice"){			
 		    const searchFilter = document.getElementById("search-filter");
-		    const input = target.querySelector("#noticeSearchInput");
-		    const btn = target.querySelector("#noticeSearchBtn");
+		    const input = target.querySelector("#noticeSearchInput");		   
             
 			function filterRows() {
 				const searchOption = searchFilter.value;
@@ -42,13 +41,13 @@ function loadContent(page) {
 		            row.style.display = matched ? "" : "none";
 		        });
             }			
-			input.addEventListener("keyup", filterRows);					
+			input.addEventListener("keyup", filterRows);
+			searchFilter.addEventListener("click", filterRows);					
 	  }
 	  //user_list 탭 검색 기능 
 	  if (page === "user_list" || page === "withdrawn_list"){
 	  		    const searchFilter = document.getElementById("search-filter");
-	  		    const input = target.querySelector("#userListSearchInput");
-	  		    const btn = target.querySelector("#userListSearchBtn");
+	  		    const input = target.querySelector("#userListSearchInput");	  		   
 	              
 	  			function filterRows() {
 	  				const searchOption = searchFilter.value;
@@ -62,6 +61,7 @@ function loadContent(page) {
 	  		        });
 	              }	  			
 	  			input.addEventListener("keyup", filterRows);
+				searchFilter.addEventListener("click", filterRows);	
 	   }	  
 	  //statistics 탭 그래프 그리기 script 실행
 	  if (page === "statistics") {

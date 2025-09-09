@@ -66,7 +66,7 @@
 		            </c:choose>
 		        </div>
 		        <div style="display:flex; margin-left: auto;">
-		            <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=${cateNum}&type=title&keyword=${keyword}">
+		            <a href="${pageContext.request.contextPath}/post.do?m=list&category_num=${cateNum}&type=title_content&keyword=${keyword}">
 		            더보기
 		            </a>
 		        </div>

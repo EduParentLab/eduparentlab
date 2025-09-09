@@ -11,7 +11,7 @@
   </resource-ref>
   
   <welcome-file-list>
-        <welcome-file>main/main.do</welcome-file>
+        <welcome-file>index.do</welcome-file>
   </welcome-file-list>
 
 </web-app>
