@@ -254,5 +254,3 @@ function events(){
 				     });
 		    });
 }
-
-

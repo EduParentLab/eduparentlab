@@ -14,12 +14,9 @@ public class EmailCheckController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String email = request.getParameter("email");
-
         RegisterService service = RegisterService.getInstance();
         boolean exists = service.emailCheckS(email);
-
         response.setContentType("text/plain;charset=UTF-8");
         if (exists) {
             response.getWriter().write("DUPLICATE");

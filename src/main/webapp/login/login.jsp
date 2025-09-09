@@ -27,7 +27,6 @@
 		            return false;
 		        }
 		    }
-		    
 		    var pwdval = f.password.value;   // password
 		    pwdval = trim(pwdval);
 		    if(pwdval.length == 0){
@@ -43,12 +42,9 @@
 		            return false;
 		        }
 		    }
-		
 		    f.submit();
 		    return true;
-		    
 			}
-		
 		    function checkByteLen(str, size){
 		        var byteLen = getByteLen(str);
 				if(byteLen <= size){
@@ -60,7 +56,6 @@
 			function getByteLen(str){
 			   return str.replace(/[\0-\x7f]|([0-\u07ff]|(.))/g,"$&$1$2").length;
 		    }
-			
 			function enterCheck(elm){
 				if(event.keyCode == 13){
 					if(elm == f.email){
@@ -73,11 +68,9 @@
 		</script>
 </head>
 
-
 <body onload="document.f.email.focus()">
   <div class="wrapper">
 	<div id="headerArea"></div>
-
     <main>
       <div class="center-wrapper">
         <div class="logincontainer">
@@ -98,12 +91,9 @@
     </main>
     <div id="footerArea"></div>
   </div>
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="search.js"></script>
 <script src="login.js"></script>
-
-
 
 </body>
 </html>

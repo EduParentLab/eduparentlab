@@ -11,30 +11,23 @@
   color: white;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
 }
-
-/* 각 버튼별 색상 */
 .editBtn {
-  background-color: #4CAF50; /* 연초록 */
+  background-color: #4CAF50;
 }
-
 .editBtn:hover {
   background-color: #43a047;
   transform: scale(1.05);
 }
-
 .deleteBtn {
   background-color: #9b59b6;
 }
-
 .deleteBtn:hover {
   background-color: #c62828;
   transform: scale(1.05);
 }
-
 .recommentBtn {
-  background-color: #16a085; /* 진파랑 */
+  background-color: #16a085;
 }
-
 .recommentBtn:hover {
   background-color: #2c3e90;
   transform: scale(1.05);

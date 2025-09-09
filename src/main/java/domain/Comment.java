@@ -15,9 +15,7 @@ public class Comment {
 	private List<Comment> recomments;
 	private String nickName;
 	public Comment() {
-		
 	}
-
 	public Comment(int comment_num, String comment_content, Timestamp comment_date, int group_num, int group_order,
 			String email, int post_num, String nickName) {
 		this.comment_num = comment_num;
@@ -33,7 +31,6 @@ public class Comment {
 	public int getComment_num() {
 		return comment_num;
 	}
-
 	public void setComment_num(int comment_num) {
 		this.comment_num = comment_num;
 	}
@@ -41,7 +38,6 @@ public class Comment {
 	public String getComment_content() {
 		return comment_content;
 	}
-
 	public void setComment_content(String comment_content) {
 		this.comment_content = comment_content;
 	}
@@ -49,7 +45,6 @@ public class Comment {
 	public Timestamp getComment_date() {
 		return comment_date;
 	}
-
 	public void setComment_date(Timestamp comment_date) {
 		this.comment_date = comment_date;
 	}
@@ -57,7 +52,6 @@ public class Comment {
 	public int getGroup_num() {
 		return group_num;
 	}
-
 	public void setGroup_num(int group_num) {
 		this.group_num = group_num;
 	}
@@ -65,7 +59,6 @@ public class Comment {
 	public int getGroup_order() {
 		return group_order;
 	}
-
 	public void setGroup_order(int group_order) {
 		this.group_order = group_order;
 	}
@@ -73,7 +66,6 @@ public class Comment {
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -81,7 +73,6 @@ public class Comment {
 	public int getPost_num() {
 		return post_num;
 	}
-
 	public void setPost_num(int post_num) {
 		this.post_num = post_num;
 	}
@@ -89,21 +80,14 @@ public class Comment {
 	public List<Comment> getRecomments() {
 		return recomments;
 	}
-
 	public void setRecomments(List<Comment> recomments) {
 		this.recomments = recomments;
 	}
-
+	
 	public String getNickName() {
 		return nickName;
 	}
-
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
-	
-	
-	
-	
-	
 }

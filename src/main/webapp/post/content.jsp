@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="util.FileUtil" %>
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -112,7 +111,6 @@
 		        </button>
 		      </form>
 		    </c:if>
-
 		    <c:if test="${canDelete}">
 		      <form action="<%=request.getContextPath()%>/post.do?m=delete" method="post" style="display:inline;">
 		        <input type="hidden" name="seq" value="${dto.post_num}" />
@@ -137,20 +135,15 @@
 		        </button>
 		      </form>
 		    </c:if>
-		
 		  </div>
 		</c:if>
-
- 
         <div id="commentArea" style="display:flex; width:1210px; flex-direction:column;">
           <div id="commentList" style="display:flex; width:1210px; flex-direction:column;"></div>
           <div id="pagination" style="display:flex; width:1210px; text-align:center;justify-content:center;margin-top:20px;"></div>
         </div>
-          
     </main>
     <div id="footerArea"></div>
   </div>
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/post/js/board_content.js"></script>
 <script> const contextPath = "<%=request.getContextPath()%>";</script>

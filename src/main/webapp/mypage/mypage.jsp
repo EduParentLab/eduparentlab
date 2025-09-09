@@ -12,16 +12,12 @@
   <link rel="stylesheet" href="../main/layout.css"/>
   <link rel="stylesheet" href="../mypage/mypage.css"/>
 </head>
-
-
 <body>
   <div class="wrapper">
-
  <%--<jsp:include page="../login/headerBox.jsp"/> ... --%>
  	<div id="headerArea"></div>
     <main>
       <div class="center-wrapper">
-
         <div class="section-title">
            <p style="font-size:35px; font-weight:bold;color:#98c7e6;">마이페이지</p> 
         </div>
@@ -44,7 +40,6 @@
 			</div>
 	    </c:if>       		
 		</div>		
-        
         <div class="section-personal-info-content">
             <div class="container">
                 <div class="info-box">
@@ -57,7 +52,6 @@
                 <div class="info-row"><div class="label">생년월일</div><div class="value">${loginOkUser.birth}</div></div>
                 <div class="info-row"><div class="label">가입일</div><div class="value">${loginOkUser.cdate}</div></div>
                 </div>
-
                 <div class="stat-box">
                 <h2>활동 통계</h2>
                 <div class="stat-row"><div class="label">총 게시글</div><div class="value">${mypostcount}</div></div>
@@ -65,24 +59,18 @@
                 <div class="stat-row"><div class="label">받은 총 공감수</div><div class="value">${mypostlike}</div></div>
                 </div>
             </div>
-           
         </div>
         <div class="section-self-write-title">
            <label style="font-size:20px; font-weight:bold ;color:#98c7e6;" >내가 쓴 글</label> 
         </div>
-        
-<c:choose>
-
+	<c:choose>
   <c:when test="${fromAdmin}">
     <form action="${pageContext.request.contextPath}/admin/admin.do?m=delete&email=${loginOkUser.email}&page=${pageNum}" method="post">
   </c:when>
-
-
   <c:otherwise>
     <form action="${pageContext.request.contextPath}/mypage/mypage.do?m=delete&page=${pageNum}" method="post">
   </c:otherwise>
 </c:choose>
-        
         <div class="section-self-write-content">
             <div class="post-container">
                 <table>
@@ -95,11 +83,8 @@
                     <th>공감수</th>
                     </tr>
                </thead>
-                
      <c:forEach var="p" items="${mypost}">
-                
                 <tbody>
-                    <!-- 반복되는 글 -->
                     <tr>
                     <td><input type="checkbox" name="chk" value="${p.post_num}"></td>
                     <td>
@@ -111,13 +96,9 @@
                     <td>${p.post_view}</td>
                     <td>${p.likes}</td>
                     </tr>
-     </c:forEach>       
-                    
-
+     </c:forEach>
                 </tbody>
                 </table>
-                
-
 				<div class="pagination">
 				  <c:forEach var="i" begin="1" end="${totalPages}">
 				    <c:choose>
@@ -126,11 +107,9 @@
 				      </c:when>
 				      <c:otherwise>
 				        <c:choose>
-
 				          <c:when test="${fromAdmin}">
 				            <a href="${pageContext.request.contextPath}/admin/admin.do?m=mypage&email=${loginOkUser.email}&page=${i}">${i}</a>
 				          </c:when>
-
 				          <c:otherwise>
 				            <a href="${pageContext.request.contextPath}/mypage/mypage.do?page=${i}">${i}</a>
 				          </c:otherwise>
@@ -148,11 +127,8 @@
         </div>
       </div>
       </form>
-      
-
     </main>
     <div id="footerArea"></div>
-
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
@@ -160,11 +136,10 @@
 <script src="mypage.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const form = document.querySelector("form"); // 현재 글 삭제 form
+  const form = document.querySelector("form");
   const deleteBtn = form.querySelector("button[type='submit']");
 
   form.addEventListener("submit", function(e) {
-    // 체크박스 선택 확인
     const checked = form.querySelectorAll("input[name='chk']:checked");
     if (checked.length === 0) {
       e.preventDefault(); // form 전송 막기
@@ -173,9 +148,5 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
-
-
-
-
 </body>
 </html>

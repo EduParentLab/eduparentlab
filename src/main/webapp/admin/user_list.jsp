@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <button id="toggleNav">☰ 메뉴</button>
-
 <div class="search-box" style="margin-left: 50px; margin-top: 20px; margin-right: 50px;">
     <select id="search-filter"class="search-filter">
         <option value="email">이메일</option>
@@ -13,9 +12,6 @@
     </select>
     <input type="text" id="userListSearchInput" class="search-input" placeholder="검색어를 입력하세요" />
 </div>
-
-
-
 <div style="padding:50px; padding-top:20px;">
 <table id="userTable" class="notice-table">
 <thead>
@@ -53,5 +49,3 @@
 </tbody>
 </table>
 </div>
-
-

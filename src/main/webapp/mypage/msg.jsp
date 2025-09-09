@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <script>
-    const mode     = "${mode}";        // "update" 또는 "delete"
-    const result   = ${result};        // true or false
-    const errorMsg = "${errorMsg}";    // 컨트롤러에서 전달한 에러 메시지
+    const mode     = "${mode}";
+    const result   = ${result};
+    const errorMsg = "${errorMsg}";
 
     if(mode === "update"){
         if(result){

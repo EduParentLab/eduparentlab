@@ -1,5 +1,4 @@
 package model.dao;
-
 import javax.naming.*;
 import javax.sql.DataSource;
 import java.sql.*;
@@ -55,9 +54,7 @@ public class PostFileDAO {
              PreparedStatement pstmt = con.prepareStatement(DELETE_BY_POST)) {
             pstmt.setLong(1, post_num);
             return pstmt.executeUpdate() > 0;
-            
         } catch (SQLException e) {
-        	
             e.printStackTrace();
             return false;
         }
@@ -65,7 +62,6 @@ public class PostFileDAO {
     public PostFile findBySaveName(String savedName) {
         try (Connection con = ds.getConnection();
              PreparedStatement pstmt = con.prepareStatement(FIND_BY_SAVE_NAME)) {
-             
             pstmt.setString(1, savedName);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {

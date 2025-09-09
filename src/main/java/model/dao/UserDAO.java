@@ -1,5 +1,4 @@
 package model.dao;
-
 import java.sql.*;
 import java.util.*;
 import java.sql.Date;
@@ -37,7 +36,6 @@ public class UserDAO {
 	        	String phone = rs.getString(7);
 	        	java.sql.Date cdate = rs.getDate(8);
 	        	int role_num = rs.getInt(9);
-	            
 	            list.add(new User(email, password, nickname, gender, birth, name, phone, cdate, role_num));
 	        }
 	        return list;
@@ -70,7 +68,6 @@ public class UserDAO {
 	        	String phone = rs.getString(7);
 	        	java.sql.Date cdate = rs.getDate(8);
 	        	int role_num = rs.getInt(9);
-	            
 	            list.add(new User(email, password, nickname, gender, birth, name, phone, cdate, role_num));
 	        }
 	        return list;
@@ -99,7 +96,6 @@ public class UserDAO {
 				map.put(cdate, count);
 			}
 		}catch(SQLException se){
-			
 		}finally {
 			try {
 				rs.close();

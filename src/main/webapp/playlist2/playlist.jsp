@@ -7,12 +7,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>학부모정보통</title>
-  <!-- ▶ CSS 경로 수정 -->
   <link rel="stylesheet" href="<%=request.getContextPath()%>/main/layout.css" />
   <link rel="stylesheet" href="<%=request.getContextPath()%>/playlist2/playlist.css" />
-  
 </head>
-
 <body>
   <div class="wrapper">
     <div id="headerArea"></div>
@@ -35,8 +32,6 @@
     </main>
     <div id="footerArea"></div>
   </div>
-
-  <!-- ▶ JS -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="<%=request.getContextPath()%>/playlist2/playlist.js"></script>
   <script>
@@ -50,9 +45,6 @@
     </c:forEach>
   ];
 </script>
-
 <script> const contextPath = "<%=request.getContextPath()%>";</script>
-
-
 </body>
 </html>
