@@ -189,7 +189,6 @@ function events(){
 			        // 버튼 변경
 			        $btn.text("등록").removeClass("editBtn").addClass("saveBtn");
 		    	})
-		    	
 			});
 	
 			//댓글 수정 후 등록 버튼 클릭
@@ -255,5 +254,3 @@ function events(){
 				     });
 		    });
 }
-
-

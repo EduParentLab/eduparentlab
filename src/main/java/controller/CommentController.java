@@ -158,8 +158,8 @@ public class CommentController extends HttpServlet {
 	    String role = (String) session.getAttribute("role");
 	    System.out.println("@checkUpdateAuth email: " +loginUser.getEmail());
 	    if(loginUser == null || role == null || "guest".equals(role)) {
-	        response.sendError(HttpServletResponse.SC_FORBIDDEN); // 403
-	        return;
+	    	response.sendError(HttpServletResponse.SC_FORBIDDEN); // 403
+	    	return;
 	    }
 	    String strComment_num = request.getParameter("comment_num");
 	    int comment_num;
